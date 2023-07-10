@@ -36,3 +36,8 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// BootJar만 생성, Jar(plain.jar) 생성 제외
+jar {
+	enabled = false
+}
