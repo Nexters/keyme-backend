@@ -56,11 +56,7 @@ jobs:
 
       # SSH Connect & Deploy
       - name: Deploy after connecting to ec2
-        uses: appleboy/ssh-action@master
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: keyme-api-server-ecr
-          IMAGE_TAG: latest
+        uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ec2-user
@@ -72,5 +68,5 @@ jobs:
               sudo docker stop $id && docker rm $id
             done
             docker image prune -a -f
-            docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
-            docker run -d --log-driver=syslog -p 80:8080 $REGISTRY/$REPOSITORY:$IMAGE_TAG
+            docker pull ${{ secrets.ECR_REGISTRY }}/keyme-api-server-ecr:latest
+            docker run -d --log-driver=syslog -p 80:8080 ${{ secrets.ECR_REGISTRY }}/keyme-api-server-ecr:latest
