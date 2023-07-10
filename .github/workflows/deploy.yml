@@ -66,8 +66,11 @@ jobs:
           username: ec2-user
           key: ${{ secrets.EC2_KEY }}
           script: |
-            docker stop $(docker ps -a -q)
-            docker container prune
+            ids=$(sudo docker ps -a -q)
+            for id in $ids
+            do
+              sudo docker stop $id && docker rm $id
+            done
             docker image prune -a -f
             docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
             docker run -d --log-driver=syslog -p 80:8080 $REGISTRY/$REPOSITORY:$IMAGE_TAG
