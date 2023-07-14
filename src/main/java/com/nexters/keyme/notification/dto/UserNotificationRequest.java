@@ -1,15 +1,22 @@
 package com.nexters.keyme.notification.dto;
 
+import lombok.Getter;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class NotificationRequest {
+public class UserNotificationRequest {
+    @Getter
+    private List<Long> userIds;
+    @Getter
     private final String title;
+    @Getter
     private final String body;
     private final Map<String, String> info;
 
-    public NotificationRequest(String title, String body, Map<String, String> info) {
+    public UserNotificationRequest(String title, String body, Map<String, String> info) {
         this.title = title;
         this.body = body;
         this.info = info;
@@ -41,19 +48,11 @@ public class NotificationRequest {
             return this;
         }
 
-        public NotificationRequest build() {
-            return new NotificationRequest(this.title, this.body, this.info);
+        public UserNotificationRequest build() {
+            return new UserNotificationRequest(this.title, this.body, this.info);
         }
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getBody() {
-        return body;
-    }
-    
     public Optional<String> getInfo(String key) {
         return Optional.of(info.get(key));
     }
