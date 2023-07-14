@@ -1,6 +1,6 @@
 package com.nexters.keyme.dummy;
 
-import com.nexters.keyme.notification.dto.NotificationRequest;
+import com.nexters.keyme.notification.dto.UserNotificationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -13,12 +13,12 @@ public class DummyService {
     public void doLogicAndPublishNotification() {
         // do logic..
 
-        NotificationRequest notificationRequest = NotificationRequest.builder()
+        UserNotificationRequest userNotificationRequest = UserNotificationRequest.builder()
                 .title("title")
                 .body("body")
                 .info("token", "dummytoken")
                 .build();
 
-        eventPublisher.publishEvent(notificationRequest);
+        eventPublisher.publishEvent(userNotificationRequest);
     }
 }
