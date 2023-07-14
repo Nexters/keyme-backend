@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
-public class FCMNotificationSender {
+public class FCMNotificationSender implements NotificationSender {
 
     private final FirebaseMessaging firebaseMessaging;
 
