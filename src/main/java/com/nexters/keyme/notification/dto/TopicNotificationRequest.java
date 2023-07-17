@@ -15,9 +15,9 @@ public class TopicNotificationRequest {
     private final String body;
     @Singular("info")
     @Getter(AccessLevel.NONE)
-    private final Map<String, String> info;
+    private final Map<String, String> data;
 
-    public Map<String, String> getInfo() {
-        return new HashMap<>(info);
+    public Map<String, String> getData() {
+        return new HashMap<>(data);
     }
 }

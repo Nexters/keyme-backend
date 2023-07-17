@@ -31,7 +31,7 @@ public class NotificationServiceImpl implements NotificationService {
             tokens.addAll(user.getDeviceIds());
         }
 
-        notificationSender.sendByTokens(tokens, request.getTitle(), request.getBody(), request.getInfo());
+        notificationSender.sendByTokens(tokens, request.getTitle(), request.getBody(), request.getData());
     }
 
     @Async("NotificationThreadPool")
@@ -40,7 +40,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .map(DummyTopic::getName)
                 .collect(Collectors.toList());
 
-        notificationSender.sendByTopics(topics, request.getTitle(), request.getBody(), request.getInfo());
+        notificationSender.sendByTopics(topics, request.getTitle(), request.getBody(), request.getData());
     }
 
 }
