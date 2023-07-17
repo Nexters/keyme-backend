@@ -2,23 +2,22 @@ package com.nexters.keyme.notification.dto;
 
 import lombok.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Builder
+@Getter
 @RequiredArgsConstructor
 public class TopicNotificationRequest {
-    @Getter
     private final List<Long> topicIds;
-    @Getter
     private final String title;
-    @Getter
     private final String body;
     @Singular("info")
+    @Getter(AccessLevel.NONE)
     private final Map<String, String> info;
 
-    public Optional<String> getInfo(String key) {
-        return Optional.of(info.get(key));
+    public Map<String, String> getInfo() {
+        return new HashMap<>(info);
     }
 }

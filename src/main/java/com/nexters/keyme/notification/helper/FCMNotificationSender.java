@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -14,7 +15,7 @@ public class FCMNotificationSender implements NotificationSender {
     private final FirebaseMessaging firebaseMessaging;
 
 
-    public void sendByTokens(List<String> tokens, String title, String body) {
+    public void sendByTokens(List<String> tokens, String title, String body, Map<String, String> data) {
         Notification notification = Notification.builder()
                 .setTitle(title)
                 .setBody(body)
@@ -25,6 +26,7 @@ public class FCMNotificationSender implements NotificationSender {
                         Message.builder()
                                 .setNotification(notification)
                                 .setToken(token)
+                                .putAllData(data)
                                 .build())
                 .collect(Collectors.toList());
 
@@ -36,7 +38,7 @@ public class FCMNotificationSender implements NotificationSender {
         }
     }
 
-    public void sendByTopics(List<String> topics, String title, String body) {
+    public void sendByTopics(List<String> topics, String title, String body, Map<String, String> data) {
         Notification notification = Notification.builder()
                 .setTitle(title)
                 .setBody(body)
@@ -47,6 +49,7 @@ public class FCMNotificationSender implements NotificationSender {
                         Message.builder()
                                 .setNotification(notification)
                                 .setTopic(topic)
+                                .putAllData(data)
                                 .build())
                 .collect(Collectors.toList());
 
