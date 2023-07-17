@@ -8,6 +8,7 @@ import com.nexters.keyme.notification.dto.TopicNotificationRequest;
 import com.nexters.keyme.notification.dto.UserNotificationRequest;
 import com.nexters.keyme.notification.helper.NotificationSender;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class NotificationServiceImpl implements NotificationService {
     private final DummyUserRepository userRepository;
     private final DummyTopicRepository topicRepository;
 
+    @Async("NotificationThreadPool")
     public void sendByUsers(UserNotificationRequest request) {
         List<String> tokens = new ArrayList<>();
 
@@ -32,6 +34,7 @@ public class NotificationServiceImpl implements NotificationService {
         notificationSender.sendByTokens(tokens, request.getTitle(), request.getBody());
     }
 
+    @Async("NotificationThreadPool")
     public void sendByTopics(TopicNotificationRequest request) {
         List<String> topics = topicRepository.findAllByTopicId(request.getTopicIds()).stream()
                 .map(DummyTopic::getName)
