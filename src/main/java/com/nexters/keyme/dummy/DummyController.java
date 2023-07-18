@@ -5,8 +5,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class DummyController {
-    @GetMapping("/")
+    @GetMapping("/hello")
     public String helloKeyme() {
         return "Hello keyme!";
+    }
+
+    @GetMapping("/auth")
+    public String helloAuthKeyme() {
+        return "Hello Authenticated keyme!";
     }
 }
