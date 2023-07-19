@@ -7,14 +7,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 public class DummyController {
-
+    
     private final DummyService dummyService;
 
-    @GetMapping("/")
+    @GetMapping("/hello")
     public String helloKeyme() {
         return "Hello keyme!";
     }
 
+    @GetMapping("/auth")
+    public String helloAuthKeyme() {
+        return "Hello Authenticated keyme!";
+    }
+  
     @GetMapping("/notification")
     public String sendNotification() {
         dummyService.doLogicAndPublishNotification();
