@@ -7,9 +7,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 public class DummyController {
+    
+    private final DummyService dummyService;
 
     @GetMapping("/hello")
-    private final DummyService dummyService;
+    public String helloKeyme() {
+        return "Hello keyme!";
+    }
 
     @GetMapping("/auth")
     public String helloAuthKeyme() {
