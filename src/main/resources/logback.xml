@@ -2,13 +2,23 @@
 <!DOCTYPE configuration>
 
 <configuration>
-    <include resource="logback-console-appender.xml"/>
-    <include resource="logback-file-info-appender.xml"/>
-    <include resource="logback-file-error-appender.xml"/>
+    <springProfile name="prod">
+        <include resource="logback-console-appender.xml"/>
+        <include resource="logback-file-info-appender.xml"/>
+        <include resource="logback-file-error-appender.xml"/>
 
-    <root level="INFO">
-        <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILE_INFO"/>
-        <appender-ref ref="FILE_ERROR"/>
-    </root>
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="FILE_INFO"/>
+            <appender-ref ref="FILE_ERROR"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="!prod">
+        <include resource="logback-console-appender.xml"/>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
 </configuration>
