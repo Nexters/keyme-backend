@@ -59,7 +59,7 @@ public class MemberServiceImpl implements MemberService {
     return memberDto;
   }
 
-  public OAuthUserInfo verifyAppleToken(String identityToken) {
+  private OAuthUserInfo verifyAppleToken(String identityToken) {
     AppleAuthKeysResponseDto authKeys = appleClient.getAuthKeys();
     String jwtHeaderString = jwtTokenProvider.extractJwtHeaderString(identityToken);
     PublicKey key = applePublicKeyProvider.getPublicKey(jwtHeaderString, authKeys);
@@ -84,7 +84,7 @@ public class MemberServiceImpl implements MemberService {
     return null;
   }
 
-  public OAuthUserInfo getKakaoProfile(String accessToken) {
+  private OAuthUserInfo getKakaoProfile(String accessToken) {
     KakaoUserInfoResponseDto userInfo = kakaoClient.getUserProfile("Bearer " + accessToken);
 
     return OAuthUserInfo.builder()
