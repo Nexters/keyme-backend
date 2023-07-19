@@ -42,7 +42,7 @@ task copyYML(type: Copy) {
 	copy {
 		from './keyme-backend-config'
 		include "*.yml"
-		into './common/src/main/resources'
+		into 'src/main/resources'
 	}
 }
 
