@@ -38,10 +38,10 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-task copyYML(type: Copy) {
+task copyFiles(type: Copy) {
 	copy {
 		from './keyme-backend-config'
-		include "*.yml"
+		include "*.json", "*.yml"
 		into 'src/main/resources'
 	}
 }
