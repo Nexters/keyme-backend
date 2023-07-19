@@ -12,6 +12,9 @@ jobs:
       # Repo checkout
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.TOKEN_GITHUB }}
+          submodules: true
 
       # JDK 환경 셋팅
       - name: Set up JDK 11
