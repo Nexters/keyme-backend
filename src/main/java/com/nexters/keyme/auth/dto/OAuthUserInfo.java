@@ -1,4 +1,4 @@
-package com.nexters.keyme.member.dto;
+package com.nexters.keyme.auth.dto;
 
 import com.nexters.keyme.common.enums.OAuthType;
 import lombok.Builder;
