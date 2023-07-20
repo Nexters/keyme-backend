@@ -19,10 +19,4 @@ public class DummyController {
     public String helloAuthKeyme() {
         return "Hello Authenticated keyme!";
     }
-  
-    @GetMapping("/notification")
-    public String sendNotification() {
-        dummyService.doLogicAndPublishNotification();
-        return "requested notification";
-    }
 }
