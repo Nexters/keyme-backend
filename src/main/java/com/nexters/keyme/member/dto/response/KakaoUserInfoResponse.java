@@ -3,7 +3,6 @@ package com.nexters.keyme.member.dto.response;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class KakaoUserInfoResponseDto {
+public class KakaoUserInfoResponse {
   private Long id;
 
   @JsonProperty("connected_at")
