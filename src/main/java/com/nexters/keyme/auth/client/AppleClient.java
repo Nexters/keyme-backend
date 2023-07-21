@@ -1,6 +1,6 @@
 package com.nexters.keyme.auth.client;
 
-import com.nexters.keyme.member.dto.response.AppleAuthKeysResponse;
+import com.nexters.keyme.auth.dto.response.AppleAuthKeysResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 

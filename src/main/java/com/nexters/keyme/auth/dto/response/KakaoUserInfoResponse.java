@@ -1,4 +1,4 @@
-package com.nexters.keyme.member.dto.response;
+package com.nexters.keyme.auth.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

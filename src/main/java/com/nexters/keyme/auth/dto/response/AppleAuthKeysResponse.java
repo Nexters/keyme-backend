@@ -1,4 +1,4 @@
-package com.nexters.keyme.member.dto.response;
+package com.nexters.keyme.auth.dto.response;
 
 import lombok.Getter;
 

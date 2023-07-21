@@ -1,4 +1,4 @@
-package com.nexters.keyme.member.dto.request;
+package com.nexters.keyme.auth.dto.request;
 
 import com.nexters.keyme.common.enums.OAuthType;
 import io.swagger.annotations.ApiModel;

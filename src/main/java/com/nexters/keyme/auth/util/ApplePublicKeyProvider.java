@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nexters.keyme.auth.dto.JwtHeaderInfo;
-import com.nexters.keyme.member.dto.response.AppleAuthKeysResponse;
+import com.nexters.keyme.auth.dto.response.AppleAuthKeysResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
