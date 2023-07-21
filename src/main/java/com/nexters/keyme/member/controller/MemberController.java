@@ -16,7 +16,6 @@ public class MemberController {
 
   @GetMapping
   public Long getMemberId(@RequestUser UserInfo userInfo) {
-    System.out.println(userInfo.getMemberId());
     return userInfo.getMemberId();
   }
 }
