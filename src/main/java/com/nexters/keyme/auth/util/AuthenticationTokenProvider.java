@@ -1,6 +1,7 @@
 package com.nexters.keyme.auth.util;
 
 import com.nexters.keyme.auth.config.filter.JwtAuthenticationToken;
+import com.nexters.keyme.auth.dto.UserInfo;
 import io.jsonwebtoken.Claims;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +24,6 @@ public class AuthenticationTokenProvider {
              .map(SimpleGrantedAuthority::new)
              .collect(Collectors.toList());
 
-    System.out.println(authorities.get(0).toString());
-    System.out.println(memberId);
-
-    return new JwtAuthenticationToken(memberId, "", authorities);
+    return new JwtAuthenticationToken(new UserInfo(memberId), "", authorities);
   }
 }
