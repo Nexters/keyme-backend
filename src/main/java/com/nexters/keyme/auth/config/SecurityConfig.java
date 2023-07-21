@@ -39,7 +39,7 @@ public class SecurityConfig {
             .authenticationEntryPoint(new RestAuthenticationEntryPoint());
 
     http.authorizeRequests()
-            .antMatchers("/hello", "/members", "/auth/login")
+            .antMatchers("/hello", "/auth/login")
             .permitAll()
             .anyRequest()
             .authenticated();
