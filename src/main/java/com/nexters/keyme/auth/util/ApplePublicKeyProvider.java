@@ -3,7 +3,7 @@ package com.nexters.keyme.auth.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nexters.keyme.auth.dto.JwtHeader;
+import com.nexters.keyme.auth.dto.JwtHeaderInfo;
 import com.nexters.keyme.member.dto.response.AppleAuthKeysResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -27,10 +27,10 @@ public class ApplePublicKeyProvider {
 
   public PublicKey getPublicKey(String jwtHeader, AppleAuthKeysResponse authKeys) {
     try {
-      JwtHeader jwtHeaderObject = objectMapper.readValue(jwtHeader, JwtHeader.class);
+      JwtHeaderInfo jwtHeaderInfoObject = objectMapper.readValue(jwtHeader, JwtHeaderInfo.class);
       AppleAuthKeysResponse.Key publicKey = authKeys.getKeys().stream()
-              .filter(key -> key.getAlg().equals(jwtHeaderObject.getAlg()))
-              .filter(key -> key.getKid().equals(jwtHeaderObject.getKid()))
+              .filter(key -> key.getAlg().equals(jwtHeaderInfoObject.getAlg()))
+              .filter(key -> key.getKid().equals(jwtHeaderInfoObject.getKid()))
               .findAny()
               .orElseThrow();
       return createPublicKey(publicKey);

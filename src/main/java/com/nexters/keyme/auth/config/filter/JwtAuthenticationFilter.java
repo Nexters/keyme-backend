@@ -53,7 +53,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     Matcher matcher = AUTHORIZATION_PATTERN.matcher(authorization);
 
     if (matcher.matches()) {
-      System.out.println("토큰 받음");
       String accessToken = authorization.substring(7);
       Boolean isVerifiedToken = jwtTokenProvider.verifyToken(accessToken);
 
@@ -67,8 +66,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       return;
     }
 
-    // & refresh token 정책 추가될 수 있음
-    System.out.println("토큰이 유효하지 않음");
+    // refresh token 정책 추가될 수 있음
+    log.info("토큰이 유효하지 않음");
     filterChain.doFilter(request, response);
   }
 }

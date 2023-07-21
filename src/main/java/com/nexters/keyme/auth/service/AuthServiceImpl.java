@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nexters.keyme.auth.client.AppleClient;
 import com.nexters.keyme.auth.client.KakaoClient;
-import com.nexters.keyme.auth.dto.AppleJwtBody;
+import com.nexters.keyme.auth.dto.AppleJwtBodyInfo;
 import com.nexters.keyme.auth.util.ApplePublicKeyProvider;
 import com.nexters.keyme.auth.util.JwtTokenProvider;
 import com.nexters.keyme.common.enums.OAuthType;
@@ -64,7 +64,7 @@ public class AuthServiceImpl implements AuthService {
 
         try {
             String jwtBodyString = jwtTokenProvider.extractJwtBodyString(identityToken);
-            AppleJwtBody jwtBody = objectMapper.readValue(jwtBodyString, AppleJwtBody.class);
+            AppleJwtBodyInfo jwtBody = objectMapper.readValue(jwtBodyString, AppleJwtBodyInfo.class);
 
             return OAuthUserInfo.builder()
                     .id(jwtBody.getSub())
