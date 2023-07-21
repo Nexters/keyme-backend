@@ -6,12 +6,10 @@ import com.nexters.keyme.auth.util.AuthenticationTokenProvider;
 import com.nexters.keyme.auth.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -39,7 +37,19 @@ public class SecurityConfig {
             .authenticationEntryPoint(new RestAuthenticationEntryPoint());
 
     http.authorizeRequests()
-            .antMatchers("/hello", "/members")
+            .antMatchers(
+                    "/hello",
+                    "/members",
+                    "/v2/api-docs",
+                    "/swagger-resources",
+                    "/swagger-resources/**",
+                    "/configuration/ui",
+                    "/configuration/security",
+                    "/swagger-ui.html",
+                    "/webjars/**",
+                    /* swagger v3 */
+                    "/v3/api-docs/**",
+                    "/swagger-ui/**")
             .permitAll()
             .anyRequest()
             .authenticated();
