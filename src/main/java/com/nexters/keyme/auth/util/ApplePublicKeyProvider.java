@@ -3,8 +3,8 @@ package com.nexters.keyme.auth.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nexters.keyme.auth.dto.JwtHeader;
-import com.nexters.keyme.member.dto.response.AppleAuthKeysResponseDto;
+import com.nexters.keyme.auth.dto.JwtHeaderInfo;
+import com.nexters.keyme.auth.dto.response.AppleAuthKeysResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
@@ -25,12 +25,12 @@ public class ApplePublicKeyProvider {
 
   private final ObjectMapper objectMapper;
 
-  public PublicKey getPublicKey(String jwtHeader, AppleAuthKeysResponseDto authKeys) {
+  public PublicKey getPublicKey(String jwtHeader, AppleAuthKeysResponse authKeys) {
     try {
-      JwtHeader jwtHeaderObject = objectMapper.readValue(jwtHeader, JwtHeader.class);
-      AppleAuthKeysResponseDto.Key publicKey = authKeys.getKeys().stream()
-              .filter(key -> key.getAlg().equals(jwtHeaderObject.getAlg()))
-              .filter(key -> key.getKid().equals(jwtHeaderObject.getKid()))
+      JwtHeaderInfo jwtHeaderInfoObject = objectMapper.readValue(jwtHeader, JwtHeaderInfo.class);
+      AppleAuthKeysResponse.Key publicKey = authKeys.getKeys().stream()
+              .filter(key -> key.getAlg().equals(jwtHeaderInfoObject.getAlg()))
+              .filter(key -> key.getKid().equals(jwtHeaderInfoObject.getKid()))
               .findAny()
               .orElseThrow();
       return createPublicKey(publicKey);
@@ -45,7 +45,7 @@ public class ApplePublicKeyProvider {
     return null;
   }
 
-  private PublicKey createPublicKey(AppleAuthKeysResponseDto.Key publicKey) {
+  private PublicKey createPublicKey(AppleAuthKeysResponse.Key publicKey) {
     byte[] n = Base64Utils.decodeFromUrlSafeString(publicKey.getN());
     byte[] e = Base64Utils.decodeFromUrlSafeString(publicKey.getE());
     RSAPublicKeySpec publicKeySpec =
