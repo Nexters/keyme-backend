@@ -1,4 +1,4 @@
-package com.nexters.keyme.member.dto.request;
+package com.nexters.keyme.auth.dto.request;
 
 import com.nexters.keyme.common.enums.OAuthType;
 import io.swagger.annotations.ApiModel;
@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @ApiModel
 @Getter
-public class LoginRequestDto {
+public class LoginRequest {
 
   @ApiModelProperty(value = "Oauth 타입(KAKAO/APPLE)", example = "KAKAO", required = true)
   @NotNull(message = "유효하지 않는 OAuth 타입")

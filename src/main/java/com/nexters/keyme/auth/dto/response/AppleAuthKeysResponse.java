@@ -1,12 +1,11 @@
-package com.nexters.keyme.member.dto.response;
+package com.nexters.keyme.auth.dto.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
 
 @Getter
-public class AppleAuthKeysResponseDto {
+public class AppleAuthKeysResponse {
   private List<Key> keys;
 
   @Getter
