@@ -38,8 +38,6 @@ public class SecurityConfig {
 
     http.authorizeRequests()
             .antMatchers(
-                    "/hello",
-					"/auth/login",
                     "/v2/api-docs",
                     "/swagger-resources",
                     "/swagger-resources/**",
@@ -50,6 +48,11 @@ public class SecurityConfig {
                     /* swagger v3 */
                     "/v3/api-docs/**",
                     "/swagger-ui/**")
+            .permitAll()
+            .antMatchers(
+                    "/hello",
+                    "/auth/login"
+            )
             .permitAll()
             .anyRequest()
             .authenticated();
@@ -64,7 +67,7 @@ public class SecurityConfig {
 
     configuration.addAllowedOriginPattern("*");
     configuration.addAllowedHeader("*");
-    configuration.addAllowedMethod("*");
+    configuration.addAllowedMethod("POST, GET, DELETE, PUT, PATCH, OPTIONS");
     configuration.setAllowCredentials(true);
 
     configurationSource.registerCorsConfiguration("/**", configuration);
