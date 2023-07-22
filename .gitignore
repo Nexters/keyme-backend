@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Configuration ###
+**/src/**/*.yml
+**/src/**/*.json

@@ -22,3 +22,14 @@ git-flow base
 - feature/{이슈번호}
 - bugfix/{이슈번호}
 - hotfix/{이슈번호}
+
+<br />
+
+### 컨밴션
+- `@Async` 어노테이션
+  - `@Service` 클래스 내 비동기 처리가 필요한 메서드 단위로 작성
+- DTO 클래스
+  - 클라이언트의 요청 - `...Request`
+  - 클라이언트에게 응답 - `...Response`
+  - 서버가 외부서비스에게 받아오는 응답객체 - `...Response`
+  - internal 객체 - `...Info`

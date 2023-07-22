@@ -1,0 +1,3 @@
+[submodule "keyme-backend-config"]
+	path = keyme-backend-config
+	url = https://github.com/kids-ground/keyme-backend-config.git
