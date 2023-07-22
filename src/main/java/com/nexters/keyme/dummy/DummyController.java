@@ -1,6 +1,7 @@
 package com.nexters.keyme.dummy;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,7 @@ public class DummyController {
     }
 
     @GetMapping("/auth")
-    @ApiOperation(value = "테스트용 컨트롤러(인증 필요)", notes = "인증 처리가 완료되어야 접근 가능한 엔드포인트")
+    @ApiOperation(value = "Hello Auth API")
     public String helloAuthKeyme() {
         return "Hello Authenticated keyme!";
     }

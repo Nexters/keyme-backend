@@ -12,6 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    static final String AUTHORIZATION_HEADER = "Autorization";
     private final UserInfoArgumentResolver userInfoArgumentResolver;
 
     @Override
