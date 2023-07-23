@@ -30,12 +30,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.nexters.keyme.common.config.WebMvcConfig.AUTHORIZATION_HEADER;
+
 
 @Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-  public static final String AUTHORIZATION_HEADER = "Authorization";
   private static final Pattern AUTHORIZATION_PATTERN = Pattern.compile("^[Bb]earer (.*)$");
 
   private final JwtTokenProvider jwtTokenProvider;
