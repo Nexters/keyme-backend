@@ -14,10 +14,18 @@
         </root>
     </springProfile>
 
-    <springProfile name="!prod">
+    <springProfile name="stage">
         <include resource="logback-console-appender.xml"/>
 
         <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="dev">
+        <include resource="logback-console-appender.xml"/>
+
+        <root level="DEBUG">
             <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
