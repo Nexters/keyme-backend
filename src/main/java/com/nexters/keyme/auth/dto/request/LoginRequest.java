@@ -3,6 +3,7 @@ package com.nexters.keyme.auth.dto.request;
 import com.nexters.keyme.common.enums.OAuthType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
