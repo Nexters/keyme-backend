@@ -9,6 +9,4 @@ import lombok.Getter;
 public class TokenResponse {
   @ApiModelProperty(value="Access JWT 토큰")
   private String accessToken;
-  @ApiModelProperty(value="Refresh JWT 토큰")
-  private String refreshToken;
 }

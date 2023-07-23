@@ -46,7 +46,7 @@ public class AuthServiceImpl implements AuthService {
 
         MemberResponse memberResponse = memberService.getOrCreateMember(userInfo);
         String jwtToken = jwtTokenProvider.createToken(memberResponse.getId());
-        TokenResponse tokenObject = new TokenResponse(jwtToken, jwtToken);
+        TokenResponse tokenObject = new TokenResponse(jwtToken);
         memberResponse.setToken(tokenObject);
 
         // refresh 토큰정책 있으면 member에 저장
