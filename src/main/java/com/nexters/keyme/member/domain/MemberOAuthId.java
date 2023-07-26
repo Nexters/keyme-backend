@@ -1,4 +1,4 @@
-package com.nexters.keyme.model.member;
+package com.nexters.keyme.member.domain;
 
 
 import com.nexters.keyme.auth.dto.OAuthUserInfo;

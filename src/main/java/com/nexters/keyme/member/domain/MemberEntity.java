@@ -1,11 +1,9 @@
-package com.nexters.keyme.model.member;
+package com.nexters.keyme.member.domain;
 
-import com.nexters.keyme.model.BaseTimeEntity;
-import lombok.Data;
+import com.nexters.keyme.common.domain.BaseTimeEntity;
 import lombok.Getter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

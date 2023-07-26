@@ -1,4 +1,4 @@
-package com.nexters.keyme.common.config;
+package com.nexters.keyme.config;
 
 import com.nexters.keyme.auth.resolver.RequestUser;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

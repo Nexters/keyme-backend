@@ -1,4 +1,4 @@
-package com.nexters.keyme.model;
+package com.nexters.keyme.common.domain;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

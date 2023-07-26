@@ -1,7 +1,7 @@
 package com.nexters.keyme.member.dto.response;
 
 import com.nexters.keyme.auth.dto.response.TokenResponse;
-import com.nexters.keyme.model.member.MemberEntity;
+import com.nexters.keyme.member.domain.MemberEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

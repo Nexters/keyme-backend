@@ -1,4 +1,4 @@
-package com.nexters.keyme.common.config;
+package com.nexters.keyme.config;
 
 import com.nexters.keyme.auth.resolver.UserInfoArgumentResolver;
 import lombok.RequiredArgsConstructor;

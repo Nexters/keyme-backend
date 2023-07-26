@@ -1,6 +1,6 @@
-package com.nexters.keyme.auth.config;
+package com.nexters.keyme.config;
 
-import com.nexters.keyme.auth.config.filter.JwtAuthenticationFilter;
+import com.nexters.keyme.auth.filter.JwtAuthenticationFilter;
 import com.nexters.keyme.auth.exception.RestAuthenticationEntryPoint;
 import com.nexters.keyme.auth.util.AuthenticationTokenProvider;
 import com.nexters.keyme.auth.util.JwtTokenProvider;
@@ -62,13 +62,13 @@ public class SecurityConfig {
 
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
-    UrlBasedCorsConfigurationSource configurationSource  = new UrlBasedCorsConfigurationSource();
+    UrlBasedCorsConfigurationSource configurationSource = new UrlBasedCorsConfigurationSource();
     CorsConfiguration configuration = new CorsConfiguration();
 
     configuration.addAllowedOriginPattern("*");
     configuration.addAllowedOrigin("*");
     configuration.addAllowedHeader("*");
-    configuration.addAllowedMethod("POST, GET, DELETE, PUT, PATCH, OPTIONS");
+    configuration.addAllowedMethod("HEAD, POST, GET, DELETE, PUT, PATCH, OPTIONS");
     configuration.setAllowCredentials(true);
 
     configurationSource.registerCorsConfiguration("/**", configuration);
