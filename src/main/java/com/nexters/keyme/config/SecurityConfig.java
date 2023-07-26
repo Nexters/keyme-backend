@@ -15,6 +15,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
+import java.util.List;
+
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig {
@@ -62,15 +65,14 @@ public class SecurityConfig {
 
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
-    UrlBasedCorsConfigurationSource configurationSource = new UrlBasedCorsConfigurationSource();
     CorsConfiguration configuration = new CorsConfiguration();
 
-    configuration.addAllowedOriginPattern("*");
-    configuration.addAllowedOrigin("*");
-    configuration.addAllowedHeader("*");
-    configuration.addAllowedMethod("HEAD, POST, GET, DELETE, PUT, PATCH, OPTIONS");
+    configuration.setAllowedOriginPatterns(List.of("*"));
+    configuration.setAllowedHeaders(List.of("*"));
+    configuration.setAllowedMethods(Arrays.asList("HEAD", "POST", "GET", "DELETE", "PUT", "PATCH", "OPTIONS"));
     configuration.setAllowCredentials(true);
 
+    UrlBasedCorsConfigurationSource configurationSource = new UrlBasedCorsConfigurationSource();
     configurationSource.registerCorsConfiguration("/**", configuration);
     return configurationSource;
   }
