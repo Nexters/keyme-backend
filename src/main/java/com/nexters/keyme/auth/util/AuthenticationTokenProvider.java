@@ -1,6 +1,6 @@
 package com.nexters.keyme.auth.util;
 
-import com.nexters.keyme.auth.config.filter.JwtAuthenticationToken;
+import com.nexters.keyme.auth.filter.JwtAuthenticationToken;
 import com.nexters.keyme.auth.dto.UserInfo;
 import io.jsonwebtoken.Claims;
 
@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;

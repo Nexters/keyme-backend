@@ -1,4 +1,4 @@
-package com.nexters.keyme.auth.config.filter;
+package com.nexters.keyme.auth.filter;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

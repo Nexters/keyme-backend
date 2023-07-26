@@ -1,7 +1,5 @@
-package com.nexters.keyme.model.member;
+package com.nexters.keyme.member.domain;
 
-import com.nexters.keyme.common.enums.OAuthType;
-import com.nexters.keyme.model.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
