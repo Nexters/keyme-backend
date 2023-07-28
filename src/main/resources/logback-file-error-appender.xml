@@ -18,7 +18,7 @@
 
         <encoder>
             <pattern>
-                %d{yyyy:MM:dd HH:mm:ss.SSS} %-5level --- [%thread] %logger{35} : %C %M %n %msg %n%n
+                [%-5level] %d{yyyy:MM:dd HH:mm:ss.SSS} [%thread] [%C %M] [%logger{35}:%line] - %msg %n%n
             </pattern>
         </encoder>
     </appender>
