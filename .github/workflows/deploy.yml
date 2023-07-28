@@ -75,4 +75,4 @@ jobs:
             done
             docker image prune -a -f
             docker pull ${{ secrets.ECR_REGISTRY }}/keyme-api-server-ecr:latest
-            docker run -d --log-driver=syslog -v /keyme-logs:/logs -p 80:8080 ${{ secrets.ECR_REGISTRY }}/keyme-api-server-ecr:latest
+            docker run -d --log-driver=syslog -v /keyme-logs:/log -p 80:8080 ${{ secrets.ECR_REGISTRY }}/keyme-api-server-ecr:latest
