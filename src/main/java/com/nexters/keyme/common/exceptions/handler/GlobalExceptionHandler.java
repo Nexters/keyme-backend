@@ -1,6 +1,10 @@
-package com.nexters.keyme.common.exceptions;
+package com.nexters.keyme.common.exceptions.handler;
 
 import com.nexters.keyme.common.dto.CommonResponse;
+import com.nexters.keyme.common.exceptions.AccessDeniedException;
+import com.nexters.keyme.common.exceptions.AuthorizationFailedException;
+import com.nexters.keyme.common.exceptions.InvalidRequestException;
+import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
