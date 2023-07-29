@@ -1,9 +1,7 @@
 package com.nexters.keyme.config;
 
+import com.nexters.keyme.auth.filter.AuthorizationExceptionFilter;
 import com.nexters.keyme.auth.filter.JwtAuthenticationFilter;
-import com.nexters.keyme.auth.exception.RestAuthenticationEntryPoint;
-import com.nexters.keyme.auth.util.AuthenticationTokenProvider;
-import com.nexters.keyme.auth.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,9 +19,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig {
-
-  private final JwtTokenProvider jwtTokenProvider;
-  private final AuthenticationTokenProvider authenticationTokenProvider;
+  private final JwtAuthenticationFilter jwtAuthenticationFilter;
+  private final AuthorizationExceptionFilter authorizationExceptionFilter;
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -35,9 +32,8 @@ public class SecurityConfig {
             .and()
             .formLogin().disable()
             .httpBasic().disable()
-            .addFilterBefore(jwtTokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-            .exceptionHandling()
-            .authenticationEntryPoint(new RestAuthenticationEntryPoint());
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(authorizationExceptionFilter, JwtAuthenticationFilter.class);
 
     http.authorizeRequests()
             .antMatchers(
@@ -77,8 +73,5 @@ public class SecurityConfig {
     return configurationSource;
   }
 
-  @Bean
-  public JwtAuthenticationFilter jwtTokenAuthenticationFilter() {
-    return new JwtAuthenticationFilter(jwtTokenProvider, authenticationTokenProvider);
-  }
+
 }
