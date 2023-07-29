@@ -1,5 +1,6 @@
 package com.nexters.keyme.config;
 
+import com.nexters.keyme.auth.exception.RestAuthenticationEntryPoint;
 import com.nexters.keyme.auth.filter.AuthorizationExceptionFilter;
 import com.nexters.keyme.auth.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,10 @@ public class SecurityConfig {
             .formLogin().disable()
             .httpBasic().disable()
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-            .addFilterBefore(authorizationExceptionFilter, JwtAuthenticationFilter.class);
+            .addFilterBefore(authorizationExceptionFilter, JwtAuthenticationFilter.class)
+            .exceptionHandling()
+            .authenticationEntryPoint(new RestAuthenticationEntryPoint());
+
 
     http.authorizeRequests()
             .antMatchers(
