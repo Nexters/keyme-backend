@@ -19,7 +19,7 @@ public class JwtTokenProvider {
   @Value("${security.jwt.secretKey}")
   private String secretKey;
 
-  private final int EXPIRATION_MS = 30 * 24 * 60 * 60 * 1000; // 30일
+  private final long EXPIRATION_MS = 30 * 24 * 60 * 60 * 1000L; // 30일
 
   public String createToken(Long memberId) {
     Date now = new Date();
