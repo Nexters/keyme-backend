@@ -15,8 +15,8 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
     response.setContentType("application/json;charset=UTF-8");
     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     JSONObject failResponse = new JSONObject();
-    failResponse.put("msg", "인증되지 않은 유저입니다.");
-
+    failResponse.put("statusCode", 401);
+    failResponse.put("message", "인증되지 않은 사용자입니다.");
     response.getWriter().print(failResponse);
   }
 }
