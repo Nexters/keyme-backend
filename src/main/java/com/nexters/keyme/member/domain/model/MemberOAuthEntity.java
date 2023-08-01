@@ -1,4 +1,4 @@
-package com.nexters.keyme.member.domain;
+package com.nexters.keyme.member.domain.model;
 
 import lombok.*;
 
