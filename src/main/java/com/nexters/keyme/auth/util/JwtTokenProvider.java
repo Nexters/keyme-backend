@@ -1,23 +1,25 @@
 package com.nexters.keyme.auth.util;
 
 import com.nexters.keyme.auth.enums.AuthRole;
+import com.nexters.keyme.common.exceptions.AuthorizationFailedException;
+import com.nexters.keyme.common.exceptions.errorcode.ErrorCode;
 import io.jsonwebtoken.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-
-import java.security.Key;
 import java.security.PublicKey;
 import java.util.Date;
 
+@Slf4j
 @Component
 public class JwtTokenProvider {
 
   @Value("${security.jwt.secretKey}")
   private String secretKey;
 
-  private final int EXPIRATION_MS = 30 * 24 * 60 * 60 * 1000; // 30일
+  private final long EXPIRATION_MS = 30 * 24 * 60 * 60 * 1000L; // 30일
 
   public String createToken(Long memberId) {
     Date now = new Date();
@@ -88,15 +90,17 @@ public class JwtTokenProvider {
     try {
       return parser.parseClaimsJws(token).getBody();
     } catch (MalformedJwtException e) {
-      System.out.println("Invalid JWT token");
+      log.info("Invalid JWT token");
+      throw new AuthorizationFailedException(ErrorCode.TOKEN_INVALID);
     } catch (ExpiredJwtException e) {
-      System.out.println("Expired JWT token");
+      log.info("Expired JWT token");
+      throw new AuthorizationFailedException(ErrorCode.TOKEN_EXPIRED);
     } catch (UnsupportedJwtException e) {
-      System.out.println("Unsupported JWT token");
+      log.info("Unsupported JWT token");
+      throw new AuthorizationFailedException(ErrorCode.TOKEN_INVALID);
     } catch (IllegalArgumentException e) {
-      System.out.println("JWT claims string is empty.");
+      log.info("JWT claims string is empty.");
+      throw new AuthorizationFailedException(ErrorCode.UNAUTHORIZED);
     }
-
-    return null;
   }
 }
