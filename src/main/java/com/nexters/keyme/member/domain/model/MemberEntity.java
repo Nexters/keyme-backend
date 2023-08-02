@@ -15,8 +15,6 @@ public class MemberEntity extends BaseTimeEntity {
     private Long id;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private List<MemberEntity> friends;
-    @OneToMany(fetch = FetchType.LAZY)
     private List<OauthInfo> oauthInfo;
     @OneToMany(fetch = FetchType.LAZY)
     private List<DeviceInfo> deviceInfo;
@@ -25,5 +23,4 @@ public class MemberEntity extends BaseTimeEntity {
     private String inviteCode;
     private MemberStatus status;
     private ProfileImage image;
-
 }

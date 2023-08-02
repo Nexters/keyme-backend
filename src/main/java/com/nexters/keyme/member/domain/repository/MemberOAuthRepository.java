@@ -1,4 +1,4 @@
-package com.nexters.keyme.member.repository;
+package com.nexters.keyme.member.domain.repository;
 
 import com.nexters.keyme.member.domain.model.MemberOAuthEntity;
 import com.nexters.keyme.member.domain.model.MemberOAuthId;
