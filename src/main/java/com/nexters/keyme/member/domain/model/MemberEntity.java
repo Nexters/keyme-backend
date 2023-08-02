@@ -14,12 +14,16 @@ public class MemberEntity extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Transient
-    private Stats stats;
     @OneToMany(fetch = FetchType.LAZY)
     private List<MemberEntity> friends;
     @OneToMany(fetch = FetchType.LAZY)
     private List<OauthInfo> oauthInfo;
     @OneToMany(fetch = FetchType.LAZY)
     private List<DeviceInfo> deviceInfo;
+
+    private String nickname;
+    private String inviteCode;
+    private MemberStatus status;
+    private ProfileImage image;
+
 }
