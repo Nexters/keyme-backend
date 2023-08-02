@@ -1,9 +1,8 @@
 package com.nexters.keyme.member.domain.repository;
 
 import com.nexters.keyme.member.domain.model.MemberEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MemberRepository {
-    MemberEntity findById(Long id);
-    MemberEntity save(MemberEntity memberEntity);
+public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 
 }
