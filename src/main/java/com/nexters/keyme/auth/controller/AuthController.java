@@ -3,7 +3,7 @@ package com.nexters.keyme.auth.controller;
 
 import com.nexters.keyme.auth.service.AuthService;
 import com.nexters.keyme.auth.dto.request.LoginRequest;
-import com.nexters.keyme.member.dto.response.MemberResponse;
+import com.nexters.keyme.member.presentation.dto.response.MemberResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
