@@ -1,4 +1,4 @@
-package com.nexters.keyme.member.dto.response;
+package com.nexters.keyme.member.presentation.dto.response;
 
 import com.nexters.keyme.auth.dto.response.TokenResponse;
 import com.nexters.keyme.member.domain.model.MemberEntity;
