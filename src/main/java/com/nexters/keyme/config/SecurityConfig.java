@@ -58,6 +58,7 @@ public class SecurityConfig {
             .permitAll()
             .antMatchers(
                     "/hello",
+                    "/hello/error",
                     "/auth/login"
             )
             .permitAll()
