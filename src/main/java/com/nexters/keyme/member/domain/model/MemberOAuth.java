@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Table(name = "member_oauth")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberOAuthEntity {
+public class MemberOAuth {
     @EmbeddedId
     private MemberOAuthId oauthInfo;
 
@@ -17,7 +17,7 @@ public class MemberOAuthEntity {
     private MemberEntity member;
 
     @Builder
-    public MemberOAuthEntity(MemberOAuthId oauthInfo, MemberEntity member) {
+    public MemberOAuth(MemberOAuthId oauthInfo, MemberEntity member) {
         this.oauthInfo = oauthInfo;
         this.member = member;
     }

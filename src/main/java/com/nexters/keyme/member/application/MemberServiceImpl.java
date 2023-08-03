@@ -5,7 +5,7 @@ import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
 import com.nexters.keyme.member.domain.internaldto.MemberModificationInfo;
 import com.nexters.keyme.member.domain.internaldto.ValidationInfo;
 import com.nexters.keyme.member.domain.model.MemberEntity;
-import com.nexters.keyme.member.domain.model.MemberOAuthEntity;
+import com.nexters.keyme.member.domain.model.MemberOAuth;
 import com.nexters.keyme.member.domain.model.MemberOAuthId;
 import com.nexters.keyme.member.domain.repository.MemberOAuthRepository;
 import com.nexters.keyme.member.domain.repository.MemberRepository;
@@ -36,14 +36,14 @@ public class MemberServiceImpl implements MemberService {
     public MemberResponse getOrCreateMember(OAuthUserInfo oauthUserInfo) {
         MemberOAuthId memberOAuthId = new MemberOAuthId(oauthUserInfo);
 
-        Optional<MemberOAuthEntity> existedMemberOAuth = memberOAuthRepository.findById(memberOAuthId);
+        Optional<MemberOAuth> existedMemberOAuth = memberOAuthRepository.findById(memberOAuthId);
         if (existedMemberOAuth.isPresent()) {
             return new MemberResponse(existedMemberOAuth.get().getMember());
         }
 
         MemberEntity memberEntity = memberRepository.save(new MemberEntity());
-        MemberOAuthEntity memberOAuthEntity = memberOAuthRepository.save(
-                MemberOAuthEntity.builder()
+        MemberOAuth memberOauth = memberOAuthRepository.save(
+                MemberOAuth.builder()
                         .oauthInfo(memberOAuthId)
                         .member(memberEntity)
                         .build()
