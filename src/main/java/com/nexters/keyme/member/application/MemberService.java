@@ -5,9 +5,10 @@ import com.nexters.keyme.member.presentation.dto.MemberModificationRequest;
 import com.nexters.keyme.member.presentation.dto.NicknameVerificationRequest;
 import com.nexters.keyme.member.presentation.dto.NicknameVerificationResponse;
 import com.nexters.keyme.member.presentation.dto.response.MemberResponse;
+import com.nexters.keyme.member.presentation.dto.response.MemberWithTokenResponse;
 
 public interface MemberService {
-  MemberResponse getOrCreateMember(OAuthUserInfo oauthUserInfo);
+  MemberWithTokenResponse getOrCreateMember(OAuthUserInfo oauthUserInfo);
 
   MemberResponse getMemberInfo(Long memberId);
 

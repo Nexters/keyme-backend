@@ -15,6 +15,7 @@ import com.nexters.keyme.member.presentation.dto.MemberModificationRequest;
 import com.nexters.keyme.member.presentation.dto.NicknameVerificationRequest;
 import com.nexters.keyme.member.presentation.dto.NicknameVerificationResponse;
 import com.nexters.keyme.member.presentation.dto.response.MemberResponse;
+import com.nexters.keyme.member.presentation.dto.response.MemberWithTokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,12 +34,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public MemberResponse getOrCreateMember(OAuthUserInfo oauthUserInfo) {
+    public MemberWithTokenResponse getOrCreateMember(OAuthUserInfo oauthUserInfo) {
         MemberOAuthId memberOAuthId = new MemberOAuthId(oauthUserInfo);
 
         Optional<MemberOAuth> existedMemberOAuth = memberOAuthRepository.findById(memberOAuthId);
         if (existedMemberOAuth.isPresent()) {
-            return new MemberResponse(existedMemberOAuth.get().getMember());
+            return new MemberWithTokenResponse(existedMemberOAuth.get().getMember());
         }
 
         MemberEntity memberEntity = memberRepository.save(new MemberEntity());
@@ -49,7 +50,7 @@ public class MemberServiceImpl implements MemberService {
                         .build()
         );
 
-        return new MemberResponse(memberEntity);
+        return new MemberWithTokenResponse(memberEntity);
     }
 
     @Override
