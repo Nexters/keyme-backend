@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class OauthInfo {
+public class MemberOauth {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

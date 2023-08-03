@@ -1,6 +1,7 @@
 package com.nexters.keyme.member.domain.model;
 
 import com.nexters.keyme.common.domain.BaseTimeEntity;
+import com.nexters.keyme.member.domain.internaldto.MemberModificationInfo;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -15,12 +16,17 @@ public class MemberEntity extends BaseTimeEntity {
     private Long id;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private List<OauthInfo> oauthInfo;
+    private List<MemberOauth> memberOauth;
     @OneToMany(fetch = FetchType.LAZY)
-    private List<DeviceInfo> deviceInfo;
+    private List<MemberDevice> memberDevice;
 
     private String nickname;
     private String inviteCode;
     private MemberStatus status;
-    private ProfileImage image;
+    private ProfileImage profileImage;
+
+    public void modifyMemberInfo(MemberModificationInfo modificationInfo) {
+        this.nickname = modificationInfo.getNickname();
+        this.profileImage = new ProfileImage(modificationInfo.getOriginalImage(), modificationInfo.getThumbnailImage());
+    }
 }
