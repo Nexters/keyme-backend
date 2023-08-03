@@ -58,7 +58,7 @@ public class MemberController {
     }
 
     @GetMapping("/search")
-    @ApiOperation("회원 정보 수정")
+    @ApiOperation("회원 검색")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<List<MemberResponse>>> verifyNickname(@RequestParam String keyword) {
         List<MemberResponse> response = memberService.searchUser(keyword);
