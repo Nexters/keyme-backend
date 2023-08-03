@@ -2,6 +2,7 @@ package com.nexters.keyme.member.domain.service;
 
 import com.nexters.keyme.member.domain.model.MemberEntity;
 import com.nexters.keyme.member.domain.repository.MemberRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,6 +23,7 @@ class NicknameValidatorTest {
     NicknameValidator validator;
 
     @Test
+    @DisplayName("닉네임 유효성 검사 테스트")
     void validateNickname() {
         Mockito.when(memberRepository.findByNickname("sample")).thenReturn(Optional.of(new MemberEntity()));
 
