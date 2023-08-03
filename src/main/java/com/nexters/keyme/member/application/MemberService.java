@@ -6,8 +6,6 @@ import com.nexters.keyme.member.presentation.dto.NicknameVerificationRequest;
 import com.nexters.keyme.member.presentation.dto.NicknameVerificationResponse;
 import com.nexters.keyme.member.presentation.dto.response.MemberResponse;
 
-import java.util.List;
-
 public interface MemberService {
   MemberResponse getOrCreateMember(OAuthUserInfo oauthUserInfo);
 
@@ -16,6 +14,4 @@ public interface MemberService {
   NicknameVerificationResponse verifyNickname(NicknameVerificationRequest request);
 
   MemberResponse modifyMemberInfo(MemberModificationRequest request);
-
-  List<MemberResponse> searchUser(String keyword);
 }

@@ -16,8 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 import static com.nexters.keyme.config.SwaggerConfig.SWAGGER_AUTHORIZATION_SCHEME;
 
 @RestController
@@ -54,14 +52,6 @@ public class MemberController {
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<MemberResponse>> verifyNickname(MemberModificationRequest request) {
         MemberResponse response = memberService.modifyMemberInfo(request);
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK, "SUCCESS", response));
-    }
-
-    @GetMapping("/search")
-    @ApiOperation("회원 검색")
-    @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
-    public ResponseEntity<ApiResponse<List<MemberResponse>>> verifyNickname(@RequestParam String keyword) {
-        List<MemberResponse> response = memberService.searchUser(keyword);
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK, "SUCCESS", response));
     }
 }

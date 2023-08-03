@@ -3,26 +3,23 @@ package com.nexters.keyme.member.application;
 import com.nexters.keyme.auth.dto.OAuthUserInfo;
 import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
 import com.nexters.keyme.member.domain.internaldto.MemberModificationInfo;
-import com.nexters.keyme.member.domain.service.NicknameValidator;
 import com.nexters.keyme.member.domain.internaldto.ValidationInfo;
+import com.nexters.keyme.member.domain.model.MemberEntity;
+import com.nexters.keyme.member.domain.model.MemberOAuthEntity;
+import com.nexters.keyme.member.domain.model.MemberOAuthId;
+import com.nexters.keyme.member.domain.repository.MemberOAuthRepository;
+import com.nexters.keyme.member.domain.repository.MemberRepository;
+import com.nexters.keyme.member.domain.service.NicknameValidator;
 import com.nexters.keyme.member.domain.service.ProfileImageService;
 import com.nexters.keyme.member.presentation.dto.MemberModificationRequest;
 import com.nexters.keyme.member.presentation.dto.NicknameVerificationRequest;
 import com.nexters.keyme.member.presentation.dto.NicknameVerificationResponse;
 import com.nexters.keyme.member.presentation.dto.response.MemberResponse;
-import com.nexters.keyme.member.domain.repository.MemberOAuthRepository;
-import com.nexters.keyme.member.domain.repository.MemberRepository;
-import com.nexters.keyme.member.domain.model.MemberEntity;
-import com.nexters.keyme.member.domain.model.MemberOAuthEntity;
-import com.nexters.keyme.member.domain.model.MemberOAuthId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -83,18 +80,5 @@ public class MemberServiceImpl implements MemberService {
         member.modifyMemberInfo(modificationInfo);
 
         return new MemberResponse(member);
-    }
-
-    @Override
-    public List<MemberResponse> searchUser(String keyword) {
-        List<MemberEntity> result = new ArrayList<>();
-
-        List<MemberEntity> nicknameResult = memberRepository.findAllByNicknameStartsWith(keyword, 0, 10);
-        Optional<MemberEntity> inviteCodeResult = memberRepository.findByInviteCode(keyword);
-
-        inviteCodeResult.ifPresent(result::add);
-        result.addAll(nicknameResult);
-
-        return result.stream().map(MemberResponse::new).collect(Collectors.toList());
     }
 }
