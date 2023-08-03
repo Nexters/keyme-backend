@@ -2,7 +2,7 @@ package com.nexters.keyme.member.domain.model;
 
 import com.nexters.keyme.common.domain.BaseTimeEntity;
 import com.nexters.keyme.member.domain.internaldto.MemberModificationInfo;
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,6 +10,9 @@ import java.util.List;
 @Entity
 @Table(name = "member")
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class MemberEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
