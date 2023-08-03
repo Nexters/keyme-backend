@@ -19,8 +19,10 @@ public class MemberEntity extends BaseTimeEntity {
     private Long id;
 
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name="member_oauth_id")
     private List<MemberOAuth> memberOauth;
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name="member_device_id")
     private List<MemberDevice> memberDevice;
 
     private String nickname;

@@ -1,11 +1,9 @@
 package com.nexters.keyme.member.domain.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "member_device")
 public class MemberDevice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
