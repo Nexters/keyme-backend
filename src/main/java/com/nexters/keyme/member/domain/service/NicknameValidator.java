@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class NicknameValidationService {
+public class NicknameValidator {
     private final MemberRepository memberRepository;
     private static final int MAX_NICKNAME_SIZE = 7;
 

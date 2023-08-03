@@ -3,7 +3,7 @@ package com.nexters.keyme.member.application;
 import com.nexters.keyme.auth.dto.OAuthUserInfo;
 import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
 import com.nexters.keyme.member.domain.internaldto.MemberModificationInfo;
-import com.nexters.keyme.member.domain.service.NicknameValidationService;
+import com.nexters.keyme.member.domain.service.NicknameValidator;
 import com.nexters.keyme.member.domain.internaldto.ValidationInfo;
 import com.nexters.keyme.member.domain.service.ProfileImageService;
 import com.nexters.keyme.member.presentation.dto.MemberModificationRequest;
@@ -30,7 +30,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final MemberOAuthRepository memberOAuthRepository;
-    private final NicknameValidationService nicknameValidationService;
+    private final NicknameValidator nicknameValidator;
     private final ProfileImageService profileImageService;
 
 
@@ -66,7 +66,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public NicknameVerificationResponse verifyNickname(NicknameVerificationRequest request) {
-        ValidationInfo validationInfo = nicknameValidationService.validateNickname(request.getNickname());
+        ValidationInfo validationInfo = nicknameValidator.validateNickname(request.getNickname());
 
         return new NicknameVerificationResponse(validationInfo.isValid(), validationInfo.getMessage());
     }
