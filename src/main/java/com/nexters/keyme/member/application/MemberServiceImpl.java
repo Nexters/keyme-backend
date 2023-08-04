@@ -73,8 +73,8 @@ public class MemberServiceImpl implements MemberService {
     public MemberResponse modifyMemberInfo(MemberModificationRequest request) {
         MemberModificationInfo modificationInfo = MemberModificationInfo.builder()
                 .nickname(request.getNickname())
-                .originalImage(request.getImage())
-                .thumbnailImage(profileImageService.findThumbnailUrl(request.getImage()))
+                .originalImage(request.getProfileImage())
+                .thumbnailImage(profileImageService.findThumbnailUrl(request.getProfileThumbnail()))
                 .build();
 
         MemberEntity member = new MemberEntity();
