@@ -28,5 +28,9 @@ public class MemberResponse {
 
     public MemberResponse(MemberEntity member) {
         this.id = member.getId();
+        this.nickname = member.getNickname();
+        this.friendCode = member.getFriendCode();
+        this.profileImage = member.getProfileImage().getOriginalUrl();
+        this.profileTumbnail = member.getProfileImage().getThumbnailUrl();
     }
 }
