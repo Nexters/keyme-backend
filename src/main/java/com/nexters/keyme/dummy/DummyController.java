@@ -15,7 +15,7 @@ import static com.nexters.keyme.config.SwaggerConfig.SWAGGER_AUTHORIZATION_SCHEM
 @RestController
 @RequestMapping("/hello")
 @Slf4j
-@Api(tags = "테스트", description = "")
+@Api(tags = "백엔드 테스트용", description = "")
 public class DummyController {
     
     private final DummyService dummyService;
