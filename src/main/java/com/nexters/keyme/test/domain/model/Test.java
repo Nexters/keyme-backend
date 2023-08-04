@@ -1,8 +1,8 @@
-package com.nexters.keyme.test.domain;
+package com.nexters.keyme.test.domain.model;
 
 import com.nexters.keyme.common.domain.BaseTimeEntity;
 import com.nexters.keyme.member.domain.model.MemberEntity;
-import com.nexters.keyme.question.domain.QuestionBundle;
+import com.nexters.keyme.question.domain.model.QuestionBundle;
 import lombok.Getter;
 
 import javax.persistence.*;
