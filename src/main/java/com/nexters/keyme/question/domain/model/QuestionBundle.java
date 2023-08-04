@@ -1,4 +1,4 @@
-package com.nexters.keyme.question.domain;
+package com.nexters.keyme.question.domain.model;
 
 import lombok.Getter;
 

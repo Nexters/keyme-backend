@@ -1,6 +1,6 @@
-package com.nexters.keyme.question.domain;
+package com.nexters.keyme.question.domain.model;
 
-import com.nexters.keyme.test.domain.Test;
+import com.nexters.keyme.test.domain.model.Test;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

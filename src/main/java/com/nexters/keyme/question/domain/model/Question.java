@@ -1,7 +1,7 @@
-package com.nexters.keyme.question.domain;
+package com.nexters.keyme.question.domain.model;
 
 import com.nexters.keyme.common.domain.BaseTimeEntity;
-import com.nexters.keyme.question.enums.QuestionCategoryType;
+import com.nexters.keyme.question.domain.enums.QuestionCategoryType;
 import lombok.Getter;
 
 import javax.persistence.*;
