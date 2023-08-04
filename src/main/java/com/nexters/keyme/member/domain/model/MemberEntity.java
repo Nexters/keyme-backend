@@ -26,7 +26,7 @@ public class MemberEntity extends BaseTimeEntity {
     private List<MemberDevice> memberDevice;
 
     private String nickname;
-    private String inviteCode;
+    private String friendCode;
     private MemberStatus status;
     private ProfileImage profileImage;
 

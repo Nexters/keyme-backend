@@ -25,7 +25,7 @@ class MemberRepositoryTest {
         MemberEntity member = MemberEntity.builder()
                 .id(1L)
                 .nickname("nick")
-                .inviteCode("AZ03A20")
+                .friendCode("AZ03A20")
                 .build();
 
         memberRepository.save(member);
@@ -48,12 +48,12 @@ class MemberRepositoryTest {
     @DisplayName("초대코드로 멤버 엔티티 찾기 테스트")
     void findByInviteCode() {
         assertThatThrownBy(() -> {
-            memberRepository.findByInviteCode("1234567").orElseThrow(ResourceNotFoundException::new);
+            memberRepository.findByFriendCode("1234567").orElseThrow(ResourceNotFoundException::new);
         }).isInstanceOf(ResourceNotFoundException.class);
 
-        MemberEntity member = memberRepository.findByInviteCode("AZ03A20")
+        MemberEntity member = memberRepository.findByFriendCode("AZ03A20")
                 .orElseThrow(ResourceNotFoundException::new);
 
-        assertThat(member.getInviteCode()).isEqualTo("AZ03A20");
+        assertThat(member.getFriendCode()).isEqualTo("AZ03A20");
     }
 }
