@@ -20,4 +20,10 @@ public class ApiResponse<T> {
         this.message = message;
         this.data = data;
     }
+
+    public ApiResponse(HttpStatus status, T data) {
+        this.statusCode = status.value();
+        this.message = status.getReasonPhrase();
+        this.data = data;
+    }
 }
