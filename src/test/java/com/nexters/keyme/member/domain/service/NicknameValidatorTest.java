@@ -26,9 +26,12 @@ class NicknameValidatorTest {
     @DisplayName("닉네임 유효성 검사 테스트")
     void validateNickname() {
         Mockito.when(memberRepository.findByNickname("sample")).thenReturn(Optional.of(new MemberEntity()));
-
         assertThat(validator.validateNickname("sample").isValid()).isFalse();
+
         assertThat(validator.validateNickname("sample1234").isValid()).isFalse();
+        assertThat(validator.validateNickname("너무긴한글닉네임").isValid()).isFalse();
+
         assertThat(validator.validateNickname("sample1").isValid()).isTrue();
+        assertThat(validator.validateNickname("한글닉네임").isValid()).isTrue();
     }
 }
