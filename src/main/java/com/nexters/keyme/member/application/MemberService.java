@@ -1,6 +1,7 @@
 package com.nexters.keyme.member.application;
 
 import com.nexters.keyme.auth.dto.OAuthUserInfo;
+import com.nexters.keyme.auth.dto.UserInfo;
 import com.nexters.keyme.member.presentation.dto.MemberModificationRequest;
 import com.nexters.keyme.member.presentation.dto.NicknameVerificationRequest;
 import com.nexters.keyme.member.presentation.dto.NicknameVerificationResponse;
@@ -14,5 +15,5 @@ public interface MemberService {
 
   NicknameVerificationResponse verifyNickname(NicknameVerificationRequest request);
 
-  MemberResponse modifyMemberInfo(MemberModificationRequest request);
+  MemberResponse modifyMemberInfo(MemberModificationRequest request, UserInfo userInfo);
 }

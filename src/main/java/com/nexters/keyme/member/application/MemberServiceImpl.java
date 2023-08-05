@@ -1,6 +1,7 @@
 package com.nexters.keyme.member.application;
 
 import com.nexters.keyme.auth.dto.OAuthUserInfo;
+import com.nexters.keyme.auth.dto.UserInfo;
 import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
 import com.nexters.keyme.member.domain.internaldto.MemberModificationInfo;
 import com.nexters.keyme.member.domain.internaldto.ValidationInfo;
@@ -70,14 +71,15 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberResponse modifyMemberInfo(MemberModificationRequest request) {
+    public MemberResponse modifyMemberInfo(MemberModificationRequest request, UserInfo userInfo) {
         MemberModificationInfo modificationInfo = MemberModificationInfo.builder()
                 .nickname(request.getNickname())
                 .originalImage(request.getProfileImage())
-                .thumbnailImage(profileImageService.findThumbnailUrl(request.getProfileThumbnail()))
+                .thumbnailImage(request.getProfileThumbnail())
                 .build();
 
-        MemberEntity member = new MemberEntity();
+        MemberEntity member = memberRepository.findById(userInfo.getMemberId())
+                .orElseThrow(ResourceNotFoundException::new);
         member.modifyMemberInfo(modificationInfo);
 
         return new MemberResponse(member);
