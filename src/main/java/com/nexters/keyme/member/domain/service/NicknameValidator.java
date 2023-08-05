@@ -12,11 +12,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class NicknameValidator {
     private final MemberRepository memberRepository;
-    private static final int MAX_NICKNAME_SIZE = 7;
+    private static final int MAX_NICKNAME_SIZE = 6;
 
     public ValidationInfo validateNickname(String nickname) {
         if (!isEqualOrLessThanSevenChars(nickname)) {
-            return new ValidationInfo(false, "닉네임은 7글자 이하여야 합니다.");
+            return new ValidationInfo(false, "닉네임은 6글자 이하여야 합니다.");
         }
         if (!isUnique(nickname)) {
             return new ValidationInfo(false, "사용 중인 닉네임입니다.");

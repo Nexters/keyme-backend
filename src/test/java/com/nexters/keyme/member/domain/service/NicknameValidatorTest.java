@@ -31,7 +31,8 @@ class NicknameValidatorTest {
         assertThat(validator.validateNickname("sample1234").isValid()).isFalse();
         assertThat(validator.validateNickname("너무긴한글닉네임").isValid()).isFalse();
 
-        assertThat(validator.validateNickname("sample1").isValid()).isTrue();
+        assertThat(validator.validateNickname("sample1").isValid()).isFalse();
+        assertThat(validator.validateNickname("sam123").isValid()).isTrue();
         assertThat(validator.validateNickname("한글닉네임").isValid()).isTrue();
     }
 }
