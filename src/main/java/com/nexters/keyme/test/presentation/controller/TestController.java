@@ -73,8 +73,8 @@ public class TestController {
     @ApiOperation(value = "해당 테스트의 결과 가져오기")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<TestResultResponse>> getResult(
-        @PathVariable("id") Long testId,
         @RequestUser UserInfo userInfo,
+        @PathVariable("id") Long testId,
         TestResultRequest requestParameters
     ) {
         return null;
