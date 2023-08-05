@@ -27,6 +27,7 @@ public class MemberEntity extends BaseTimeEntity {
 
     private String nickname;
     private String friendCode;
+    @Enumerated(EnumType.STRING)
     private MemberStatus status;
     private ProfileImage profileImage;
 
