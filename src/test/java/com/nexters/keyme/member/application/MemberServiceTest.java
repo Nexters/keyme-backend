@@ -35,7 +35,7 @@ public class MemberServiceTest {
         assertThat(response.getNickname()).isEqualTo("nick");
         assertThat(response.getFriendCode()).isEqualTo("ABCDEFG");
         assertThat(response.getProfileImage()).isEqualTo("keyme.space/original");
-        assertThat(response.getProfileTumbnail()).isEqualTo("keyme.space.thumbnail");
+        assertThat(response.getProfileThumbnail()).isEqualTo("keyme.space.thumbnail");
     }
 
     @Test
@@ -64,6 +64,6 @@ public class MemberServiceTest {
         assertThat(response.getNickname()).isEqualTo("chames");
         assertThat(response.getFriendCode()).isEqualTo("ABCDEFG");
         assertThat(response.getProfileImage()).isEqualTo("newOrg");
-        assertThat(response.getProfileTumbnail()).isEqualTo("newThumbnail");
+        assertThat(response.getProfileThumbnail()).isEqualTo("newThumbnail");
     }
 }

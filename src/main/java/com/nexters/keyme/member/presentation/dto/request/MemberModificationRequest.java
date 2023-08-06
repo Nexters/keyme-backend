@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class MemberModificationRequest {
-    @ApiModelProperty(value="닉네임")
+    @ApiModelProperty(value="닉네임", example = "키미")
     private String nickname;
     @ApiModelProperty(value="프로필 이미지 URL")
     private String profileImage;
