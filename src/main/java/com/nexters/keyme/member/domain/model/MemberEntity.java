@@ -2,7 +2,10 @@ package com.nexters.keyme.member.domain.model;
 
 import com.nexters.keyme.common.domain.BaseTimeEntity;
 import com.nexters.keyme.member.domain.internaldto.MemberModificationInfo;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
