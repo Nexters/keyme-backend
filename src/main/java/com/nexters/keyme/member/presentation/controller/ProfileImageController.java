@@ -1,7 +1,7 @@
 package com.nexters.keyme.member.presentation.controller;
 
 import com.nexters.keyme.common.dto.ApiResponse;
-import com.nexters.keyme.member.presentation.dto.ImageResponse;
+import com.nexters.keyme.member.presentation.dto.response.ImageResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

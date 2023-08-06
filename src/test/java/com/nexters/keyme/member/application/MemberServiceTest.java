@@ -1,9 +1,9 @@
 package com.nexters.keyme.member.application;
 
 import com.nexters.keyme.auth.dto.UserInfo;
-import com.nexters.keyme.member.presentation.dto.MemberModificationRequest;
-import com.nexters.keyme.member.presentation.dto.NicknameVerificationRequest;
-import com.nexters.keyme.member.presentation.dto.NicknameVerificationResponse;
+import com.nexters.keyme.member.presentation.dto.request.MemberModificationRequest;
+import com.nexters.keyme.member.presentation.dto.request.NicknameVerificationRequest;
+import com.nexters.keyme.member.presentation.dto.response.NicknameVerificationResponse;
 import com.nexters.keyme.member.presentation.dto.response.MemberResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
