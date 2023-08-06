@@ -23,15 +23,6 @@ public class MemberEntity extends BaseTimeEntity {
     @OneToMany(fetch = FetchType.LAZY)
     private List<DeviceInfo> deviceInfo;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private List<Test> testList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private List<QuestionSolved> questionSolvedList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private List<TestResultSimpleInfo> testResultSimpleInfoList = new ArrayList<>();
-
     private String nickname;
     private String inviteCode;
     private MemberStatus status;
