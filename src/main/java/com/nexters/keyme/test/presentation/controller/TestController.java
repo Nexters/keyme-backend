@@ -3,19 +3,21 @@ package com.nexters.keyme.test.presentation.controller;
 import com.nexters.keyme.auth.dto.UserInfo;
 import com.nexters.keyme.auth.resolver.RequestUser;
 import com.nexters.keyme.common.dto.ApiResponse;
+import com.nexters.keyme.question.presentation.dto.response.QuestionResponse;
 import com.nexters.keyme.test.presentation.dto.request.TestListRequest;
 import com.nexters.keyme.test.presentation.dto.request.TestResultRequest;
 import com.nexters.keyme.test.presentation.dto.request.TestSubmissionRequest;
-import com.nexters.keyme.test.presentation.dto.response.QuestionsInTestResponse;
-import com.nexters.keyme.test.presentation.dto.response.TestFeedResponse;
-import com.nexters.keyme.test.presentation.dto.response.TestResultResponse;
+import com.nexters.keyme.test.presentation.dto.response.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.nexters.keyme.config.SwaggerConfig.SWAGGER_AUTHORIZATION_SCHEME;
@@ -30,13 +32,25 @@ public class TestController {
     @ApiOperation(value = "오늘의 테스트 가져오기")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<QuestionsInTestResponse>> getDailyTest(@RequestUser UserInfo requestUser) {
-        return null;
+        return ResponseEntity.ok(
+            new ApiResponse<QuestionsInTestResponse>(HttpStatus.OK ,new QuestionsInTestResponse(1L, false, Arrays.asList(
+                new QuestionResponse(1L, "공부를 잘 할 것 같다", "공부",  null),
+                new QuestionResponse(2L, "밥을 좋아할 것 같다", "밥",  null),
+                new QuestionResponse(3L, "커피를 사랑할 것 같다", "천재",  null)
+            )))
+        );
     }
 
     @GetMapping("/onboarding")
     @ApiOperation(value = "온보딩 테스트 가져오기")
     public ResponseEntity<ApiResponse<QuestionsInTestResponse>> getOnboardingTest() {
-        return null;
+        return ResponseEntity.ok(
+            new ApiResponse<QuestionsInTestResponse>(HttpStatus.OK ,new QuestionsInTestResponse(1L, false, Arrays.asList(
+                new QuestionResponse(1L, "공부를 잘 할 것 같다", "공부",  null),
+                new QuestionResponse(2L, "밥을 좋아할 것 같다", "밥",  null),
+                new QuestionResponse(3L, "커피를 사랑할 것 같다", "천재",  null)
+            )))
+        );
     }
 
     @GetMapping("/{id}")
@@ -46,9 +60,17 @@ public class TestController {
         @RequestUser UserInfo requestUser,
         @PathVariable("id") Long testId
     ) {
-        return null;
+        return ResponseEntity.ok(
+            new ApiResponse<QuestionsInTestResponse>(HttpStatus.OK, new QuestionsInTestResponse(1L, false, Arrays.asList(
+                new QuestionResponse(1L, "공부를 잘 할 것 같다", "공부",  null),
+                new QuestionResponse(2L, "밥을 좋아할 것 같다", "밥",  null),
+                new QuestionResponse(3L, "커피를 사랑할 것 같다", "천재",  null)
+            )))
+        );
     }
 
+
+    // Not MMVP
     @GetMapping
     @ApiOperation(value = "테스트 리스트 가져오기")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
@@ -56,13 +78,18 @@ public class TestController {
         @RequestUser UserInfo requestUser,
         TestListRequest requestParameters
     ) {
-        return null;
+        return ResponseEntity.ok(
+            new ApiResponse<List<TestFeedResponse>>(HttpStatus.OK, Arrays.asList( new TestFeedResponse(
+                1L, 10, "공부를 잘 할 것 같다",
+                new TestSimpleMemberResponse(),
+                new TestResultRateResponse()
+            )))
+        );
     }
 
     @PostMapping("/{id}/submit")
     @ApiOperation(value = "테스트 제출")
     public ResponseEntity<ApiResponse<TestResultResponse>> submitTest(
-        @RequestUser UserInfo requestUser,
         @PathVariable("id") Long testId,
         @RequestBody TestSubmissionRequest requestBody
     ) {
