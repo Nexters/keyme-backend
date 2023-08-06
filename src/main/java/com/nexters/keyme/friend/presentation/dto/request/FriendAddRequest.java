@@ -1,5 +1,6 @@
-package com.nexters.keyme.friend.presentation.dto;
+package com.nexters.keyme.friend.presentation.dto.request;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FriendAddRequest {
-    private Long friendId;
+    @ApiModelProperty(value="문제 ID", example = "22")
     private String friendCode;
 }
