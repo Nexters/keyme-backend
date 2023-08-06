@@ -1,8 +1,8 @@
 package com.nexters.keyme.friend.presentation.controller;
 
-import com.nexters.keyme.auth.dto.UserInfo;
-import com.nexters.keyme.auth.resolver.RequestUser;
-import com.nexters.keyme.common.dto.ApiResponse;
+import com.nexters.keyme.auth.domain.internaldto.UserInfo;
+import com.nexters.keyme.common.annotation.RequestUser;
+import com.nexters.keyme.common.dto.response.ApiResponse;
 import com.nexters.keyme.friend.presentation.dto.request.FriendAcceptRequest;
 import com.nexters.keyme.friend.presentation.dto.request.FriendAddRequest;
 import com.nexters.keyme.friend.presentation.dto.response.FriendResponse;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.nexters.keyme.config.SwaggerConfig.SWAGGER_AUTHORIZATION_SCHEME;
+import static com.nexters.keyme.common.config.SwaggerConfig.SWAGGER_AUTHORIZATION_SCHEME;
 
 @RestController
 @RequestMapping("/friends")

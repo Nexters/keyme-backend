@@ -1,6 +1,6 @@
 package com.nexters.keyme.statistics.presentation.controller;
 
-import com.nexters.keyme.common.dto.ApiResponse;
+import com.nexters.keyme.common.dto.response.ApiResponse;
 import com.nexters.keyme.statistics.presentation.dto.request.StatisticRequest;
 import com.nexters.keyme.statistics.presentation.dto.response.*;
 import io.swagger.annotations.Api;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.nexters.keyme.config.SwaggerConfig.SWAGGER_AUTHORIZATION_SCHEME;
+import static com.nexters.keyme.common.config.SwaggerConfig.SWAGGER_AUTHORIZATION_SCHEME;
 
 @RestController
 @RequiredArgsConstructor

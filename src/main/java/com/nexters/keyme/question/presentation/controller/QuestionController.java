@@ -1,7 +1,6 @@
 package com.nexters.keyme.question.presentation.controller;
 
-import com.nexters.keyme.common.dto.ApiResponse;
-import com.nexters.keyme.question.presentation.dto.response.QuestionCategoryResponse;
+import com.nexters.keyme.common.dto.response.ApiResponse;
 import com.nexters.keyme.question.presentation.dto.response.QuestionResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

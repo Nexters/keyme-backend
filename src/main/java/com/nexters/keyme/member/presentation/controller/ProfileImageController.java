@@ -1,6 +1,6 @@
 package com.nexters.keyme.member.presentation.controller;
 
-import com.nexters.keyme.common.dto.ApiResponse;
+import com.nexters.keyme.common.dto.response.ApiResponse;
 import com.nexters.keyme.member.presentation.dto.response.ImageResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import static com.nexters.keyme.config.SwaggerConfig.SWAGGER_AUTHORIZATION_SCHEME;
+import static com.nexters.keyme.common.config.SwaggerConfig.SWAGGER_AUTHORIZATION_SCHEME;
 
 @RestController
 @RequestMapping("/images")

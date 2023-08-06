@@ -1,7 +1,7 @@
 package com.nexters.keyme.member.domain.model;
 
 
-import com.nexters.keyme.auth.dto.OAuthUserInfo;
+import com.nexters.keyme.auth.domain.internaldto.OAuthUserInfo;
 import com.nexters.keyme.common.enums.OAuthType;
 import lombok.*;
 

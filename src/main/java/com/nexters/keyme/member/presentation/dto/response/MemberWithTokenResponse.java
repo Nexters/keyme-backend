@@ -1,6 +1,6 @@
 package com.nexters.keyme.member.presentation.dto.response;
 
-import com.nexters.keyme.auth.dto.response.TokenResponse;
+import com.nexters.keyme.auth.presentation.dto.response.TokenResponse;
 import com.nexters.keyme.member.domain.model.MemberEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

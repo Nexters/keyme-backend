@@ -1,8 +1,8 @@
 package com.nexters.keyme.test.presentation.controller;
 
-import com.nexters.keyme.auth.dto.UserInfo;
-import com.nexters.keyme.auth.resolver.RequestUser;
-import com.nexters.keyme.common.dto.ApiResponse;
+import com.nexters.keyme.auth.domain.internaldto.UserInfo;
+import com.nexters.keyme.common.annotation.RequestUser;
+import com.nexters.keyme.common.dto.response.ApiResponse;
 import com.nexters.keyme.question.presentation.dto.response.QuestionResponse;
 import com.nexters.keyme.test.presentation.dto.request.TestListRequest;
 import com.nexters.keyme.test.presentation.dto.request.TestResultRequest;
@@ -16,11 +16,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.nexters.keyme.config.SwaggerConfig.SWAGGER_AUTHORIZATION_SCHEME;
+import static com.nexters.keyme.common.config.SwaggerConfig.SWAGGER_AUTHORIZATION_SCHEME;
 
 @Api(tags = "테스트", description = "테스트/결과 관련 API")
 @RestController

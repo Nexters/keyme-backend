@@ -1,6 +1,6 @@
 package com.nexters.keyme.member.application;
 
-import com.nexters.keyme.auth.dto.UserInfo;
+import com.nexters.keyme.auth.domain.internaldto.UserInfo;
 import com.nexters.keyme.member.presentation.dto.request.MemberModificationRequest;
 import com.nexters.keyme.member.presentation.dto.request.NicknameVerificationRequest;
 import com.nexters.keyme.member.presentation.dto.response.NicknameVerificationResponse;

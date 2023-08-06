@@ -1,6 +1,6 @@
 package com.nexters.keyme.notification.presentation.controller;
 
-import com.nexters.keyme.common.dto.ApiResponse;
+import com.nexters.keyme.common.dto.response.ApiResponse;
 import com.nexters.keyme.notification.presentation.dto.NotificationResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.nexters.keyme.config.SwaggerConfig.SWAGGER_AUTHORIZATION_SCHEME;
+import static com.nexters.keyme.common.config.SwaggerConfig.SWAGGER_AUTHORIZATION_SCHEME;
 
 @RestController
 @RequestMapping("/notifications")

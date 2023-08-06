@@ -1,6 +1,6 @@
 package com.nexters.keyme.test.presentation.dto.request;
 
-import com.nexters.keyme.common.dto.PaginationRequest;
+import com.nexters.keyme.common.dto.request.PaginationRequest;
 import com.nexters.keyme.test.domain.enums.TestListType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -1,6 +1,6 @@
 package com.nexters.keyme.common.exceptions.handler;
 
-import com.nexters.keyme.common.dto.CommonResponse;
+import com.nexters.keyme.common.dto.response.CommonResponse;
 import com.nexters.keyme.common.exceptions.AccessDeniedException;
 import com.nexters.keyme.common.exceptions.AuthorizationFailedException;
 import com.nexters.keyme.common.exceptions.InvalidRequestException;

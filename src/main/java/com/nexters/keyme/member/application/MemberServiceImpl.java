@@ -1,7 +1,7 @@
 package com.nexters.keyme.member.application;
 
-import com.nexters.keyme.auth.dto.OAuthUserInfo;
-import com.nexters.keyme.auth.dto.UserInfo;
+import com.nexters.keyme.auth.domain.internaldto.OAuthUserInfo;
+import com.nexters.keyme.auth.domain.internaldto.UserInfo;
 import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
 import com.nexters.keyme.member.domain.internaldto.MemberModificationInfo;
 import com.nexters.keyme.member.domain.internaldto.ValidationInfo;
