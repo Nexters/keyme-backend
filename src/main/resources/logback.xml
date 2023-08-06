@@ -25,4 +25,12 @@
             <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
+
+    <springProfile name="dev-senglee">
+        <include resource="logback-console-appender.xml"/>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
 </configuration>

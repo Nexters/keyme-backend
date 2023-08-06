@@ -1,11 +1,14 @@
 package com.nexters.keyme.common.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
 public class ApiResponse<T> {
+    @ApiModelProperty(value="HTTP 상태코드", example = "200")
     private int statusCode;
+    @ApiModelProperty(value="메시지", example = "SUCCESS")
     private String message;
     private T data;
 

@@ -5,16 +5,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nexters.keyme.auth.client.AppleClient;
 import com.nexters.keyme.auth.client.KakaoClient;
 import com.nexters.keyme.auth.dto.AppleJwtBodyInfo;
-import com.nexters.keyme.auth.util.ApplePublicKeyProvider;
-import com.nexters.keyme.auth.util.JwtTokenProvider;
-import com.nexters.keyme.common.enums.OAuthType;
 import com.nexters.keyme.auth.dto.OAuthUserInfo;
 import com.nexters.keyme.auth.dto.request.LoginRequest;
 import com.nexters.keyme.auth.dto.response.AppleAuthKeysResponse;
 import com.nexters.keyme.auth.dto.response.KakaoUserInfoResponse;
-import com.nexters.keyme.member.dto.response.MemberResponse;
 import com.nexters.keyme.auth.dto.response.TokenResponse;
-import com.nexters.keyme.member.service.MemberService;
+import com.nexters.keyme.auth.util.ApplePublicKeyProvider;
+import com.nexters.keyme.auth.util.JwtTokenProvider;
+import com.nexters.keyme.common.enums.OAuthType;
+import com.nexters.keyme.member.application.MemberService;
+import com.nexters.keyme.member.presentation.dto.response.MemberWithTokenResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
     private final MemberService memberService;
 
     @Override
-    public MemberResponse getMemberWithToken(LoginRequest request) {
+    public MemberWithTokenResponse getMemberWithToken(LoginRequest request) {
         OAuthType oauthType = request.getOauthType();
         OAuthUserInfo userInfo = null;
 
@@ -44,7 +44,7 @@ public class AuthServiceImpl implements AuthService {
             userInfo = getOAuthInfoOfKakao(request.getToken());
         }
 
-        MemberResponse memberResponse = memberService.getOrCreateMember(userInfo);
+        MemberWithTokenResponse memberResponse = memberService.getOrCreateMember(userInfo);
         String jwtToken = jwtTokenProvider.createToken(memberResponse.getId());
         TokenResponse tokenObject = new TokenResponse(jwtToken);
         memberResponse.setToken(tokenObject);

@@ -1,9 +1,9 @@
 package com.nexters.keyme.auth.controller;
 
 
-import com.nexters.keyme.auth.service.AuthService;
 import com.nexters.keyme.auth.dto.request.LoginRequest;
-import com.nexters.keyme.member.dto.response.MemberResponse;
+import com.nexters.keyme.auth.service.AuthService;
+import com.nexters.keyme.member.presentation.dto.response.MemberWithTokenResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @ApiOperation(value = "회원가입/로그인 API")
-    public MemberResponse signUpOrSignIn(@RequestBody LoginRequest request) {
+    public MemberWithTokenResponse signUpOrSignIn(@RequestBody LoginRequest request) {
         return authService.getMemberWithToken(request);
     }
 }
