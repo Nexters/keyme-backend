@@ -2,11 +2,11 @@ package com.nexters.keyme.member.service;
 
 import com.nexters.keyme.auth.dto.OAuthUserInfo;
 import com.nexters.keyme.member.dto.response.MemberResponse;
-import com.nexters.keyme.member.repository.MemberOAuthRepository;
-import com.nexters.keyme.member.domain.repository.MemberRepository;
+import com.nexters.keyme.member.domain.repository.MemberOAuthRepository;
 import com.nexters.keyme.member.domain.model.MemberEntity;
 import com.nexters.keyme.member.domain.model.MemberOAuthEntity;
 import com.nexters.keyme.member.domain.model.MemberOAuthId;
+import com.nexters.keyme.member.infrastructure.MemberJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
-    private final MemberRepository memberRepository;
+    private final MemberJpaRepository memberRepository;
     private final MemberOAuthRepository memberOAuthRepository;
 
     @Override

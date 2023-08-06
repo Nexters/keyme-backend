@@ -35,6 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     if (authorization == null) {
       filterChain.doFilter(request, response);
+      return;
     }
 
     Matcher matcher = AUTHORIZATION_PATTERN.matcher(authorization);

@@ -1,9 +1,13 @@
 package com.nexters.keyme.member.domain.model;
 
 import com.nexters.keyme.common.domain.BaseTimeEntity;
+import com.nexters.keyme.question.domain.model.QuestionSolved;
+import com.nexters.keyme.test.domain.model.Test;
+import com.nexters.keyme.test.domain.model.TestResultSimpleInfo;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
