@@ -25,13 +25,6 @@ import static com.nexters.keyme.config.SwaggerConfig.SWAGGER_AUTHORIZATION_SCHEM
 public class MemberController {
     private final MemberService memberService;
 
-    @GetMapping
-    @ApiOperation(value = "(테스트용) Member Id 가져오기")
-    @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
-    public Long getMemberId(@RequestUser UserInfo userInfo) {
-        return userInfo.getMemberId();
-    }
-
     @GetMapping("/{memberId}")
     @ApiOperation(value = "회원 정보 보기")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
