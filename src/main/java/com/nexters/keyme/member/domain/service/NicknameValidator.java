@@ -15,7 +15,7 @@ public class NicknameValidator {
     private static final int MAX_NICKNAME_SIZE = 6;
 
     public ValidationInfo validateNickname(String nickname) {
-        if (!isEqualOrLessThanSevenChars(nickname)) {
+        if (!isEqualOrLessThanSixChars(nickname)) {
             return new ValidationInfo(false, "닉네임은 6글자 이하여야 합니다.");
         }
         if (!isUnique(nickname)) {
@@ -25,7 +25,7 @@ public class NicknameValidator {
         return new ValidationInfo(true, "사용 가능한 닉네임입니다");
     }
 
-    private boolean isEqualOrLessThanSevenChars(String nickname) {
+    private boolean isEqualOrLessThanSixChars(String nickname) {
         return nickname.length() <= MAX_NICKNAME_SIZE;
     }
 
