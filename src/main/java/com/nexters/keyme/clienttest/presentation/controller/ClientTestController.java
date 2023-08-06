@@ -1,7 +1,13 @@
 package com.nexters.keyme.clienttest.presentation.controller;
 
+import com.nexters.keyme.auth.domain.internaldto.UserInfo;
+import com.nexters.keyme.common.annotation.RequestUser;
+import com.nexters.keyme.common.dto.response.ApiResponse;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,4 +20,18 @@ public class ClientTestController {
 
     @GetMapping
     public void hi() { }
+
+    @DeleteMapping("/tests/onboarding")
+    @ApiOperation(value = "제출한 onboarding 삭제")
+    public ResponseEntity<ApiResponse> deleteOnboardingTest(@RequestUser UserInfo requestUser) {
+        // 발급받은 온보딩 test도 삭제
+        return null;
+    }
+
+    @DeleteMapping("/tests/daily")
+    @ApiOperation(value = "오늘 발급받은 테스트 삭제")
+    public ResponseEntity<ApiResponse> deleteDailyTest(@RequestUser UserInfo requestUser) {
+        // 제출한 테스트도 삭제
+        return null;
+    }
 }

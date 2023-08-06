@@ -2,11 +2,13 @@ package com.nexters.keyme.test.presentation.controller;
 
 import com.nexters.keyme.auth.domain.internaldto.UserInfo;
 import com.nexters.keyme.common.annotation.RequestUser;
+import com.nexters.keyme.common.dto.response.ApiResponse;
 import com.nexters.keyme.test.presentation.dto.request.TestRegistRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static com.nexters.keyme.common.config.SwaggerConfig.SWAGGER_AUTHORIZATION_SCHEME;
@@ -20,8 +22,10 @@ public class TestResultController {
     @PostMapping("/regist")
     @ApiOperation(value = "익명 유저로 푼 결과 유저에 귀속")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
-    public void mappingResultToUser(
+    public ResponseEntity<ApiResponse> mappingResultToUser(
         @RequestUser UserInfo userInfo,
         @RequestBody TestRegistRequest requestBody
-    ) { }
+    ) {
+        return null;
+    }
 }

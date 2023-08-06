@@ -28,7 +28,7 @@ import static com.nexters.keyme.common.config.SwaggerConfig.SWAGGER_AUTHORIZATIO
 public class TestController {
 
     @GetMapping("/daily")
-    @ApiOperation(value = "오늘의 테스트 가져오기")
+    @ApiOperation(value = "내 데일리 테스트 가져오기")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<QuestionsInTestResponse>> getDailyTest(@RequestUser UserInfo requestUser) {
         return ResponseEntity.ok(
@@ -41,7 +41,7 @@ public class TestController {
     }
 
     @GetMapping("/onboarding")
-    @ApiOperation(value = "온보딩 테스트 가져오기")
+    @ApiOperation(value = "내 온보딩 테스트 가져오기")
     public ResponseEntity<ApiResponse<QuestionsInTestResponse>> getOnboardingTest() {
         return ResponseEntity.ok(
             new ApiResponse<QuestionsInTestResponse>(HttpStatus.OK ,new QuestionsInTestResponse(1L, false, Arrays.asList(

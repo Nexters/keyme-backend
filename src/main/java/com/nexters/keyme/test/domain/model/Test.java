@@ -17,6 +17,9 @@ public class Test extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long testId;
 
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isOnboarding;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(columnDefinition = "owner_id")
     private MemberEntity member;

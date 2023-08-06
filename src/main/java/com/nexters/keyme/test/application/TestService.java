@@ -1,7 +1,6 @@
 package com.nexters.keyme.test.application;
 
 import com.nexters.keyme.test.presentation.dto.request.TestListRequest;
-import com.nexters.keyme.test.presentation.dto.request.TestResultRequest;
 import com.nexters.keyme.test.presentation.dto.request.TestSubmissionRequest;
 import com.nexters.keyme.test.presentation.dto.response.QuestionsInTestResponse;
 import com.nexters.keyme.test.presentation.dto.response.TestFeedResponse;
@@ -15,5 +14,5 @@ public interface TestService {
     QuestionsInTestResponse getSpecificTest(Long memberId, Long testId);
     List<TestFeedResponse> getTestList(Long memberId, TestListRequest requestInfo);
     TestResultResponse submitTest(Long solverId, Long testId, TestSubmissionRequest submitInfo);
-    TestResultRequest getTestResult(Long solverId, Long testId);
+    TestResultResponse getTestResult(Long solverId, Long testId);
 }
