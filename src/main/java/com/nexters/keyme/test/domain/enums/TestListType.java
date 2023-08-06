@@ -9,9 +9,6 @@ public enum TestListType {
 
     @JsonCreator
     public static TestListType from(String inputValue) {
-        return Stream.of(TestListType.values())
-                .filter(category -> category.toString().equals(inputValue.toUpperCase()))
-                .findFirst()
-                .orElse(null);
+        return TestListType.valueOf(inputValue);
     }
 }
