@@ -27,13 +27,13 @@ public class S3ImageUploader implements ImageUploader {
 
     @Override
     public ImageInfo uploadImage(MultipartFile image) {
-        String extension = extractExtension(image);
         String originalUrl;
         String thumbnailUrl;
+        String extension = extractExtension(image);
 
         try {
-            originalUrl = uploadToS3AndGetUrl(image.getInputStream(), new ObjectMetadata(), extension);
-            thumbnailUrl = uploadToS3AndGetUrl(resizeForThumbnail(image), new ObjectMetadata(), extension);
+            originalUrl = uploadToS3AndGetUrl(image.getInputStream(), extension);
+            thumbnailUrl = uploadToS3AndGetUrl(resizeForThumbnail(image), extension);
         } catch (IOException e) {
             log.info(e.getMessage());
             throw new RuntimeException();
@@ -53,15 +53,15 @@ public class S3ImageUploader implements ImageUploader {
         return thumbnail;
     }
 
-    private String uploadToS3AndGetUrl(InputStream inputStream, ObjectMetadata metadata, String extension) {
+    private String uploadToS3AndGetUrl(InputStream inputStream, String extension) {
         String key = UUID.randomUUID() + "." + extension;
 
-        s3Client.putObject(bucket, key, inputStream, metadata);
+        s3Client.putObject(bucket, key, inputStream, new ObjectMetadata());
         return s3Client.getUrl(bucket, key).toString();
     }
 
-    private String uploadToS3AndGetUrl(File tempFile, ObjectMetadata metadata, String extension) throws FileNotFoundException {
-        String url = uploadToS3AndGetUrl(new FileInputStream(tempFile), metadata, extension);
+    private String uploadToS3AndGetUrl(File tempFile, String extension) throws FileNotFoundException {
+        String url = uploadToS3AndGetUrl(new FileInputStream(tempFile), extension);
         tempFile.delete();
 
         return url;
