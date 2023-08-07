@@ -7,7 +7,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +31,6 @@ public class StatisticsController {
         StatisticResultResponse result = new StatisticResultResponse(question, coordinate);
         MemberStatisticResponse response = new MemberStatisticResponse(14L, List.of(result));
 
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK, "SUCCESS", response));
+        return ResponseEntity.ok(new ApiResponse<>(response));
     }
 }
