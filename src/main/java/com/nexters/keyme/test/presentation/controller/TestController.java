@@ -4,6 +4,7 @@ import com.nexters.keyme.auth.domain.internaldto.UserInfo;
 import com.nexters.keyme.common.annotation.RequestUser;
 import com.nexters.keyme.common.dto.response.ApiResponse;
 import com.nexters.keyme.question.presentation.dto.response.QuestionResponse;
+import com.nexters.keyme.test.application.TestService;
 import com.nexters.keyme.test.presentation.dto.request.TestListRequest;
 import com.nexters.keyme.test.presentation.dto.request.TestResultRequest;
 import com.nexters.keyme.test.presentation.dto.request.TestSubmissionRequest;
@@ -26,6 +27,7 @@ import static com.nexters.keyme.common.config.SwaggerConfig.SWAGGER_AUTHORIZATIO
 @RequestMapping("/tests")
 @RequiredArgsConstructor
 public class TestController {
+    final private TestService testService;
 
     @GetMapping("/daily")
     @ApiOperation(value = "내 데일리 테스트 가져오기")

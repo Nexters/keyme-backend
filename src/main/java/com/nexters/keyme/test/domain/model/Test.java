@@ -3,6 +3,7 @@ package com.nexters.keyme.test.domain.model;
 import com.nexters.keyme.common.model.BaseTimeEntity;
 import com.nexters.keyme.member.domain.model.MemberEntity;
 import com.nexters.keyme.question.domain.model.QuestionBundle;
+import com.nexters.keyme.test.presentation.dto.response.QuestionsInTestResponse;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -31,5 +32,5 @@ public class Test extends BaseTimeEntity {
     private List<QuestionBundle> questionBundleList = new ArrayList<>();
 
     @OneToMany(mappedBy = "test", cascade = CascadeType.REMOVE)
-    private List<TestResultSimpleInfo> testResultSimpleInfoList = new ArrayList<>();
+    private List<TestResult> testResultSimpleInfoList = new ArrayList<>();
 }

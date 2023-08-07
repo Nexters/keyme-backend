@@ -7,9 +7,9 @@ import lombok.Getter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "test_result_simple_info")
+@Table(name = "test_result")
 @Getter
-public class TestResultSimpleInfo extends BaseTimeEntity {
+public class TestResult extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long testResultId;
