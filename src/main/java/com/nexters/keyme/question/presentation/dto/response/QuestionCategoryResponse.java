@@ -1,5 +1,6 @@
 package com.nexters.keyme.question.presentation.dto.response;
 
+import com.nexters.keyme.question.domain.enums.QuestionCategoryType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -22,4 +23,10 @@ public class QuestionCategoryResponse {
 
     @ApiModelProperty(value = "카테고리 색상(헥사코드)")
     private String color;
+
+    public QuestionCategoryResponse(QuestionCategoryType category) {
+        this.name = category.name();
+        this.color = category.getColorCode();
+        this.imageUrl = category.getIamgeUrl();
+    }
 }

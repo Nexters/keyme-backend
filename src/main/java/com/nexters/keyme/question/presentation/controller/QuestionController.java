@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/questions")
 @RequiredArgsConstructor
 public class QuestionController {
-    
+
     @GetMapping("/{id}")
     @ApiOperation(value = "질문 정보 가져오기")
     public ResponseEntity<ApiResponse<QuestionResponse>> questionDetail(@PathVariable("id") Long questionid) {
