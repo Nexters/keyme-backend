@@ -32,8 +32,8 @@ public class S3ImageUploader implements ImageUploader {
         String thumbnailUrl;
 
         try {
-            originalUrl = uploadToS3(image.getInputStream(), new ObjectMetadata(), extension);
-            thumbnailUrl = uploadToS3(new FileInputStream(resizeForThumbnail(image)), new ObjectMetadata(), extension);
+            originalUrl = uploadToS3AndGetUrl(image.getInputStream(), new ObjectMetadata(), extension);
+            thumbnailUrl = uploadToS3AndGetUrl(resizeForThumbnail(image), new ObjectMetadata(), extension);
         } catch (IOException e) {
             log.info(e.getMessage());
             throw new RuntimeException();
@@ -42,46 +42,33 @@ public class S3ImageUploader implements ImageUploader {
         return new ImageInfo(originalUrl, thumbnailUrl);
     }
 
-    private File resizeForThumbnail(MultipartFile image) {
+    private File resizeForThumbnail(MultipartFile image) throws IOException {
         String extension = extractExtension(image);
-
-        File original = new File(tempImagePath + UUID.randomUUID() + "." + extension);
         File thumbnail = new File(tempImagePath + UUID.randomUUID() + "." + extension);
 
-        try (FileOutputStream os = new FileOutputStream(original)) {
-            os.write(image.getBytes());
-        } catch (IOException e) {
-            log.info(e.getMessage());
-            throw new RuntimeException();
-        }
-
-        try {
-            Thumbnails.of(original)
-                .size(700, 400)
-                .toFile(thumbnail);
-        } catch (IOException e) {
-            log.info(e.getMessage());
-            throw new RuntimeException();
-        }
-
-        original.delete();
+        Thumbnails.of(image.getInputStream())
+            .size(700, 400)
+            .toFile(thumbnail);
 
         return thumbnail;
     }
 
-    private String uploadToS3(InputStream inputStream, ObjectMetadata metadata, String extension) {
+    private String uploadToS3AndGetUrl(InputStream inputStream, ObjectMetadata metadata, String extension) {
         String key = UUID.randomUUID() + "." + extension;
 
         s3Client.putObject(bucket, key, inputStream, metadata);
         return s3Client.getUrl(bucket, key).toString();
     }
 
+    private String uploadToS3AndGetUrl(File tempFile, ObjectMetadata metadata, String extension) throws FileNotFoundException {
+        String url = uploadToS3AndGetUrl(new FileInputStream(tempFile), metadata, extension);
+        tempFile.delete();
+
+        return url;
+    }
+
     private String extractExtension(MultipartFile image) {
         return Objects.requireNonNull(image.getContentType()).split("/")[1];
     }
 
-    private void clearFiles(File original, File thumbnail) {
-        original.delete();
-        thumbnail.delete();
-    }
 }
