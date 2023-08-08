@@ -1,8 +1,10 @@
 package com.nexters.keyme.member.domain.service;
 
+import com.nexters.keyme.member.domain.exceptions.NicknameVerificationException;
 import com.nexters.keyme.member.domain.internaldto.ValidationInfo;
 import com.nexters.keyme.member.domain.model.MemberEntity;
 import com.nexters.keyme.member.domain.repository.MemberRepository;
+import com.nexters.keyme.member.domain.state.MemberStateCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +18,10 @@ public class NicknameValidator {
 
     public ValidationInfo validateNickname(String nickname) {
         if (!isEqualOrLessThanSixChars(nickname)) {
-            return new ValidationInfo(false, "닉네임은 6글자 이하여야 합니다.");
+            throw new NicknameVerificationException(MemberStateCode.NICKNAME_TOO_LONG);
         }
         if (!isUnique(nickname)) {
-            return new ValidationInfo(false, "사용 중인 닉네임입니다.");
+            throw new NicknameVerificationException(MemberStateCode.DUPLICATED_NICKNAME);
         }
 
         return new ValidationInfo(true, "사용 가능한 닉네임입니다");

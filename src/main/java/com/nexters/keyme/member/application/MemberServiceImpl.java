@@ -67,6 +67,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public NicknameVerificationResponse verifyNickname(NicknameVerificationRequest request) {
         ValidationInfo validationInfo = nicknameValidator.validateNickname(request.getNickname());
 
@@ -74,12 +75,15 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public MemberResponse modifyMemberInfo(MemberModificationRequest request, UserInfo userInfo) {
         MemberModificationInfo modificationInfo = MemberModificationInfo.builder()
                 .nickname(request.getNickname())
                 .originalImage(request.getProfileImage())
                 .thumbnailImage(request.getProfileThumbnail())
                 .build();
+
+        nicknameValidator.validateNickname(modificationInfo.getNickname());
 
         MemberEntity member = memberRepository.findById(userInfo.getMemberId())
                 .orElseThrow(ResourceNotFoundException::new);

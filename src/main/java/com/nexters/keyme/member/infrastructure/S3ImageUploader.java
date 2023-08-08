@@ -2,6 +2,7 @@ package com.nexters.keyme.member.infrastructure;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.nexters.keyme.common.exceptions.FileUploadFailedException;
 import com.nexters.keyme.member.domain.internaldto.ImageInfo;
 import com.nexters.keyme.member.domain.service.ImageUploader;
 import lombok.RequiredArgsConstructor;
@@ -35,8 +36,8 @@ public class S3ImageUploader implements ImageUploader {
             originalUrl = uploadToS3AndGetUrl(image.getInputStream(), extension);
             thumbnailUrl = uploadToS3AndGetUrl(resizeForThumbnail(image), extension);
         } catch (IOException e) {
-            log.info(e.getMessage());
-            throw new RuntimeException();
+            log.error(e.getMessage());
+            throw new FileUploadFailedException();
         }
 
         return new ImageInfo(originalUrl, thumbnailUrl);
