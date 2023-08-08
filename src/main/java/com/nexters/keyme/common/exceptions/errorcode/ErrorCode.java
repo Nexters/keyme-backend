@@ -11,7 +11,8 @@ public enum ErrorCode {
 
     ACCESS_DENIED(403, "접근 권한이 없습니다."),
 
-    RESOURCE_NOT_FOUND(404, "대상을 찾을 수 없습니다.");
+    RESOURCE_NOT_FOUND(404, "대상을 찾을 수 없습니다."),
+    FILE_UPLOAD_FAILED(500, "파일 업로드에 실패하였습니다. 재시도해 주세요.");
 
     private final int statusCode;
     private final String message;

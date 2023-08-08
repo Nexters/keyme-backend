@@ -1,9 +1,8 @@
 package com.nexters.keyme.notification.service;
 
-import com.nexters.keyme.dummy.DummyTopic;
-import com.nexters.keyme.dummy.DummyTopicRepository;
-import com.nexters.keyme.dummy.DummyUser;
-import com.nexters.keyme.dummy.DummyUserRepository;
+import com.nexters.keyme.member.domain.model.MemberDevice;
+import com.nexters.keyme.member.domain.model.MemberEntity;
+import com.nexters.keyme.member.domain.repository.MemberRepository;
 import com.nexters.keyme.notification.dto.TopicNotificationRequest;
 import com.nexters.keyme.notification.dto.UserNotificationRequest;
 import com.nexters.keyme.notification.helper.NotificationSender;
@@ -13,22 +12,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationSender notificationSender;
-    private final DummyUserRepository userRepository;
-    private final DummyTopicRepository topicRepository;
+    private final MemberRepository memberRepository;
 
     @Async("NotificationThreadPool")
     public void sendByUsers(UserNotificationRequest request) {
         List<String> tokens = new ArrayList<>();
 
-        for (DummyUser user : userRepository.findAllByUserId(request.getUserIds())) {
-            tokens.addAll(user.getDeviceIds());
+        for (MemberEntity member : memberRepository.findAllById(request.getUserIds())) {
+            for (MemberDevice device : member.getMemberDevice()) {
+                tokens.add(String.valueOf(device.getId()));
+            }
+
         }
 
         notificationSender.sendByTokens(tokens, request.getTitle(), request.getBody(), request.getData());
@@ -36,9 +36,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Async("NotificationThreadPool")
     public void sendByTopics(TopicNotificationRequest request) {
-        List<String> topics = topicRepository.findAllByTopicId(request.getTopicIds()).stream()
-                .map(DummyTopic::getName)
-                .collect(Collectors.toList());
+        List<String> topics = List.of("topic1", "topic2");
 
         notificationSender.sendByTopics(topics, request.getTitle(), request.getBody(), request.getData());
     }

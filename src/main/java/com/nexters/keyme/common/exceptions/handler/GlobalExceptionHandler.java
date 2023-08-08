@@ -1,10 +1,11 @@
 package com.nexters.keyme.common.exceptions.handler;
 
-import com.nexters.keyme.common.dto.CommonResponse;
+import com.nexters.keyme.common.dto.response.ApiResponse;
 import com.nexters.keyme.common.exceptions.AccessDeniedException;
 import com.nexters.keyme.common.exceptions.AuthorizationFailedException;
 import com.nexters.keyme.common.exceptions.InvalidRequestException;
 import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
+import com.nexters.keyme.common.exceptions.errorcode.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,22 +14,22 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<CommonResponse> handleAccessDeniedException(AccessDeniedException e) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new CommonResponse(HttpStatus.FORBIDDEN.value(), e.getMessage()));
+    public ResponseEntity<ApiResponse> handleAccessDeniedException(AccessDeniedException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ApiResponse<>(ErrorCode.ACCESS_DENIED));
     }
 
     @ExceptionHandler(AuthorizationFailedException.class)
-    public ResponseEntity<CommonResponse> handleAuthorizationFailedException(AuthorizationFailedException e) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new CommonResponse(HttpStatus.UNAUTHORIZED.value(), e.getMessage()));
+    public ResponseEntity<ApiResponse> handleAuthorizationFailedException(AuthorizationFailedException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse(ErrorCode.UNAUTHORIZED.name(), e.getMessage(), null));
     }
 
     @ExceptionHandler(InvalidRequestException.class)
-    public ResponseEntity<CommonResponse> handleInvalidRequestException(InvalidRequestException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new CommonResponse(HttpStatus.BAD_REQUEST.value(), e.getMessage()));
+    public ResponseEntity<ApiResponse> handleInvalidRequestException(InvalidRequestException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>(ErrorCode.INVALID_REQUEST));
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<CommonResponse> handleResourceNotFoundException(ResourceNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new CommonResponse(HttpStatus.NOT_FOUND.value(), e.getMessage()));
+    public ResponseEntity<ApiResponse> handleResourceNotFoundException(ResourceNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse(ErrorCode.RESOURCE_NOT_FOUND));
     }
 }
