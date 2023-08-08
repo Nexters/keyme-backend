@@ -1,5 +1,6 @@
 package com.nexters.keyme.common.dto.response;
 
+import com.nexters.keyme.common.exceptions.errorcode.ErrorCode;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
@@ -22,6 +23,12 @@ public class ApiResponse<T> {
         this.state = "SUCCESS";
         this.message = "요청에 성공했습니다.";
         this.data = data;
+    }
+
+    public ApiResponse(ErrorCode errorCode) {
+        this.state = errorCode.name();
+        this.message = errorCode.message();
+        this.data = null;
     }
 
 }
