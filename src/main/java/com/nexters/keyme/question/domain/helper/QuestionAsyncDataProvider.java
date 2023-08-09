@@ -2,7 +2,6 @@ package com.nexters.keyme.question.domain.helper;
 
 import com.nexters.keyme.question.domain.model.Question;
 import com.nexters.keyme.question.domain.repository.QuestionRepository;
-import com.nexters.keyme.question.presentation.dto.response.QuestionResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -12,7 +11,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Component
 @RequiredArgsConstructor
-public class QuestionAsyncHelper {
+public class QuestionAsyncDataProvider {
     final private QuestionRepository questionRepository;
 
     @Async
