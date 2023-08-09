@@ -1,10 +1,7 @@
 package com.nexters.keyme.common.exceptions.handler;
 
 import com.nexters.keyme.common.dto.response.CommonResponse;
-import com.nexters.keyme.common.exceptions.AccessDeniedException;
-import com.nexters.keyme.common.exceptions.AuthorizationFailedException;
-import com.nexters.keyme.common.exceptions.InvalidRequestException;
-import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
+import com.nexters.keyme.common.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -30,5 +27,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<CommonResponse> handleResourceNotFoundException(ResourceNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new CommonResponse(HttpStatus.NOT_FOUND.value(), e.getMessage()));
+    }
+
+    @ExceptionHandler(ResourceAlreadyExistsException.class)
+    public ResponseEntity<CommonResponse> handleResourceAlreadyExistsException(ResourceAlreadyExistsException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new CommonResponse(HttpStatus.CONFLICT.value(), e.getMessage()));
     }
 }
