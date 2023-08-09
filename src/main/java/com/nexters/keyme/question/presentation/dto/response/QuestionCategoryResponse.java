@@ -24,9 +24,9 @@ public class QuestionCategoryResponse {
     @ApiModelProperty(value = "카테고리 색상(헥사코드)")
     private String color;
 
-    public QuestionCategoryResponse(QuestionCategoryType category) {
-        this.name = category.name();
-        this.color = category.getColorCode();
-        this.imageUrl = category.getIamgeUrl();
+    public QuestionCategoryResponse(QuestionCategoryType type) {
+        this.imageUrl = type.getImageUrl();
+        this.name = type.name();
+        this.color = type.getColorCode();
     }
 }
