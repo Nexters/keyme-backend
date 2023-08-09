@@ -23,6 +23,28 @@ public class ClientTestController {
     @GetMapping
     public void hi() { }
 
+    @DeleteMapping("/tests/onboarding")
+    @ApiOperation(value = "제출한 onboarding 삭제")
+    @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
+    public ResponseEntity<ApiResponse> deleteOnboardingTest(@RequestUser UserInfo requestUser) {
+        // 발급받은 온보딩 - test 삭제(test result도 삭
+        return null;
+    }
+
+    @DeleteMapping("/tests/daily")
+    @ApiOperation(value = "오늘 발급받은 테스트 삭제")
+    @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
+    public ResponseEntity<ApiResponse> deleteDailyTest(@RequestUser UserInfo requestUser) {
+        // 제출한 테스트도 삭제
+        return null;
+    }
+
+    @PostMapping("/questions")
+    @ApiOperation(value = "백엔드용")
+    public ResponseEntity<ApiResponse> addMockQuesetion() {
+        return null;
+    }
+
     @DeleteMapping("/member")
     @ApiOperation(value = "멤버 정보 삭제")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)

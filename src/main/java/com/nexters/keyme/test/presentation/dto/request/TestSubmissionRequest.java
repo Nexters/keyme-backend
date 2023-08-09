@@ -12,8 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TestSubmissionRequest {
-
-    private Boolean isOnboarding = false;
     private List<QuestionSubmission> results;
 
     @Getter

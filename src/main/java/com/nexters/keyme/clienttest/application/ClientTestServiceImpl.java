@@ -1,6 +1,5 @@
 package com.nexters.keyme.clienttest.application;
 
-
 import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
 import com.nexters.keyme.member.domain.model.MemberEntity;
 import com.nexters.keyme.member.domain.repository.MemberRepository;
@@ -11,6 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class ClientTestServiceImpl implements ClientTestService {
+
+    @Override
+    public void deleteIssuedOnboardingTest(Long memberId) {
+        // 삭제
+    }
+
+    @Override
+    public void deleteIssuedDailyTest(Long memberId) {
+        // 삭제
+    }
     private final MemberRepository memberRepository;
 
     @Transactional

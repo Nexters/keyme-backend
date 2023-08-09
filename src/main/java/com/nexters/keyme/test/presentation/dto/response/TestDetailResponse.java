@@ -11,8 +11,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class QuestionsInTestResponse {
+public class TestDetailResponse {
     private Long testId;
-    private Boolean isSolved = false;
+    private Long testResultId;
+    private int solvedCount;
+    private String title;
+    private TestSimpleMemberResponse presenterProfile;
     private List<QuestionResponse> questions;
 }
