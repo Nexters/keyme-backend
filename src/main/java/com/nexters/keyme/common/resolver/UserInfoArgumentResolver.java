@@ -22,7 +22,7 @@ public class UserInfoArgumentResolver implements HandlerMethodArgumentResolver {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (!(principal instanceof UserInfo)) {
-            throw new RuntimeException();
+            return null;
         }
 
         return principal;

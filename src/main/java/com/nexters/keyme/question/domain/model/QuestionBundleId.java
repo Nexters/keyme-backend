@@ -2,6 +2,7 @@ package com.nexters.keyme.question.domain.model;
 
 import com.nexters.keyme.test.domain.model.Test;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.io.Serializable;
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@AllArgsConstructor
 public class QuestionBundleId implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
