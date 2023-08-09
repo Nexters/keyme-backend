@@ -3,8 +3,8 @@ package com.nexters.keyme.test.domain.model;
 import com.nexters.keyme.common.model.BaseTimeEntity;
 import com.nexters.keyme.member.domain.model.MemberEntity;
 import com.nexters.keyme.question.domain.model.QuestionBundle;
-import com.nexters.keyme.test.presentation.dto.response.QuestionsInTestResponse;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "test")
 @Getter
+@NoArgsConstructor
 public class Test extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +23,7 @@ public class Test extends BaseTimeEntity {
     private Boolean isOnboarding;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(columnDefinition = "owner_id")
+    @JoinColumn(name = "owner_id")
     private MemberEntity member;
 
     @Column(length = 30)
@@ -32,5 +33,11 @@ public class Test extends BaseTimeEntity {
     private List<QuestionBundle> questionBundleList = new ArrayList<>();
 
     @OneToMany(mappedBy = "test", cascade = CascadeType.REMOVE)
-    private List<TestResult> testResultSimpleInfoList = new ArrayList<>();
+    private List<TestResult> testResultList = new ArrayList<>();
+
+    public Test(Boolean isOnboarding, MemberEntity member, String title) {
+        this.isOnboarding = isOnboarding;
+        this.member = member;
+        this.title = title;
+    }
 }
