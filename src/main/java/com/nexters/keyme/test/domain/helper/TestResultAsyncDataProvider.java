@@ -1,5 +1,7 @@
 package com.nexters.keyme.test.domain.helper;
 
+import com.nexters.keyme.member.domain.model.MemberEntity;
+import com.nexters.keyme.test.domain.model.Test;
 import com.nexters.keyme.test.domain.model.TestResult;
 import com.nexters.keyme.test.domain.repository.TestResultRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,14 +13,14 @@ import java.util.concurrent.CompletableFuture;
 
 @Component
 @RequiredArgsConstructor
-public class TestResultAsyncHelper {
+public class TestResultAsyncDataProvider {
     private final TestResultRepository testResultRepository;
 
     @Async
-    public CompletableFuture<Optional<TestResult>> asyncFindByTestIdAndSolverId(Long testId, Long solvedMemberId) {
-        if (solvedMemberId == null) return null;
+    public CompletableFuture<Optional<TestResult>> asyncFindByTestAndSolver(Test test, MemberEntity member) {
+        if (member == null) return null;
 
-        Optional<TestResult> testResult = testResultRepository.findByTestIdAndSolverId(testId, solvedMemberId);
+        Optional<TestResult> testResult = testResultRepository.findByTestAndSolver(test, member);
 
         return CompletableFuture.completedFuture(testResult);
     }
