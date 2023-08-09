@@ -39,7 +39,7 @@ public class MemberEntity extends BaseTimeEntity {
             this.nickname = modificationInfo.getNickname();
         }
 
-        if (modificationInfo.getOriginalImage() != null) {
+        if (modificationInfo.getOriginalImage() != null && modificationInfo.getThumbnailImage() != null) {
             this.profileImage = new ProfileImage(modificationInfo.getOriginalImage(), modificationInfo.getThumbnailImage());
         }
     }
