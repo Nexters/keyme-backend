@@ -9,8 +9,9 @@ import java.util.List;
 public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Query(
         "select qb.questionBundleId.question from QuestionBundle qb " +
-            "join fetch qb.questionBundleId.question q " +
             "where qb.questionBundleId.test.testId = :testId"
     )
     List<Question> findAllQuestionByTestId(Long testId);
+
+    List<Question> findAllByIsOnboarding(Boolean isOnboarding);
 }
