@@ -31,16 +31,15 @@ public class TestController {
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<TestDetailResponse>> getOnboardingTest(@RequestUser UserInfo requestUser) {
         TestDetailResponse testDetailResponse = testService.getOrCreateOnboardingTest(requestUser.getMemberId());
-        return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, testDetailResponse) );
+        return ResponseEntity.ok(new ApiResponse(testDetailResponse) );
     }
 
     @GetMapping("/daily")
-    @ApiOperation(value = "오늘의 테스트 가져오기")
     @ApiOperation(value = "내 데일리 테스트 가져오기")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<TestDetailResponse>> getDailyTest(@RequestUser UserInfo requestUser) {
         TestDetailResponse testDetailResponse = testService.getOrCreateDailyTest(requestUser.getMemberId());
-        return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, testDetailResponse) );
+        return ResponseEntity.ok(new ApiResponse(testDetailResponse) );
     }
 
     @GetMapping("/{id}")
@@ -51,7 +50,7 @@ public class TestController {
         @PathVariable("id") Long testId
     ) {
         TestDetailResponse testDetailResponse = testService.getSpecificTest(requestUser.getMemberId(), testId);
-        return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, testDetailResponse) );
+        return ResponseEntity.ok(new ApiResponse(testDetailResponse) );
     }
 
     @GetMapping("/{id}/statistics")
@@ -62,7 +61,7 @@ public class TestController {
         @PathVariable("id") Long testId
     ) {
         SingleTestStatisticsResponse testStatisticsResponse = testService.getTestStatistics(requestUser.getMemberId(), testId);
-        return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, testStatisticsResponse) );
+        return ResponseEntity.ok(new ApiResponse(testStatisticsResponse) );
     }
 
     // Not MMVP
@@ -84,7 +83,7 @@ public class TestController {
         @RequestBody TestSubmissionRequest requestBody
     ) {
         TestSubmitResponse testSubmitResponse = testService.createTestResult(userInfo.getMemberId(), testId, requestBody);
-        return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, testSubmitResponse) );
+        return ResponseEntity.ok(new ApiResponse(testSubmitResponse) );
     }
 
     @GetMapping("/{id}/result/{resultId}")
@@ -96,7 +95,7 @@ public class TestController {
         @PathVariable("resultId") Long resultId
     ) {
         TestResultResponse testResultResponse = testService.getTestResult(testId, resultId);
-        return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, testResultResponse) );
+        return ResponseEntity.ok(new ApiResponse(testResultResponse) );
     }
 
     @GetMapping("/{id}/solved-members")
