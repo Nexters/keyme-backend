@@ -21,7 +21,6 @@ public class TestResultController {
 
     @PostMapping("/regist")
     @ApiOperation(value = "익명 유저로 푼 결과 유저에 귀속")
-    @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse> mappingResultToUser(
         @RequestUser UserInfo userInfo,
         @RequestBody TestRegistRequest requestBody

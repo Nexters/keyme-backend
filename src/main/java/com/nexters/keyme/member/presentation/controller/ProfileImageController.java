@@ -25,7 +25,6 @@ public class ProfileImageController {
 
     @PostMapping
     @ApiOperation(value = "프로필 이미지 업로드")
-    @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<ImageResponse>> uploadImage(@RequestPart MultipartFile image) {
         ImageResponse response = memberService.uploadImage(image);
         return ResponseEntity.ok(new ApiResponse<>(response));

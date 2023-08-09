@@ -1,6 +1,7 @@
 package com.nexters.keyme.member.presentation.controller;
 
 import com.nexters.keyme.auth.domain.internaldto.UserInfo;
+import com.nexters.keyme.common.annotation.ApiSecurityIgnore;
 import com.nexters.keyme.common.annotation.RequestUser;
 import com.nexters.keyme.common.dto.response.ApiResponse;
 import com.nexters.keyme.member.application.MemberService;
@@ -26,7 +27,6 @@ public class MemberController {
 
     @GetMapping("/{memberId}")
     @ApiOperation(value = "회원 정보 보기")
-    @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<MemberResponse>> getMemberInfo(@PathVariable(name = "memberId") Long memberId) {
         MemberResponse response = memberService.getMemberInfo(memberId);
         return ResponseEntity.ok(new ApiResponse<>(response));
@@ -34,6 +34,7 @@ public class MemberController {
 
     @GetMapping("/verify-nickname")
     @ApiOperation("닉네임 중복 확인")
+    @ApiSecurityIgnore
     public ResponseEntity<ApiResponse<NicknameVerificationResponse>> verifyNickname(NicknameVerificationRequest request) {
         NicknameVerificationResponse response = memberService.verifyNickname(request);
         return ResponseEntity.ok(new ApiResponse<>(response));
@@ -41,7 +42,6 @@ public class MemberController {
 
     @PatchMapping
     @ApiOperation("회원 정보 수정")
-    @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<MemberResponse>> modifyMemberInfo(@RequestBody MemberModificationRequest request, @RequestUser UserInfo userInfo) {
         MemberResponse response = memberService.modifyMemberInfo(request, userInfo);
         return ResponseEntity.ok(new ApiResponse<>(response));
