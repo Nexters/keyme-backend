@@ -1,6 +1,7 @@
 package com.nexters.keyme.clienttest.presentation.controller;
 
 import com.nexters.keyme.auth.domain.internaldto.UserInfo;
+import com.nexters.keyme.clienttest.application.ClientTestService;
 import com.nexters.keyme.common.annotation.RequestUser;
 import com.nexters.keyme.common.dto.response.ApiResponse;
 import io.swagger.annotations.Api;
@@ -17,6 +18,7 @@ import static com.nexters.keyme.common.config.SwaggerConfig.SWAGGER_AUTHORIZATIO
 @RequestMapping("/clienttest")
 @RequiredArgsConstructor
 public class ClientTestController {
+    private final ClientTestService clientTestService;
 
     @GetMapping
     public void hi() { }
@@ -41,5 +43,13 @@ public class ClientTestController {
     @ApiOperation(value = "백엔드용")
     public ResponseEntity<ApiResponse> addMockQuesetion() {
         return null;
+    }
+
+    @DeleteMapping("/member")
+    @ApiOperation(value = "멤버 정보 삭제")
+    @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
+    public ResponseEntity<ApiResponse> deleteMember(@RequestUser UserInfo userInfo) {
+        clientTestService.clearMember(userInfo.getMemberId());
+        return ResponseEntity.ok(new ApiResponse("SUCCESS", "멤버가 삭제되었습니다.", null));
     }
 }
