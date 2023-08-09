@@ -40,12 +40,7 @@ public class Question extends BaseTimeEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<QuestionSolved> questionSolvedList = new ArrayList<>();
 
-    public QuestionResponse toQuestionResponse() {
-        return QuestionResponse.builder()
-                .questionId(this.questionId)
-                .description(this.description)
-                .keyword(this.keyword)
-                .category(new QuestionCategoryResponse(this.categoryName))
-                .build();
+    public Question(Long questionId) {
+        this.questionId = questionId;
     }
 }
