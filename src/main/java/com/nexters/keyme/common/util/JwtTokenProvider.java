@@ -30,7 +30,7 @@ public class JwtTokenProvider {
             .setIssuedAt(now)
             .setExpiration(expiryDate);
     claims.put("memberId", memberId);
-    claims.put("role", AuthRole.ROLE_USER.name());
+    claims.put("role", AuthRole.USER.role());
 
     String jwt = Jwts.builder()
             .setHeaderParam("typ", "JWT")

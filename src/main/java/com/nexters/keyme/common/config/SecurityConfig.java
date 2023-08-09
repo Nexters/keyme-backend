@@ -1,13 +1,16 @@
 package com.nexters.keyme.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nexters.keyme.common.enums.AuthRole;
 import com.nexters.keyme.common.security.exception.RestAuthenticationEntryPoint;
+import com.nexters.keyme.common.security.filter.AnonymousAuthenticationFilter;
 import com.nexters.keyme.common.security.filter.AuthorizationExceptionFilter;
 import com.nexters.keyme.common.security.filter.JwtAuthenticationFilter;
 import com.nexters.keyme.common.security.provider.AuthenticationTokenProvider;
 import com.nexters.keyme.common.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -38,10 +41,10 @@ public class SecurityConfig {
             .formLogin().disable()
             .httpBasic().disable()
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, authenticationTokenProvider), UsernamePasswordAuthenticationFilter.class)
-            .addFilterBefore(new AuthorizationExceptionFilter(objectMapper), JwtAuthenticationFilter.class)
+            .addFilterBefore(new AnonymousAuthenticationFilter(), JwtAuthenticationFilter.class)
+            .addFilterBefore(new AuthorizationExceptionFilter(objectMapper), AnonymousAuthenticationFilter.class)
             .exceptionHandling()
             .authenticationEntryPoint(new RestAuthenticationEntryPoint());
-
 
     http.authorizeRequests()
             .antMatchers(
@@ -56,14 +59,11 @@ public class SecurityConfig {
                     "/v3/api-docs/**",
                     "/swagger-ui/**")
             .permitAll()
-            .antMatchers(
-                    "/hello",
-                    "/hello/error",
-                    "/auth/login"
-            )
-            .permitAll()
-            .anyRequest()
-            .authenticated();
+            .antMatchers("/auth/login").permitAll()
+            .antMatchers(HttpMethod.GET, "/tests/{id}").permitAll()
+            .antMatchers(HttpMethod.POST, "/tests/{id}/submit").permitAll()
+            .anyRequest().hasRole(AuthRole.USER.name());
+    //  AccessDeniedHandler 추가 필요
 
     return http.build();
   }

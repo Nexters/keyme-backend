@@ -1,6 +1,11 @@
 package com.nexters.keyme.common.enums;
 
 public enum AuthRole {
-  ROLE_USER,
-  ROLE_ADMIN
+  ANONYMOUS,
+  USER,
+  ADMIN;
+
+  public String role() {
+    return "ROLE_" + this.name();
+  }
 }
