@@ -3,7 +3,6 @@ package com.nexters.keyme.test.presentation.controller;
 import com.nexters.keyme.auth.domain.internaldto.UserInfo;
 import com.nexters.keyme.common.annotation.RequestUser;
 import com.nexters.keyme.common.dto.response.ApiResponse;
-import com.nexters.keyme.question.presentation.dto.response.QuestionResponse;
 import com.nexters.keyme.test.application.TestService;
 import com.nexters.keyme.test.presentation.dto.request.TestListRequest;
 import com.nexters.keyme.test.presentation.dto.request.TestResultRequest;
@@ -17,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static com.nexters.keyme.common.config.SwaggerConfig.SWAGGER_AUTHORIZATION_SCHEME;
@@ -29,47 +27,43 @@ import static com.nexters.keyme.common.config.SwaggerConfig.SWAGGER_AUTHORIZATIO
 public class TestController {
     final private TestService testService;
 
+    @GetMapping("/onboarding")
+    @ApiOperation(value = "내 온보딩 테스트 가져오기 (모바일 전용 API)")
+    @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
+    public ResponseEntity<ApiResponse<TestDetailResponse>> getOnboardingTest(@RequestUser UserInfo requestUser) {
+        TestDetailResponse testDetailResponse = testService.getOrCreateOnboardingTest(requestUser.getMemberId());
+        return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, testDetailResponse) );
+    }
+
     @GetMapping("/daily")
     @ApiOperation(value = "내 데일리 테스트 가져오기")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
-    public ResponseEntity<ApiResponse<QuestionsInTestResponse>> getDailyTest(@RequestUser UserInfo requestUser) {
-        return ResponseEntity.ok(
-            new ApiResponse<QuestionsInTestResponse>(HttpStatus.OK ,new QuestionsInTestResponse(1L, false, Arrays.asList(
-                new QuestionResponse(1L, "공부를 잘 할 것 같다", "공부",  null),
-                new QuestionResponse(2L, "밥을 좋아할 것 같다", "밥",  null),
-                new QuestionResponse(3L, "커피를 사랑할 것 같다", "천재",  null)
-            )))
-        );
-    }
-
-    @GetMapping("/onboarding")
-    @ApiOperation(value = "내 온보딩 테스트 가져오기")
-    public ResponseEntity<ApiResponse<QuestionsInTestResponse>> getOnboardingTest() {
-        return ResponseEntity.ok(
-            new ApiResponse<QuestionsInTestResponse>(HttpStatus.OK ,new QuestionsInTestResponse(1L, false, Arrays.asList(
-                new QuestionResponse(1L, "공부를 잘 할 것 같다", "공부",  null),
-                new QuestionResponse(2L, "밥을 좋아할 것 같다", "밥",  null),
-                new QuestionResponse(3L, "커피를 사랑할 것 같다", "천재",  null)
-            )))
-        );
+    public ResponseEntity<ApiResponse<TestDetailResponse>> getDailyTest(@RequestUser UserInfo requestUser) {
+        TestDetailResponse testDetailResponse = testService.getOrCreateDailyTest(requestUser.getMemberId());
+        return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, testDetailResponse) );
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "testId 기반으로 테스트 가져오기")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
-    public ResponseEntity<ApiResponse<QuestionsInTestResponse>> getTest(
+    public ResponseEntity<ApiResponse<TestDetailResponse>> getTest(
         @RequestUser UserInfo requestUser,
         @PathVariable("id") Long testId
     ) {
-        return ResponseEntity.ok(
-            new ApiResponse<QuestionsInTestResponse>(HttpStatus.OK, new QuestionsInTestResponse(1L, false, Arrays.asList(
-                new QuestionResponse(1L, "공부를 잘 할 것 같다", "공부",  null),
-                new QuestionResponse(2L, "밥을 좋아할 것 같다", "밥",  null),
-                new QuestionResponse(3L, "커피를 사랑할 것 같다", "천재",  null)
-            )))
-        );
+        TestDetailResponse testDetailResponse = testService.getSpecificTest(requestUser.getMemberId(), testId);
+        return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, testDetailResponse) );
     }
 
+    @GetMapping("/{id}/statistics")
+    @ApiOperation(value = "해당 테스트의 통계정보 가져오기")
+    @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
+    public ResponseEntity<ApiResponse<SingleTestStatisticsResponse>> getTestStatistics(
+        @RequestUser UserInfo requestUser,
+        @PathVariable("id") Long testId
+    ) {
+        SingleTestStatisticsResponse testStatisticsResponse = testService.getTestStatistics(requestUser.getMemberId(), testId);
+        return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, testStatisticsResponse) );
+    }
 
     // Not MMVP
     @GetMapping
@@ -79,33 +73,30 @@ public class TestController {
         @RequestUser UserInfo requestUser,
         TestListRequest requestParameters
     ) {
-        return ResponseEntity.ok(
-            new ApiResponse<List<TestFeedResponse>>(HttpStatus.OK, Arrays.asList( new TestFeedResponse(
-                1L, 10, "공부를 잘 할 것 같다",
-                new TestSimpleMemberResponse(),
-                new TestResultRateResponse()
-            )))
-        );
+        return null;
     }
 
     @PostMapping("/{id}/submit")
     @ApiOperation(value = "테스트 제출")
-    public ResponseEntity<ApiResponse<TestResultResponse>> submitTest(
+    public ResponseEntity<ApiResponse<TestSubmitResponse>> submitTest(
+        @RequestUser UserInfo userInfo,
         @PathVariable("id") Long testId,
         @RequestBody TestSubmissionRequest requestBody
     ) {
-        return null;
+        TestSubmitResponse testSubmitResponse = testService.createTestResult(userInfo.getMemberId(), testId, requestBody);
+        return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, testSubmitResponse) );
     }
 
-    @GetMapping("/{id}/result")
+    @GetMapping("/{id}/result/{resultId}")
     @ApiOperation(value = "해당 테스트의 결과 가져오기")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<TestResultResponse>> getResult(
         @RequestUser UserInfo userInfo,
         @PathVariable("id") Long testId,
-        TestResultRequest requestParameters
+        @PathVariable("resultId") Long resultId
     ) {
-        return null;
+        TestResultResponse testResultResponse = testService.getTestResult(testId, resultId);
+        return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, testResultResponse) );
     }
 
     @GetMapping("/{id}/solved-members")
