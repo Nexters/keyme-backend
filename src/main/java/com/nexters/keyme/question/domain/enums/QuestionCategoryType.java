@@ -1,5 +1,6 @@
 package com.nexters.keyme.question.domain.enums;
 
+import com.nexters.keyme.question.presentation.dto.response.QuestionCategoryResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -20,5 +21,5 @@ public enum QuestionCategoryType {
     개인적_성향("222222", "https://keyme-ec2-access-s3.s3.ap-northeast-2.amazonaws.com/test_star.png");
 
     private String colorCode;
-    private String iamgeUrl;
+    private String imageUrl;
 }
