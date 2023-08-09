@@ -11,7 +11,9 @@ public enum ErrorCode {
 
     ACCESS_DENIED(403, "접근 권한이 없습니다."),
 
-    RESOURCE_NOT_FOUND(404, "대상을 찾을 수 없습니다.");
+    RESOURCE_NOT_FOUND(404, "대상을 찾을 수 없습니다."),
+
+    RESOURCE_ALREADY_EXIST(409, "리소스가 이미 존재합니다.");
 
     private final int statusCode;
     private final String message;
