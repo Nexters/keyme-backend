@@ -43,7 +43,7 @@ public class MemberController {
     @PatchMapping
     @ApiOperation("회원 정보 수정")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
-    public ResponseEntity<ApiResponse<MemberResponse>> verifyNickname(MemberModificationRequest request, @RequestUser UserInfo userInfo) {
+    public ResponseEntity<ApiResponse<MemberResponse>> verifyNickname(@RequestBody MemberModificationRequest request, @RequestUser UserInfo userInfo) {
         MemberResponse response = memberService.modifyMemberInfo(request, userInfo);
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK, "SUCCESS", response));
     }

@@ -18,6 +18,7 @@ import com.nexters.keyme.member.presentation.dto.response.NicknameVerificationRe
 import com.nexters.keyme.member.presentation.dto.response.MemberResponse;
 import com.nexters.keyme.member.presentation.dto.response.MemberWithTokenResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
@@ -71,6 +73,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public MemberResponse modifyMemberInfo(MemberModificationRequest request, UserInfo userInfo) {
         MemberModificationInfo modificationInfo = MemberModificationInfo.builder()
                 .nickname(request.getNickname())
