@@ -10,7 +10,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,20 +37,20 @@ public class FriendController {
                 .thumbnailUrl("thumbnail url")
                 .build();
 
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK, "SUCCESS", List.of(response)));
+        return ResponseEntity.ok(new ApiResponse<>(List.of(response)));
     }
 
     @PostMapping("/request")
     @ApiOperation(value = "친구 추가 요청 보내기")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse> addFriend(FriendAddRequest request) {
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK, "친구 추가 요청이 완료되었습니다.", null));
+        return ResponseEntity.ok(new ApiResponse<>(null));
     }
 
     @PostMapping("/response")
     @ApiOperation(value = "친구 추가 요청 응답하기")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse> acceptFriend(FriendAcceptRequest request) {
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK, "친구 추가 요청이 완료되었습니다.", null));
+        return ResponseEntity.ok(new ApiResponse<>(null));
     }
 }

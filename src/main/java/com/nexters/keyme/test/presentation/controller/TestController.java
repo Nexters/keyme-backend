@@ -12,7 +12,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +35,7 @@ public class TestController {
     }
 
     @GetMapping("/daily")
+    @ApiOperation(value = "오늘의 테스트 가져오기")
     @ApiOperation(value = "내 데일리 테스트 가져오기")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<TestDetailResponse>> getDailyTest(@RequestUser UserInfo requestUser) {
