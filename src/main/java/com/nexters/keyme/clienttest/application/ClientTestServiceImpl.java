@@ -12,7 +12,6 @@ import java.util.Arrays;
 @Service
 @RequiredArgsConstructor
 public class ClientTestServiceImpl implements ClientTestService {
-    final private QuestionRepository questionRepository;
 
     @Override
     public void deleteIssuedOnboardingTest(Long memberId) {
