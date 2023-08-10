@@ -17,6 +17,18 @@ public class Statistic {
     private long ownerId;
     private long questionId;
     private long solverCount;
-    private double solverAverage;
+    private int ownerScore;
+    private double solverAvgScore;
     private double matchRate;
+
+    void addNewScore(int score) {
+        solverCount += 1;
+        solverAvgScore = (solverAvgScore + score) / solverCount;
+        matchRate = calculateMatchRate(ownerScore, solverAvgScore);
+    }
+
+    private double calculateMatchRate(int ownerScore, double solverAvgScore) {
+        double diff = Math.abs(ownerScore - solverAvgScore);
+        return 100 / (diff + 1);
+    }
 }
