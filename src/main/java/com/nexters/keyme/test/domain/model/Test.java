@@ -20,7 +20,7 @@ public class Test extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long testId;
 
-    @Column(columnDefinition = "tinyint(1)")
+    @Column(columnDefinition = "bit")
     @ColumnDefault("0")
     private Boolean isOnboarding;
 
