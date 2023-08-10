@@ -19,7 +19,7 @@ import static com.nexters.keyme.common.config.SwaggerConfig.SWAGGER_AUTHORIZATIO
 @RequiredArgsConstructor
 public class TestResultController {
 
-    @PostMapping("/regist")
+    @PostMapping("/register")
     @ApiOperation(value = "익명 유저로 푼 결과 유저에 귀속")
     public ResponseEntity<ApiResponse> mappingResultToUser(
         @RequestUser UserInfo userInfo,
