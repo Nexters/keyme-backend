@@ -5,6 +5,7 @@ import com.nexters.keyme.member.domain.model.MemberEntity;
 import com.nexters.keyme.question.domain.model.QuestionBundle;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,7 +20,8 @@ public class Test extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long testId;
 
-    @Column(columnDefinition = "boolean default false")
+    @Column(columnDefinition = "tinyint(1)")
+    @ColumnDefault("0")
     private Boolean isOnboarding;
 
     @ManyToOne(fetch = FetchType.LAZY)
