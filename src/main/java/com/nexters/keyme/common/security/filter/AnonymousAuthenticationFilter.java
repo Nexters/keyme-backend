@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.method.HandlerMethod;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -23,8 +24,9 @@ import static com.nexters.keyme.common.config.WebMvcConfig.AUTHORIZATION_HEADER;
 public class AnonymousAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
         String authorizationHeader = request.getHeader(AUTHORIZATION_HEADER);
-        if (authorizationHeader == null || authorizationHeader.isEmpty()) {
+        if (authorizationHeader == null || authorizationHeader.isEmpty() || authorizationHeader.startsWith("Anonymous")) {
             // 익명 토큰 저장
             GrantedAuthority anonymousRole = new SimpleGrantedAuthority(AuthRole.ANONYMOUS.name());
             Authentication anonymous = new JwtAuthenticationToken(new UserInfo(null), "", Arrays.asList(anonymousRole));

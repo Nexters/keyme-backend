@@ -15,8 +15,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ApiResponse<>(ErrorCode.ACCESS_DENIED));
     }
 
-    @ExceptionHandler(AuthorizationFailedException.class)
-    public ResponseEntity<ApiResponse> handleAuthorizationFailedException(AuthorizationFailedException e) {
+    @ExceptionHandler(AuthenticationFailedException.class)
+    public ResponseEntity<ApiResponse> handleAuthorizationFailedException(AuthenticationFailedException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse(ErrorCode.UNAUTHORIZED.name(), e.getMessage(), null));
     }
 
