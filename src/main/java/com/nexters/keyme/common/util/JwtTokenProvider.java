@@ -1,7 +1,7 @@
 package com.nexters.keyme.common.util;
 
 import com.nexters.keyme.common.enums.AuthRole;
-import com.nexters.keyme.common.exceptions.AuthorizationFailedException;
+import com.nexters.keyme.common.exceptions.AuthenticationFailedException;
 import com.nexters.keyme.common.exceptions.errorcode.ErrorCode;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class JwtTokenProvider {
             .setIssuedAt(now)
             .setExpiration(expiryDate);
     claims.put("memberId", memberId);
-    claims.put("role", AuthRole.ROLE_USER.name());
+    claims.put("role", AuthRole.USER.role());
 
     String jwt = Jwts.builder()
             .setHeaderParam("typ", "JWT")
@@ -91,16 +91,16 @@ public class JwtTokenProvider {
       return parser.parseClaimsJws(token).getBody();
     } catch (MalformedJwtException e) {
       log.info("Invalid JWT token");
-      throw new AuthorizationFailedException(ErrorCode.TOKEN_INVALID);
+      throw new AuthenticationFailedException(ErrorCode.TOKEN_INVALID);
     } catch (ExpiredJwtException e) {
       log.info("Expired JWT token");
-      throw new AuthorizationFailedException(ErrorCode.TOKEN_EXPIRED);
+      throw new AuthenticationFailedException(ErrorCode.TOKEN_EXPIRED);
     } catch (UnsupportedJwtException e) {
       log.info("Unsupported JWT token");
-      throw new AuthorizationFailedException(ErrorCode.TOKEN_INVALID);
+      throw new AuthenticationFailedException(ErrorCode.TOKEN_INVALID);
     } catch (IllegalArgumentException e) {
       log.info("JWT claims string is empty.");
-      throw new AuthorizationFailedException(ErrorCode.UNAUTHORIZED);
+      throw new AuthenticationFailedException(ErrorCode.UNAUTHORIZED);
     }
   }
 }

@@ -18,7 +18,7 @@ public class TestResultAsyncDataProvider {
 
     @Async
     public CompletableFuture<Optional<TestResult>> asyncFindByTestAndSolver(Test test, MemberEntity member) {
-        if (member == null) return null;
+        if (member == null) CompletableFuture.completedFuture(null);
 
         Optional<TestResult> testResult = testResultRepository.findByTestAndSolver(test, member);
 

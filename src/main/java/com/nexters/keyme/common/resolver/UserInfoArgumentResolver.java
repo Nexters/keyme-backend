@@ -2,6 +2,7 @@ package com.nexters.keyme.common.resolver;
 
 import com.nexters.keyme.auth.domain.internaldto.UserInfo;
 import com.nexters.keyme.common.annotation.RequestUser;
+import com.nexters.keyme.common.exceptions.AccessDeniedException;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -22,7 +23,7 @@ public class UserInfoArgumentResolver implements HandlerMethodArgumentResolver {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (!(principal instanceof UserInfo)) {
-            return null;
+            return new UserInfo(null);
         }
 
         return principal;

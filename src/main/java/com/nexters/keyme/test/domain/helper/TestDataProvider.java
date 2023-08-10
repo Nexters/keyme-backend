@@ -12,6 +12,7 @@ import com.nexters.keyme.test.domain.repository.TestRepository;
 import com.nexters.keyme.test.presentation.dto.response.TestDetailResponse;
 import com.nexters.keyme.test.presentation.dto.response.TestSimpleMemberResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class TestDataProvider {
     final private TestResultAsyncDataProvider testResultAsyncDataProvider;
     final private QuestionAsyncDataProvider questionAsyncDataProvider;
@@ -37,7 +39,7 @@ public class TestDataProvider {
         CompletableFuture<List<Question>> questionListFuture = questionAsyncDataProvider.asyncFindAllQuestionByTestId(testId);
 
         return questionListFuture.thenCombine(testResultFuture, (questionList, testResultOpt) -> {
-            Long testResultId = testResultOpt.isPresent() ? testResultOpt.get().getTestResultId() : null;
+            Long testResultId = testResultOpt.map(ts -> ts.getTestResultId()).orElse(null);
             List<QuestionResponse> questionResponseList = questionList.stream()
                     .map(QuestionResponse::new)
                     .collect(Collectors.toList());

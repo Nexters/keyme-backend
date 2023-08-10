@@ -2,12 +2,12 @@ package com.nexters.keyme.common.exceptions;
 
 import com.nexters.keyme.common.exceptions.errorcode.ErrorCode;
 
-public class AuthorizationFailedException extends RuntimeException {
-    public AuthorizationFailedException() {
+public class AuthenticationFailedException extends RuntimeException {
+    public AuthenticationFailedException() {
         super(ErrorCode.UNAUTHORIZED.message());
     }
 
-    public AuthorizationFailedException(ErrorCode errorCode) {
+    public AuthenticationFailedException(ErrorCode errorCode) {
         super(errorCode.message());
     }
 }

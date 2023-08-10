@@ -5,19 +5,16 @@ import com.nexters.keyme.common.annotation.RequestUser;
 import com.nexters.keyme.common.dto.response.ApiResponse;
 import com.nexters.keyme.test.application.TestService;
 import com.nexters.keyme.test.presentation.dto.request.TestListRequest;
-import com.nexters.keyme.test.presentation.dto.request.TestResultRequest;
 import com.nexters.keyme.test.presentation.dto.request.TestSubmissionRequest;
 import com.nexters.keyme.test.presentation.dto.response.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import static com.nexters.keyme.common.config.SwaggerConfig.SWAGGER_AUTHORIZATION_SCHEME;
 
 @Api(tags = "테스트", description = "테스트/결과 관련 API")
 @RestController
@@ -28,7 +25,6 @@ public class TestController {
 
     @GetMapping("/onboarding")
     @ApiOperation(value = "내 온보딩 테스트 가져오기 (모바일 전용 API)")
-    @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<TestDetailResponse>> getOnboardingTest(@RequestUser UserInfo requestUser) {
         TestDetailResponse testDetailResponse = testService.getOrCreateOnboardingTest(requestUser.getMemberId());
         return ResponseEntity.ok(new ApiResponse(testDetailResponse) );
@@ -36,7 +32,6 @@ public class TestController {
 
     @GetMapping("/daily")
     @ApiOperation(value = "내 데일리 테스트 가져오기")
-    @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<TestDetailResponse>> getDailyTest(@RequestUser UserInfo requestUser) {
         TestDetailResponse testDetailResponse = testService.getOrCreateDailyTest(requestUser.getMemberId());
         return ResponseEntity.ok(new ApiResponse(testDetailResponse) );
@@ -44,7 +39,6 @@ public class TestController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "testId 기반으로 테스트 가져오기")
-    @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<TestDetailResponse>> getTest(
         @RequestUser UserInfo requestUser,
         @PathVariable("id") Long testId
@@ -55,7 +49,6 @@ public class TestController {
 
     @GetMapping("/{id}/statistics")
     @ApiOperation(value = "해당 테스트의 통계정보 가져오기")
-    @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<SingleTestStatisticsResponse>> getTestStatistics(
         @RequestUser UserInfo requestUser,
         @PathVariable("id") Long testId
@@ -67,7 +60,6 @@ public class TestController {
     // Not MMVP
     @GetMapping
     @ApiOperation(value = "테스트 리스트 가져오기")
-    @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<List<TestFeedResponse>>> getTestList(
         @RequestUser UserInfo requestUser,
         TestListRequest requestParameters
@@ -88,7 +80,6 @@ public class TestController {
 
     @GetMapping("/{id}/result/{resultId}")
     @ApiOperation(value = "해당 테스트의 결과 가져오기")
-    @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<TestResultResponse>> getResult(
         @RequestUser UserInfo userInfo,
         @PathVariable("id") Long testId,
@@ -100,7 +91,6 @@ public class TestController {
 
     @GetMapping("/{id}/solved-members")
     @ApiOperation(value = "해당 테스트를 푼 유저리스트")
-    @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public void getSolvedMembers(
         @PathVariable("id") Long testId
     ) { }
