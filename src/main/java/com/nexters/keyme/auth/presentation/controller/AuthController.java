@@ -3,6 +3,7 @@ package com.nexters.keyme.auth.presentation.controller;
 
 import com.nexters.keyme.auth.presentation.dto.request.LoginRequest;
 import com.nexters.keyme.auth.application.AuthService;
+import com.nexters.keyme.common.annotation.ApiSecurityIgnore;
 import com.nexters.keyme.member.presentation.dto.response.MemberWithTokenResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +22,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @ApiOperation(value = "회원가입/로그인 API")
+    @ApiSecurityIgnore
     public MemberWithTokenResponse signUpOrSignIn(@RequestBody LoginRequest request) {
         return authService.getMemberWithToken(request);
     }

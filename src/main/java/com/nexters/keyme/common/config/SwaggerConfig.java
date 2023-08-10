@@ -1,5 +1,6 @@
 package com.nexters.keyme.common.config;
 
+import com.nexters.keyme.common.annotation.ApiSecurityIgnore;
 import com.nexters.keyme.common.annotation.RequestUser;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.context.annotation.Bean;
@@ -48,7 +49,7 @@ public class SwaggerConfig {
     private SecurityContext securityContext() {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
-                .operationSelector(this::isSecuredOperation)
+                .operationSelector(this::isSecurityOperation)
                 .build();
     }
 
@@ -63,7 +64,7 @@ public class SwaggerConfig {
                 .name(SWAGGER_AUTHORIZATION_SCHEME).build();
     }
 
-    private boolean isSecuredOperation(OperationContext operationContext) {
-        return operationContext.findAnnotation(SecurityRequirement.class).isPresent();
+    private boolean isSecurityOperation(OperationContext operationContext) {
+        return operationContext.findAnnotation(ApiSecurityIgnore.class).isEmpty();
     }
 }

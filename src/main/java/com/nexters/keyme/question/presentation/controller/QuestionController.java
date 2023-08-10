@@ -17,11 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class QuestionController {
 
-    // 하나의 question 정보
     @GetMapping("/{id}")
     @ApiOperation(value = "질문 정보 가져오기")
-    public ResponseEntity<ApiResponse<QuestionResponse>> questionDetail(@PathVariable("id") Long questinoId) {
+    public ResponseEntity<ApiResponse<QuestionResponse>> questionDetail(@PathVariable("id") Long questionid) {
         return ResponseEntity
                 .ok(new ApiResponse<>(new QuestionResponse()));
+    }
+
+    @GetMapping("/{id}/solved-members")
+    public ResponseEntity<ApiResponse> questionSolved(Long questionid, Long solverId) {
+        return null;
     }
 }

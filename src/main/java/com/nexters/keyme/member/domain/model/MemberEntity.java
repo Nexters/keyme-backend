@@ -21,10 +21,10 @@ public class MemberEntity extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name="member_oauth_id")
     private List<MemberOAuth> memberOauth;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name="member_device_id")
     private List<MemberDevice> memberDevice;
 
@@ -35,7 +35,12 @@ public class MemberEntity extends BaseTimeEntity {
     private ProfileImage profileImage;
 
     public void modifyMemberInfo(MemberModificationInfo modificationInfo) {
-        this.nickname = modificationInfo.getNickname();
-        this.profileImage = new ProfileImage(modificationInfo.getOriginalImage(), modificationInfo.getThumbnailImage());
+        if (modificationInfo.getNickname() != null) {
+            this.nickname = modificationInfo.getNickname();
+        }
+
+        if (modificationInfo.getOriginalImage() != null && modificationInfo.getThumbnailImage() != null) {
+            this.profileImage = new ProfileImage(modificationInfo.getOriginalImage(), modificationInfo.getThumbnailImage());
+        }
     }
 }
