@@ -1,10 +1,8 @@
 package com.nexters.keyme.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nexters.keyme.common.enums.AuthRole;
 import com.nexters.keyme.common.security.exception.RestAuthenticationEntryPoint;
-import com.nexters.keyme.common.security.filter.AnonymousAuthenticationFilter;
-import com.nexters.keyme.common.security.filter.AuthorizationExceptionFilter;
+import com.nexters.keyme.common.security.filter.AuthenticationExceptionFilter;
 import com.nexters.keyme.common.security.filter.JwtAuthenticationFilter;
 import com.nexters.keyme.common.security.provider.AuthenticationTokenProvider;
 import com.nexters.keyme.common.util.JwtTokenProvider;
@@ -41,8 +39,7 @@ public class SecurityConfig {
             .formLogin().disable()
             .httpBasic().disable()
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, authenticationTokenProvider), UsernamePasswordAuthenticationFilter.class)
-            .addFilterBefore(new AnonymousAuthenticationFilter(), JwtAuthenticationFilter.class)
-            .addFilterBefore(new AuthorizationExceptionFilter(objectMapper), AnonymousAuthenticationFilter.class)
+            .addFilterBefore(new AuthenticationExceptionFilter(objectMapper), JwtAuthenticationFilter.class)
             .exceptionHandling()
             .authenticationEntryPoint(new RestAuthenticationEntryPoint());
 
@@ -59,11 +56,10 @@ public class SecurityConfig {
                     "/v3/api-docs/**",
                     "/swagger-ui/**")
             .permitAll()
+            .antMatchers(HttpMethod.GET, "/tests/daily", "/tests/onboarding").authenticated()
+            .antMatchers(HttpMethod.GET, "/tests/*").permitAll()
             .antMatchers("/auth/login").permitAll()
-            .antMatchers(HttpMethod.GET, "/tests/{id}").permitAll()
-            .antMatchers(HttpMethod.POST, "/tests/{id}/submit").permitAll()
-            .anyRequest().hasRole(AuthRole.USER.name());
-    //  AccessDeniedHandler 추가 필요
+            .anyRequest().authenticated();
 
     return http.build();
   }
