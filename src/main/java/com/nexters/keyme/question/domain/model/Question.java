@@ -27,7 +27,7 @@ public class Question extends BaseTimeEntity {
 
     private String description;
 
-    @Column(columnDefinition = "tinyint(1)")
+    @Column(columnDefinition = "bit")
     @ColumnDefault("0")
     private Boolean isOnboarding;
 
