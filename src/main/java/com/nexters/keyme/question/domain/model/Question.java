@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,7 +27,8 @@ public class Question extends BaseTimeEntity {
 
     private String description;
 
-    @Column(columnDefinition = "boolean default false")
+    @Column(columnDefinition = "tinyint(1)")
+    @ColumnDefault("0")
     private Boolean isOnboarding;
 
     private String keyword;
