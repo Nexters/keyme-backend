@@ -18,6 +18,7 @@ import com.nexters.keyme.question.presentation.dto.response.QuestionResponse;
 import com.nexters.keyme.question.presentation.dto.response.QuestionSolvedResponse;
 import com.nexters.keyme.question.presentation.dto.response.QuestionStatisticResponse;
 import com.nexters.keyme.test.domain.helper.TestDataProvider;
+import com.nexters.keyme.test.domain.helper.TestResultCodeProvider;
 import com.nexters.keyme.test.domain.internaldto.TestResultStatisticInfo;
 import com.nexters.keyme.test.domain.model.Test;
 import com.nexters.keyme.test.domain.model.TestResult;
@@ -42,13 +43,14 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TestServiceImpl implements TestService {
 
-    final private TestDataProvider testDataProvider;
-    final private TestRepository testRepository;
-    final private MemberRepository memberRepository;
-    final private TestResultRepository testResultRepository;
-    final private QuestionRepository questionRepository;
-    final private QuestionSolvedRepository questionSolvedRepository;
-    final private QuestionBundleRepository questionBundleRepository;
+    private final TestDataProvider testDataProvider;
+    private final MemberRepository memberRepository;
+    private final TestRepository testRepository;
+    private final TestResultRepository testResultRepository;
+    private final TestResultCodeProvider testResultCodeProvider;
+    private final QuestionRepository questionRepository;
+    private final QuestionSolvedRepository questionSolvedRepository;
+    private final QuestionBundleRepository questionBundleRepository;
 
     @Transactional
     @Override
@@ -206,8 +208,14 @@ public class TestServiceImpl implements TestService {
         questionSolvedRepository.saveAll(questionSolvedList);
         testResultRepository.save(testResult);
 
+        String resultCode = null;
+        if (solverId != null) {
+            resultCode = testResultCodeProvider.crateResultCode(testResult.getTestResultId());
+        }
+
         return TestSubmitResponse.builder()
                 .testResultId(testResult.getTestResultId())
+                .resultCode(resultCode)
                 .matchRate(matchRate)
                 .build();
     }
