@@ -173,14 +173,14 @@ public class TestServiceImpl implements TestService {
     @Transactional
     @Override
     public TestSubmitResponse createTestResult(Long solverId, Long testId, TestSubmissionRequest submitInfo) {
-        // FIXME : solver Optional로 래핑 - null일 수 있음을 명시
-        Optional<MemberEntity> member = memberRepository.findById(solverId);
         Test test = testRepository.findById(testId).orElseThrow(ResourceNotFoundException::new);
+        MemberEntity member = null;
 
         // FIXME : TestResult 이미 존재하는지 확인하는 로직 domain service로 분리
         // 익명유저가 아닌경우에만
-        if (member.isPresent()) {
-            Optional<TestResult> existTestResultOpt = testResultRepository.findByTestAndSolver(test, member.get());
+        if (solverId != null) {
+            member = memberRepository.findById(solverId).orElseThrow(ResourceNotFoundException::new);
+            Optional<TestResult> existTestResultOpt = testResultRepository.findByTestAndSolver(test, member);
             if (existTestResultOpt.isPresent()) {
                 log.error("Client Error : Test 결과가 이미 존재합니다.");
                 throw new ResourceAlreadyExistsException();
@@ -194,8 +194,10 @@ public class TestServiceImpl implements TestService {
         TestResult testResult = TestResult.builder()
                 .matchRate(matchRate)
                 .test(test)
-                .solver(member.orElse(null))
+                .solver(member)
                 .build();
+        testResultRepository.save(testResult);
+
         List<QuestionSolved> questionSolvedList = submitInfo.getResults().stream()
                 .map(questionResult -> QuestionSolved.builder()
                         .question(new Question(questionResult.getQuestionId()))
@@ -204,13 +206,12 @@ public class TestServiceImpl implements TestService {
                         .build()
                 )
                 .collect(Collectors.toList());
-
         questionSolvedRepository.saveAll(questionSolvedList);
-        testResultRepository.save(testResult);
+
 
         String resultCode = null;
-        if (solverId != null) {
-            resultCode = testResultCodeProvider.crateResultCode(testResult.getTestResultId());
+        if (solverId == null) {
+            resultCode = testResultCodeProvider.createResultCode(testResult.getTestResultId());
         }
 
         return TestSubmitResponse.builder()
