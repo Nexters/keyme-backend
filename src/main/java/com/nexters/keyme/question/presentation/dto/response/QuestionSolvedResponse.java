@@ -3,6 +3,7 @@ package com.nexters.keyme.question.presentation.dto.response;
 import com.nexters.keyme.question.domain.model.QuestionSolved;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -20,7 +21,7 @@ public class QuestionSolvedResponse extends QuestionResponse {
             questionSolved.getQuestion().getQuestionId(),
             questionSolved.getQuestion().getDescription(),
             questionSolved.getQuestion().getKeyword(),
-            new QuestionCategoryResponse(questionSolved.getQuestion().getCategory())
+            new QuestionCategoryResponse(questionSolved.getQuestion().getCategoryName())
         );
         this.score = questionSolved.getScore();
     }
