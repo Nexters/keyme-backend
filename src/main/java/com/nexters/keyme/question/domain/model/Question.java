@@ -2,6 +2,8 @@ package com.nexters.keyme.question.domain.model;
 
 import com.nexters.keyme.common.model.BaseTimeEntity;
 import com.nexters.keyme.question.domain.enums.QuestionCategoryType;
+import com.nexters.keyme.question.presentation.dto.response.QuestionCategoryResponse;
+import com.nexters.keyme.question.presentation.dto.response.QuestionResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,7 +32,7 @@ public class Question extends BaseTimeEntity {
     private String keyword;
 
     @Enumerated(EnumType.STRING)
-    private QuestionCategoryType category;
+    private QuestionCategoryType categoryName;
 
     @OneToMany(mappedBy = "questionBundleId.question", cascade = CascadeType.REMOVE)
     private List<QuestionBundle> questionBundleList = new ArrayList<>();
