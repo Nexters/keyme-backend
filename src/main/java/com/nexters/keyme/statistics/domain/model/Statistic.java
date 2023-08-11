@@ -1,4 +1,4 @@
-package com.nexters.keyme.statistics.domain;
+package com.nexters.keyme.statistics.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +24,13 @@ public class Statistic {
     private double solverAvgScore;
     private double matchRate;
 
-    void addNewScore(int score) {
+    public Statistic(long ownerId, long questionId, int ownerScore) {
+        this.ownerId = ownerId;
+        this.questionId = questionId;
+        this.ownerScore = ownerScore;
+    }
+
+    public void addNewScore(int score) {
         solverCount += 1;
         solverAvgScore = (solverAvgScore + score) / solverCount;
         matchRate = calculateMatchRate(ownerScore, solverAvgScore);
