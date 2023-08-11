@@ -1,6 +1,7 @@
 package com.nexters.keyme.statistics.domain.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Builder
 public class Statistic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

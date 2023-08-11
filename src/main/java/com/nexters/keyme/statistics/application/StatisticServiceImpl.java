@@ -29,8 +29,17 @@ public class StatisticServiceImpl implements StatisticService {
     private final QuestionRepository questionRepository;
     private final CoordinateConversionService conversionService;
 
+    @Transactional
+    @Async
+    @Override
     public void createStatistic(StatisticInfo statisticInfo) {
+        Statistic statistic = Statistic.builder()
+                .questionId(statisticInfo.getQuestionId())
+                .ownerId(statisticInfo.getOwnerId())
+                .ownerId(statisticInfo.getOwnerId())
+                .build();
 
+        statisticRepository.save(statistic);
     }
 
 
