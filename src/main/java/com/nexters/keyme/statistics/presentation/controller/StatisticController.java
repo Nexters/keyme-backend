@@ -19,13 +19,13 @@ import static com.nexters.keyme.common.config.SwaggerConfig.SWAGGER_AUTHORIZATIO
 @RestController
 @RequiredArgsConstructor
 @Api(tags = "마이페이지(통계)", description = "멤버 마이페이지 관련 API")
-public class StatisticsController {
+public class StatisticController {
     @GetMapping("/members/{memberId}/stataistics")
     @ApiOperation(value = "멤버의 성격 통계 보기")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<MemberStatisticResponse>> getMemberStatistic(@PathVariable(name = "memberId") Long memberId,
                                                                                    StatisticRequest request) {
-        CategoryResponse category = new CategoryResponse("정의로움", "11ACFF", "image Url");
+        CategoryResponse category = new CategoryResponse("정의로움", "11ACFF", "11ACFF",  "image Url");
         QuestionResponse question = new QuestionResponse(1L, "키미는 불의를 보면 참는다.", "불의왕", 4.2, category);
         CoordinateResponse coordinate = new CoordinateResponse(0.1213131, -0.242131, 0.12314);
         StatisticResultResponse result = new StatisticResultResponse(question, coordinate);
