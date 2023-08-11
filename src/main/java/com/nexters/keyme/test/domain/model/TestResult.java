@@ -3,10 +3,7 @@ package com.nexters.keyme.test.domain.model;
 import com.nexters.keyme.common.model.BaseTimeEntity;
 import com.nexters.keyme.member.domain.model.MemberEntity;
 import com.nexters.keyme.question.domain.model.QuestionSolved;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "test_result")
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
