@@ -30,16 +30,15 @@ public class StatisticServiceImpl implements StatisticService {
     private final CoordinateConversionService conversionService;
 
     @Transactional
-    @Async
     @Override
-    public void createStatistic(StatisticInfo statisticInfo) {
+    public Statistic createStatistic(StatisticInfo statisticInfo) {
         Statistic statistic = Statistic.builder()
                 .questionId(statisticInfo.getQuestionId())
                 .ownerId(statisticInfo.getOwnerId())
-                .ownerId(statisticInfo.getOwnerId())
+                .ownerScore(statisticInfo.getOwnerScore())
                 .build();
 
-        statisticRepository.save(statistic);
+        return statisticRepository.save(statistic);
     }
 
 
@@ -48,8 +47,12 @@ public class StatisticServiceImpl implements StatisticService {
     @Override
     public void addNewScores(ScoreInfo scoreInfo) {
         Statistic statistic = statisticRepository.findByOwnerIdAndQuestionIdWithLock(scoreInfo.getOwnerId(), scoreInfo.getQuestionId())
-                .orElseThrow(ResourceNotFoundException::new);
-        statistic.addNewScore(scoreInfo.getScore());
+                .orElseGet(() -> {
+                    StatisticInfo info = new StatisticInfo(scoreInfo.getOwnerId(), scoreInfo.getQuestionId(), scoreInfo.getScore());
+                    return createStatistic(info);
+                });
+
+        statistic.addNewScore(scoreInfo.getSolverId(), scoreInfo.getScore());
     }
 
     @Override
