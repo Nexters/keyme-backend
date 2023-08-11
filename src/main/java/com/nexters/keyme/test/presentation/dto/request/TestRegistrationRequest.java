@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TestRegistRequest {
-    private Long resultId;
+    private String resultCode;
 }
