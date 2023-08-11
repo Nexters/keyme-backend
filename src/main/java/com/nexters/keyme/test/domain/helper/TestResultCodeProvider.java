@@ -20,16 +20,15 @@ public class TestResultCodeProvider {
     private final int LENGTH = 6;
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public String crateResultCode(Long resultId) {
+    public String createResultCode(Long resultId) {
         // TODO : 해당 result 1일 뒤 만료
         String generatedCode = null;
 
         do {
             String code = generateCode();
-            Boolean isValid = testResultCodeRepository.findById(code)
-                    .map(rc -> true)
-                    .orElse(false);
-            if (isValid) {
+            TestResultCode testResultCode = testResultCodeRepository.findById(code).orElse(null);
+
+            if (testResultCode == null) {
                 testResultCodeRepository.save(new TestResultCode(code, resultId));
                 generatedCode = code;
             }
