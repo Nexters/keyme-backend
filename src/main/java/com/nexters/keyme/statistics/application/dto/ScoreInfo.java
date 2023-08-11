@@ -6,7 +6,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class ScoreInfo {
-    private long testId;
+    private long ownerId;
     private long questionId;
     private int score;
 }
