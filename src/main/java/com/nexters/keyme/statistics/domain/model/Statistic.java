@@ -32,7 +32,11 @@ public class Statistic {
         this.ownerScore = ownerScore;
     }
 
-    public void addNewScore(int score) {
+    public void addNewScore(long solverId, int score) {
+        if (solverId == ownerId) {
+            return;
+        }
+
         solverCount += 1;
         solverAvgScore = (solverAvgScore + score) / solverCount;
         matchRate = calculateMatchRate(ownerScore, solverAvgScore);
