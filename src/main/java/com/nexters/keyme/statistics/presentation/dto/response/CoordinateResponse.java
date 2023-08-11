@@ -1,5 +1,6 @@
 package com.nexters.keyme.statistics.presentation.dto.response;
 
+import com.nexters.keyme.statistics.domain.internaldto.CoordinateInfo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,4 +14,12 @@ public class CoordinateResponse {
     private final double y;
     @ApiModelProperty(value="반지름", example = "0.1213131")
     private final double r;
+
+    public CoordinateResponse(CoordinateInfo coordinateInfo) {
+        this.x = coordinateInfo.getX();
+        this.y = coordinateInfo.getY();
+        this.r = coordinateInfo.getR();
+    }
+
+
 }
