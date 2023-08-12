@@ -90,16 +90,16 @@ public class JwtTokenProvider {
     try {
       return parser.parseClaimsJws(token).getBody();
     } catch (MalformedJwtException e) {
-      log.info("Invalid JWT token");
+      log.error("Invalid JWT token");
       throw new AuthenticationFailedException(ErrorCode.TOKEN_INVALID);
     } catch (ExpiredJwtException e) {
-      log.info("Expired JWT token");
+      log.error("Expired JWT token");
       throw new AuthenticationFailedException(ErrorCode.TOKEN_EXPIRED);
     } catch (UnsupportedJwtException e) {
-      log.info("Unsupported JWT token");
+      log.error("Unsupported JWT token");
       throw new AuthenticationFailedException(ErrorCode.TOKEN_INVALID);
     } catch (IllegalArgumentException e) {
-      log.info("JWT claims string is empty.");
+      log.error("JWT claims string is empty.");
       throw new AuthenticationFailedException(ErrorCode.UNAUTHORIZED);
     }
   }

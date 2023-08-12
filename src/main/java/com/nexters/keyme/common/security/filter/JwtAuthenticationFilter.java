@@ -5,6 +5,7 @@ import com.nexters.keyme.common.util.JwtTokenProvider;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -49,13 +50,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         Authentication authenticationToken = authenticationTokenProvider.getAuthenticationToken(jwtBody);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
       }
-
-      filterChain.doFilter(request, response);
-      return;
     }
 
-    // refresh token 정책 추가될 수 있음
-    log.info("토큰이 유효하지 않음");
     filterChain.doFilter(request, response);
   }
 }

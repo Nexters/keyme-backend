@@ -21,15 +21,12 @@ public class QuestionCategoryResponse {
     @ApiModelProperty(value = "카테고리 이름")
     private String name;
 
-    @ApiModelProperty(value = "카테고리 그라데이션 시작 색상(헥사코드)")
-    private String startColor;
-    @ApiModelProperty(value = "카테고리 그라데이션 끝 색상(헥사코드)")
-    private String endColor;
+    @ApiModelProperty(value = "색상 코드")
+    private String color;
 
     public QuestionCategoryResponse(QuestionCategoryType type) {
         this.imageUrl = type.getImageUrl();
         this.name = type.name();
-        this.startColor = type.getStartColor();
-        this.endColor = type.getEndColor();
+        this.color = type.getColor();
     }
 }
