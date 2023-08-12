@@ -25,7 +25,7 @@ public class Question extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
 
-    private String description;
+    private String title;
 
     @Column(columnDefinition = "bit")
     @ColumnDefault("0")

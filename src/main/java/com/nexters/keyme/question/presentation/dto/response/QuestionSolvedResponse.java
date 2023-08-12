@@ -19,7 +19,7 @@ public class QuestionSolvedResponse extends QuestionResponse {
     public QuestionSolvedResponse(QuestionSolved questionSolved) {
         super(
             questionSolved.getQuestion().getQuestionId(),
-            questionSolved.getQuestion().getDescription(),
+            questionSolved.getQuestion().getTitle(),
             questionSolved.getQuestion().getKeyword(),
             new QuestionCategoryResponse(questionSolved.getQuestion().getCategoryName())
         );

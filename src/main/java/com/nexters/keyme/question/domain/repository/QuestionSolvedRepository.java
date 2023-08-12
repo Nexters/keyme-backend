@@ -25,7 +25,7 @@ public interface QuestionSolvedRepository extends JpaRepository<QuestionSolved, 
     List<QuestionSolved> findAllByTestResultIdWithQuestion(Long resultId);
 
     @Query(
-        "select new com.nexters.keyme.question.domain.internaldto.QuestionStatisticInfo(qs.question.questionId, qs.question.description, qs.question.keyword, qs.question.categoryName, avg(qs.score)) " +
+        "select new com.nexters.keyme.question.domain.internaldto.QuestionStatisticInfo(qs.question.questionId, qs.question.title, qs.question.keyword, qs.question.categoryName, avg(qs.score)) " +
             "from QuestionSolved qs " +
             "where qs.testResult.test.testId = :testId " +
             "group by qs.question.questionId "

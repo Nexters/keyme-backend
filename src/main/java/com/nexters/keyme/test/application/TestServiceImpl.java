@@ -66,7 +66,7 @@ public class TestServiceImpl implements TestService {
 
         // FIXME : Create Test - member, questionList 필요
         List<Question> questionList = questionRepository.findAllByIsOnboarding(true);
-        Test test = new Test(true, member, questionList.get(0).getDescription());
+        Test test = new Test(true, member, questionList.get(0).getTitle());
         testRepository.save(test);
         questionBundleRepository.saveAllAndFlush(
             questionList.stream()
@@ -117,7 +117,7 @@ public class TestServiceImpl implements TestService {
 
         Long lastSolvedQuestionId = questionSolvedList.get(0).getQuestion().getQuestionId();
         List<Question> questionList = questionRepository.findAllById(Arrays.asList(lastSolvedQuestionId + 1, lastSolvedQuestionId + 2, lastSolvedQuestionId + 3));
-        Test test = new Test(false, member, questionList.get(0).getDescription());
+        Test test = new Test(false, member, questionList.get(0).getTitle());
         testRepository.save(test);
         questionBundleRepository.saveAllAndFlush(
                 questionList.stream()

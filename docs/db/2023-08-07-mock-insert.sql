@@ -1,5 +1,5 @@
 -- is_onboarding이 true인 경우 (1~10번)
-INSERT INTO `question` (`description`, `keyword`, `category_name`, `is_onboarding`)
+INSERT INTO `question` (`title`, `keyword`, `category_name`, `is_onboarding`)
 VALUES
     ('함께 시간을 보내는 것을 좋아하시나요?', '함께', '인간관계', true),
     ('새로운 사람들과 친해지는 것을 좋아하시나요?', '친해지는', '사회적_활동', true),
@@ -13,7 +13,7 @@ VALUES
     ('타인과의 협력을 중요하게 생각하시나요?', '협력', '인간관계', true);
 
 -- is_onboarding이 false인 경우 (11~16번)
-INSERT INTO `question` (`description`, `keyword`, `category_name`, `is_onboarding`)
+INSERT INTO `question` (`title`, `keyword`, `category_name`, `is_onboarding`)
 VALUES
     ('새로운 사람들과 대화하는 것을 즐기시겠군요?', '대화', '사회적_활동', false),
     ('규칙과 규제를 엄격하게 준수하시나요?', '규칙', '성격_및_특성', false),
@@ -21,5 +21,6 @@ VALUES
     ('새로운 환경과 변화에 적응하는 것을 좋아하시겠군요?', '적응', '삶의_변화', false),
     ('다른 사람들에게 조언을 주는 것을 좋아하시겠군요?', '조언', '인간관계', false),
     ('혼자만의 시간을 즐기시겠군요?', '혼자', '개인적_성향', false);
+
 
 DELETE FROM `question`;

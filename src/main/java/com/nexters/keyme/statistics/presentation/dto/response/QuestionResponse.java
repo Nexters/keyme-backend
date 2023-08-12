@@ -12,7 +12,7 @@ public class QuestionResponse {
     @ApiModelProperty(value="문제 ID", example = "22")
     private final Long questionId;
     @ApiModelProperty(value="문제 설명", example = "키미는 불의를 보면 참는다.")
-    private final String description;
+    private final String title;
     @ApiModelProperty(value="문제 키워드", example = "냄새꼬")
     private final String keyword;
     @ApiModelProperty(value="문제 평균점수", example = "4.2")
@@ -24,7 +24,7 @@ public class QuestionResponse {
         QuestionCategoryType categoryType = question.getCategoryName();
 
         this.questionId = question.getQuestionId();
-        this.description = question.getDescription();
+        this.title = question.getTitle();
         this.keyword = question.getKeyword();
         this.avgScore = avgScore;
         this.category = new CategoryResponse(categoryType.name(), categoryType.getStartColor(), categoryType.getEndColor(), categoryType.getImageUrl());

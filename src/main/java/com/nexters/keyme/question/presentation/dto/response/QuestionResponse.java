@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 public class QuestionResponse {
     private Long questionId;
     @ApiModelProperty(value = "질문 내용", example = "불의를 보면 참지 않는다")
-    private String description;
+    private String title;
 
     @ApiModelProperty(value = "질문 내용을 한 단어로 축약 표현", example = "참군인")
     private String keyword;
@@ -27,7 +27,7 @@ public class QuestionResponse {
 
     public QuestionResponse(Question question) {
         this.questionId = question.getQuestionId();
-        this.description = question.getDescription();
+        this.title = question.getTitle();
         this.keyword = question.getKeyword();
         this.category = new QuestionCategoryResponse(question.getCategoryName());
     }
