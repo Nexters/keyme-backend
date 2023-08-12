@@ -27,6 +27,6 @@ public class QuestionResponse {
         this.title = question.getTitle();
         this.keyword = question.getKeyword();
         this.avgScore = avgScore;
-        this.category = new CategoryResponse(categoryType.name(), categoryType.getStartColor(), categoryType.getEndColor(), categoryType.getImageUrl());
+        this.category = new CategoryResponse(categoryType.name(), categoryType.getColor(), categoryType.getImageUrl());
     }
 }
