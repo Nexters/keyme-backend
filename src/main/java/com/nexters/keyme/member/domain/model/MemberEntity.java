@@ -34,6 +34,15 @@ public class MemberEntity extends BaseTimeEntity {
     private MemberStatus status;
     private ProfileImage profileImage;
 
+
+    public void setProfileImage(ProfileImage profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
     public void modifyMemberInfo(MemberModificationInfo modificationInfo) {
         if (modificationInfo.getNickname() != null) {
             this.nickname = modificationInfo.getNickname();
