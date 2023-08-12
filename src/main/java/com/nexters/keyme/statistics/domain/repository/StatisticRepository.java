@@ -13,7 +13,10 @@ public interface StatisticRepository extends JpaRepository<Statistic, Long> {
     Optional<Statistic> findByOwnerIdAndQuestionIdWithLock(long ownerId, long questionId);
 
     @Query("SELECT st FROM Statistic st WHERE st.ownerId = :memberId ORDER BY st.matchRate")
-    List<Statistic> findByMemberId(long memberId);
+    List<Statistic> findByMemberIdSortByMatchRateAsc(long memberId);
+
+    @Query("SELECT st FROM Statistic st WHERE st.ownerId = :memberId ORDER BY st.matchRate DESC")
+    List<Statistic> findByMemberIdSortByMatchRateDesc(long memberId);
 
 //    @Query("SELECT st FROM Statistic st WHERE st.ownerId = :memberId ORDER BY st.matchRate")
 //    List<Statistic> findByMemberId(long memberId, String sortBy);

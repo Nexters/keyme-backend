@@ -58,7 +58,14 @@ public class StatisticServiceImpl implements StatisticService {
     @Transactional
     @Override
     public MemberStatisticResponse getMemberStatistic(long memberId, StatisticRequest request) {
-        List<Statistic> statistics = statisticRepository.findByMemberId(memberId);
+        List<Statistic> statistics;
+
+        if (request.getType() == StatisticRequest.StatisticType.DIFFERENT) { // TODO: QueryDsl 등 사용해서 동적쿼리로 처리
+            statistics = statisticRepository.findByMemberIdSortByMatchRateAsc(memberId);
+        } else {
+            statistics = statisticRepository.findByMemberIdSortByMatchRateDesc(memberId);
+        }
+
         List<CoordinateInfo> coordinates = conversionService.convertFrom(statistics);
 
         List<StatisticResultResponse> results = new ArrayList<>();
