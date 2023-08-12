@@ -19,5 +19,5 @@ public interface MemberService {
 
   MemberResponse modifyMemberInfo(MemberModificationRequest request, UserInfo userInfo);
 
-    ImageResponse uploadImage(MultipartFile image);
+  ImageResponse uploadImage(MultipartFile image);
 }
