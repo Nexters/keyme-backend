@@ -1,6 +1,5 @@
 package com.nexters.keyme.test.application;
 
-import com.nexters.keyme.common.exceptions.AccessDeniedException;
 import com.nexters.keyme.common.exceptions.InvalidRequestException;
 import com.nexters.keyme.common.exceptions.ResourceAlreadyExistsException;
 import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
@@ -24,11 +23,13 @@ import com.nexters.keyme.test.domain.model.Test;
 import com.nexters.keyme.test.domain.model.TestResult;
 import com.nexters.keyme.test.domain.repository.TestRepository;
 import com.nexters.keyme.test.domain.repository.TestResultRepository;
+import com.nexters.keyme.test.events.AddStatisticEvent;
 import com.nexters.keyme.test.presentation.dto.request.TestListRequest;
 import com.nexters.keyme.test.presentation.dto.request.TestSubmissionRequest;
 import com.nexters.keyme.test.presentation.dto.response.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,6 +52,7 @@ public class TestServiceImpl implements TestService {
     private final QuestionRepository questionRepository;
     private final QuestionSolvedRepository questionSolvedRepository;
     private final QuestionBundleRepository questionBundleRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     @Override
@@ -208,6 +210,7 @@ public class TestServiceImpl implements TestService {
                 .collect(Collectors.toList());
         questionSolvedRepository.saveAll(questionSolvedList);
 
+        eventPublisher.publishEvent(new AddStatisticEvent(test.getMember().getId(), solverId, questionSolvedList));
 
         String resultCode = null;
         if (solverId == null) {
