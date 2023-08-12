@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface QuestionSolvedRepository extends JpaRepository<QuestionSolved, Long> {
+public interface QuestionSolvedRepository extends JpaRepository<QuestionSolved, Long>, QuestionSolvedRepositoryCustom {
 
     @Query(
         "select qs from QuestionSolved qs " +
