@@ -20,7 +20,7 @@ import static com.nexters.keyme.common.config.SwaggerConfig.SWAGGER_AUTHORIZATIO
 @Api(tags = "마이페이지(통계)", description = "멤버 마이페이지 관련 API")
 public class StatisticController {
     private final StatisticService statisticService;
-    @GetMapping("/members/{memberId}/stataistics")
+    @GetMapping("/members/{memberId}/statistics")
     @ApiOperation(value = "멤버의 성격 통계 보기")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<MemberStatisticResponse>> getMemberStatistic(@PathVariable(name = "memberId") Long memberId,
