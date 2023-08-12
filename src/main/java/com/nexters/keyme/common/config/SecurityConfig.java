@@ -58,6 +58,7 @@ public class SecurityConfig {
             .permitAll()
             .antMatchers(HttpMethod.GET, "/tests/daily", "/tests/onboarding").authenticated()
             .antMatchers(HttpMethod.GET, "/tests/*").permitAll()
+            .antMatchers(HttpMethod.POST, "/tests/*/submit").permitAll()
             .antMatchers("/auth/login").permitAll()
             .anyRequest().authenticated();
 

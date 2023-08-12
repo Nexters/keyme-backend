@@ -12,6 +12,9 @@ public class ApiResponse<T> {
     private String message;
     private T data;
 
+    static public ApiResponse emptySuccess() {
+        return new ApiResponse("SUCCESS", "요청에 성공했습니다.", null);
+    }
 
     public ApiResponse(String status, String message, T data) {
         this.state = status;

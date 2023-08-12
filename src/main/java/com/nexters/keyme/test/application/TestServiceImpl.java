@@ -18,6 +18,7 @@ import com.nexters.keyme.question.presentation.dto.response.QuestionResponse;
 import com.nexters.keyme.question.presentation.dto.response.QuestionSolvedResponse;
 import com.nexters.keyme.question.presentation.dto.response.QuestionStatisticResponse;
 import com.nexters.keyme.test.domain.helper.TestDataProvider;
+import com.nexters.keyme.test.domain.helper.TestResultCodeProvider;
 import com.nexters.keyme.test.domain.internaldto.TestResultStatisticInfo;
 import com.nexters.keyme.test.domain.model.Test;
 import com.nexters.keyme.test.domain.model.TestResult;
@@ -42,26 +43,28 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TestServiceImpl implements TestService {
 
-    final private TestDataProvider testDataProvider;
-    final private TestRepository testRepository;
-    final private MemberRepository memberRepository;
-    final private TestResultRepository testResultRepository;
-    final private QuestionRepository questionRepository;
-    final private QuestionSolvedRepository questionSolvedRepository;
-    final private QuestionBundleRepository questionBundleRepository;
+    private final TestDataProvider testDataProvider;
+    private final MemberRepository memberRepository;
+    private final TestRepository testRepository;
+    private final TestResultRepository testResultRepository;
+    private final TestResultCodeProvider testResultCodeProvider;
+    private final QuestionRepository questionRepository;
+    private final QuestionSolvedRepository questionSolvedRepository;
+    private final QuestionBundleRepository questionBundleRepository;
 
     @Transactional
     @Override
     public TestDetailResponse getOrCreateOnboardingTest(Long memberId) {
         MemberEntity member = memberRepository.findById(memberId).orElseThrow(ResourceNotFoundException::new);
+        Long existOnboardingId = testRepository.findFirstByMemberAndIsOnboardingOrderByCreatedAtDesc(member, true)
+                .map(test -> test.getTestId())
+                .orElse(null);
 
-        Optional<Test> testList = testRepository.findFirstByMemberAndIsOnboardingOrderByCreatedAtDesc(member, true);
-        if (testList.isPresent()) {
-            log.info("기존에 존재하는 온보딩 테스트 리턴");
-            Long testId = testList.get().getTestId();
-            return testDataProvider.getTestDeatil(testId, memberId);
+        if (existOnboardingId != null) {
+            return testDataProvider.getTestDeatil(existOnboardingId, memberId);
         }
 
+        // FIXME : Create Test - member, questionList 필요
         List<Question> questionList = questionRepository.findAllByIsOnboarding(true);
         Test test = new Test(true, member, questionList.get(0).getDescription());
         testRepository.save(test);
@@ -71,6 +74,7 @@ public class TestServiceImpl implements TestService {
                 .collect(Collectors.toList())
         );
 
+        // FIXME : Create TestDeatilResponse - test, member, questionList
         return TestDetailResponse.builder()
                 .testId(test.getTestId())
                 .testResultId(null)
@@ -85,31 +89,31 @@ public class TestServiceImpl implements TestService {
     @Override
     public TestDetailResponse getOrCreateDailyTest(Long memberId) {
         MemberEntity member = memberRepository.findById(memberId).orElseThrow(ResourceNotFoundException::new);
-        Optional<Test> testOpt = testRepository.findFirstByMemberAndIsOnboardingOrderByCreatedAtDesc(member, false);
-        Optional<TestResult> testResultOpt = null;
 
-        if (testOpt.isPresent()) {
-            testResultOpt = testResultRepository.findByTestAndSolver(testOpt.get(), member);
+        // 최근 test가 존재하며, 해당 test를 풀지 않았거나 오늘 풀었으면 기존 테스트 리턴
+        // FIXME : 체킹로직 메서드로 빼기
+        Optional<Test> latesetTestOpt = testRepository.findFirstByMemberAndIsOnboardingOrderByCreatedAtDesc(member, false);
+        Optional<TestResult> testResultOpt = null;
+        if (latesetTestOpt.isPresent()) {
+            testResultOpt = testResultRepository.findByTestAndSolver(latesetTestOpt.get(), member);
         }
 
-        // 있으면 기존꺼 응답
         LocalDate today = LocalDate.now();
-        if (testOpt.isPresent() && (
+        if (latesetTestOpt.isPresent() && (
                 testResultOpt.isEmpty() ||
                 !testResultOpt.get().getCreatedAt().toLocalDate().isEqual(today) )
         ) {
             log.info("기존에 존재하는 데일리 테스트 리턴");
-            return testDataProvider.getTestDeatil(testOpt.get().getTestId(), memberId);
+            return testDataProvider.getTestDeatil(latesetTestOpt.get().getTestId(), memberId);
         }
 
         // 랜덤발급으로 수정 필요
-        // 온보딩 문제 풀었는지 확인
+        // 온보딩 문제 풀었는지 확인 FIXME : 랜덤발급 로직으로 수정 시 필요없음
         List<QuestionSolved> questionSolvedList = questionSolvedRepository.findFirstLastestQuestionSolved(memberId, memberId);
         if (questionSolvedList.isEmpty()) {
             log.error("온보딩 문제를 풀기 전 데일리 문제 호출");
             throw new InvalidRequestException();
         }
-        log.error("question solved 받아옴");
 
         Long lastSolvedQuestionId = questionSolvedList.get(0).getQuestion().getQuestionId();
         List<Question> questionList = questionRepository.findAllById(Arrays.asList(lastSolvedQuestionId + 1, lastSolvedQuestionId + 2, lastSolvedQuestionId + 3));
@@ -134,29 +138,25 @@ public class TestServiceImpl implements TestService {
     @Transactional
     @Override
     public TestDetailResponse getSpecificTest(Long solvedMemberId, Long testId) {
+        // FIXME : solver Optional로 래핑 - null일 수 있음을 명시
         return testDataProvider.getTestDeatil(testId, solvedMemberId);
     }
 
     @Override
     public SingleTestStatisticsResponse getTestStatistics(Long memberId, Long testId) {
-        Test test = testRepository.findById(testId).orElseThrow(ResourceNotFoundException::new);
+        // test 존재확인, owner가 호출자와 맞는지 확인
+        testRepository.findById(testId)
+                .map(test -> test.getMember().getId())
+                .filter(testOwnerId -> testOwnerId == memberId)
+                .orElseThrow(ResourceNotFoundException::new);
 
-        if (test.getMember().getId() != memberId) {
-            log.error("권한 없는 test의 통계에 접근 : " + memberId);
-            throw new AccessDeniedException();
-        }
-
-        Optional<TestResultStatisticInfo> testResultStatisticInfo = testResultRepository.findStatisticsByTestId(testId);
+        // FIXME : 두 통계 쿼리 병렬 수행 필요
+        TestResultStatisticInfo testResultStatisticInfo = testResultRepository.findStatisticsByTestId(testId).orElseThrow(ResourceNotFoundException::new);
         List<QuestionStatisticInfo> questionStatisticInfoList = questionSolvedRepository.findAllAssociatedQuestionStatisticsByTestId(testId);
 
-        if (testResultStatisticInfo.isEmpty()) {
-            log.error("문제를 아무도 풀지 않음(나 포함) - " + "member : " + memberId + "test : " + testId);
-            throw new AccessDeniedException();
-        }
-
         return SingleTestStatisticsResponse.builder()
-                .averageRate((float) testResultStatisticInfo.get().getAverageRate())
-                .solvedCount(testResultStatisticInfo.get().getSolvedCount().intValue())
+                .averageRate((float) testResultStatisticInfo.getAverageRate())
+                .solvedCount(testResultStatisticInfo.getSolvedCount().intValue())
                 .questionsStatistics(questionStatisticInfoList.stream()
                         .map(QuestionStatisticResponse::new)
                         .collect(Collectors.toList())
@@ -173,24 +173,31 @@ public class TestServiceImpl implements TestService {
     @Transactional
     @Override
     public TestSubmitResponse createTestResult(Long solverId, Long testId, TestSubmissionRequest submitInfo) {
-        Optional<MemberEntity> member = memberRepository.findById(solverId);
         Test test = testRepository.findById(testId).orElseThrow(ResourceNotFoundException::new);
+        MemberEntity member = null;
 
-        // 익명유저가 아닌경우
-        if (member.isPresent()) {
-            Optional<TestResult> existTestResultOpt = testResultRepository.findByTestAndSolver(test, member.get());
+        // FIXME : TestResult 이미 존재하는지 확인하는 로직 domain service로 분리
+        // 익명유저가 아닌경우에만
+        if (solverId != null) {
+            member = memberRepository.findById(solverId).orElseThrow(ResourceNotFoundException::new);
+            Optional<TestResult> existTestResultOpt = testResultRepository.findByTestAndSolver(test, member);
             if (existTestResultOpt.isPresent()) {
                 log.error("Client Error : Test 결과가 이미 존재합니다.");
                 throw new ResourceAlreadyExistsException();
             }
         }
 
+        // TODO : 일치율 계산 로직 추가 및 domain service로 분리
         Float matchRate = test.getMember().getId() == solverId ? 100f : 0f;
+
+        // FIXME : Create TestResult 로직 분리
         TestResult testResult = TestResult.builder()
                 .matchRate(matchRate)
                 .test(test)
-                .solver(member.orElse(null))
+                .solver(member)
                 .build();
+        testResultRepository.save(testResult);
+
         List<QuestionSolved> questionSolvedList = submitInfo.getResults().stream()
                 .map(questionResult -> QuestionSolved.builder()
                         .question(new Question(questionResult.getQuestionId()))
@@ -199,24 +206,26 @@ public class TestServiceImpl implements TestService {
                         .build()
                 )
                 .collect(Collectors.toList());
-
         questionSolvedRepository.saveAll(questionSolvedList);
-        testResultRepository.save(testResult);
+
+
+        String resultCode = null;
+        if (solverId == null) {
+            resultCode = testResultCodeProvider.createResultCode(testResult.getTestResultId());
+        }
 
         return TestSubmitResponse.builder()
                 .testResultId(testResult.getTestResultId())
+                .resultCode(resultCode)
                 .matchRate(matchRate)
                 .build();
     }
 
     @Override
     public TestResultResponse getTestResult(Long testId, Long resultId) {
-        TestResult testResult = testResultRepository.findById(resultId).orElseThrow(ResourceNotFoundException::new);
-
-        if (testResult.getTest().getTestId() != testId) {
-            log.error("잘못된 매칭 : test - test result ");
-            throw new ResourceNotFoundException();
-        }
+        TestResult testResult = testResultRepository.findById(resultId)
+                .filter(ts -> ts.getTest().getTestId() == testId)
+                .orElseThrow(ResourceNotFoundException::new);
 
         List<QuestionSolved> questionSolvedList = questionSolvedRepository.findAllByTestResultIdWithQuestion(resultId);
 
