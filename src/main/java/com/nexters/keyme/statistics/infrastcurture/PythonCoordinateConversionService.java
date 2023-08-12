@@ -5,6 +5,7 @@ import com.nexters.keyme.statistics.domain.model.Statistic;
 import com.nexters.keyme.statistics.domain.service.CoordinateConversionService;
 import com.nexters.keyme.statistics.infrastcurture.dto.CoordinateRequest;
 import com.nexters.keyme.statistics.infrastcurture.dto.CoordinateResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -16,6 +17,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class PythonCoordinateConversionService implements CoordinateConversionService {
+    @Value("${python-server}")
+    private String ConvertingServerUrl;
     @Override
     public List<CoordinateInfo> convertFrom(List<Statistic> statistics) {
         List<Double> collect = statistics.stream()
