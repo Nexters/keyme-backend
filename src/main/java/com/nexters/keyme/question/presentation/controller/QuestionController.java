@@ -1,7 +1,14 @@
 package com.nexters.keyme.question.presentation.controller;
 
 import com.nexters.keyme.common.dto.response.ApiResponse;
+import com.nexters.keyme.question.application.QuestionService;
+import com.nexters.keyme.question.presentation.dto.request.QuestionSolvedListRequest;
+import com.nexters.keyme.question.presentation.dto.request.QuestionSolvedRequest;
+import com.nexters.keyme.question.presentation.dto.request.QuestionStatisticRequest;
 import com.nexters.keyme.question.presentation.dto.response.QuestionResponse;
+import com.nexters.keyme.question.presentation.dto.response.QuestionSolvedListResponse;
+import com.nexters.keyme.question.presentation.dto.response.QuestionSolvedResponse;
+import com.nexters.keyme.question.presentation.dto.response.QuestionStatisticResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -16,16 +23,41 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/questions")
 @RequiredArgsConstructor
 public class QuestionController {
+    private final QuestionService questionService;
 
     @GetMapping("/{id}")
     @ApiOperation(value = "질문 정보 가져오기")
     public ResponseEntity<ApiResponse<QuestionResponse>> questionDetail(@PathVariable("id") Long questionid) {
-        return ResponseEntity
-                .ok(new ApiResponse<>(new QuestionResponse()));
+        QuestionResponse questionResponse = questionService.getQuestion(questionid);
+        return ResponseEntity.ok(new ApiResponse<>(questionResponse));
     }
 
-    @GetMapping("/{id}/solved-members")
-    public ResponseEntity<ApiResponse> questionSolved(Long questionid, Long solverId) {
+    @GetMapping("/{id}/score")
+    @ApiOperation(value = "Question 점수 가져오기")
+    public ResponseEntity<ApiResponse<QuestionSolvedResponse>> getQuestionSolvedScore(
+        @PathVariable("id") Long questionId,
+        QuestionSolvedRequest request
+    ) {
+        QuestionSolvedResponse questionSolvedResponse = questionService.getQuestionSolvedScore(questionId, request);
+        return ResponseEntity.ok(new ApiResponse<>(questionSolvedResponse));
+    }
+
+    @GetMapping("/{id}/statistics")
+    @ApiOperation(value = "Question 통계 가져오기")
+    public ResponseEntity<ApiResponse<QuestionStatisticResponse>> getQuestionStatistic(
+        @PathVariable("id") Long questionId,
+        QuestionStatisticRequest request
+    ) {
+        QuestionStatisticResponse questionStatisticResponse = questionService.getQuestionStatistic(questionId, request);
+        return ResponseEntity.ok(new ApiResponse<>(questionStatisticResponse));
+    }
+
+
+    @GetMapping("/{id}/solved-scores")
+    public ResponseEntity<ApiResponse<QuestionSolvedListResponse>> getQuestionSolvedList(
+        @PathVariable("id") Long questionId,
+        QuestionSolvedListRequest request
+    ) {
         return null;
     }
 }
