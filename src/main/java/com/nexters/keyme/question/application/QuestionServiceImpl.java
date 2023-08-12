@@ -40,7 +40,6 @@ public class QuestionServiceImpl implements QuestionService {
         Question question = questionRepository.findById(questionId).orElseThrow(ResourceNotFoundException::new);
         MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(ResourceNotFoundException::new);
         QuestionSolved questionSolved = questionSolvedRepository.findByQuestionAndOwner(question, member).orElseThrow(ResourceNotFoundException::new);
-
         return new QuestionSolvedResponse(questionSolved);
     }
 
