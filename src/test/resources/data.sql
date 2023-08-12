@@ -4,7 +4,7 @@ VALUES
     (2, 'ACTIVE', 'james', '1234567', 'keyme.space/original', 'keyme.space.thumbnail', '2023-08-05T16:07:00', '2023-08-05T16:07:00'),
     (3, 'ACTIVE', 'peter', 'A1B2C3D', 'keyme.space/original', 'keyme.space.thumbnail', '2023-08-05T16:07:00', '2023-08-05T16:07:00');
 
-INSERT INTO `question` (`description`, `keyword`, `category_name`, `is_onboarding`)
+INSERT INTO `question` (`title`, `keyword`, `category_name`, `is_onboarding`)
 VALUES
     ('새로운 사람들과 대화하는 것을 즐기시겠군요?', '대화', '사회적_활동', false),
     ('규칙과 규제를 엄격하게 준수하시나요?', '규칙', '성격_및_특성', false),
@@ -14,7 +14,7 @@ VALUES
     ('혼자만의 시간을 즐기시겠군요?', '혼자', '개인적_성향', false);
 
 
-INSERT INTO `question` (`description`, `keyword`, `category_name`, `is_onboarding`)
+INSERT INTO `question` (`title`, `keyword`, `category_name`, `is_onboarding`)
 VALUES
     ('함께 시간을 보내는 것을 좋아하시나요?', '함께', '인간관계', true),
     ('새로운 사람들과 친해지는 것을 좋아하시나요?', '친해지는', '사회적_활동', true),
