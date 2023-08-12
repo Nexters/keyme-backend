@@ -62,8 +62,7 @@ class StatisticServiceTest {
 
         CategoryResponse category = question.getCategory();
         assertThat(category.getName()).isEqualTo("사회적_활동");
-        assertThat(category.getStartColor()).isEqualTo("FFFFFF");
-        assertThat(category.getEndColor()).isEqualTo("EEEEEE");
+        assertThat(category.getColor()).isEqualTo("FFFFFF");
         assertThat(category.getIconUrl()).isEqualTo("https://keyme-ec2-access-s3.s3.ap-northeast-2.amazonaws.com/test_star.png");
 
         CoordinateResponse coordinate = firstResult.getCoordinate();
