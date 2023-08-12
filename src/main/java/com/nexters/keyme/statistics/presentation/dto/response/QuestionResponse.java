@@ -1,5 +1,7 @@
 package com.nexters.keyme.statistics.presentation.dto.response;
 
+import com.nexters.keyme.question.domain.enums.QuestionCategoryType;
+import com.nexters.keyme.question.domain.model.Question;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,4 +19,14 @@ public class QuestionResponse {
     private final double avgScore;
     @ApiModelProperty(value="문제 카테고리")
     private final CategoryResponse category;
+
+    public QuestionResponse (Question question, double avgScore) {
+        QuestionCategoryType categoryType = question.getCategoryName();
+
+        this.questionId = question.getQuestionId();
+        this.description = question.getDescription();
+        this.keyword = question.getKeyword();
+        this.avgScore = avgScore;
+        this.category = new CategoryResponse(categoryType.name(), categoryType.getStartColor(), categoryType.getEndColor(), categoryType.getImageUrl());
+    }
 }
