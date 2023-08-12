@@ -1,5 +1,5 @@
 <included>
-    <appender name="DEV" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>
                 [%-5level] %d{yyyy:MM:dd HH:mm:ss.SSS} [%thread] [%C %M] [%logger{35}:%line] : %msg %n
