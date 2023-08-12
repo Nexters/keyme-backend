@@ -55,6 +55,7 @@ public class StatisticServiceImpl implements StatisticService {
         statistic.addNewScore(scoreInfo.getSolverId(), scoreInfo.getScore());
     }
 
+    @Transactional
     @Override
     public MemberStatisticResponse getMemberStatistic(long memberId, StatisticRequest request) {
         List<Statistic> statistics = statisticRepository.findByMemberId(memberId);
