@@ -32,7 +32,7 @@ class StatisticRepositoryTest {
     }
 
     @Test
-    @DisplayName("일치율 높은 순 가져오기 테스트")
+    @DisplayName("일치율 낮은 순 가져오기 테스트")
     void findByMemberIdSortByMatchRateAsc() {
         List<Statistic> statistics = statisticRepository.findByMemberIdSortByMatchRateAsc(1L);
         assertThat(statistics.size()).isEqualTo(5);
@@ -45,7 +45,7 @@ class StatisticRepositoryTest {
     }
 
     @Test
-    @DisplayName("일치율 낮은 순 가져오기 테스트")
+    @DisplayName("일치율 높은 순 가져오기 테스트")
     void findByMemberIdSortByMatchRateDesc() {
         List<Statistic> statistics = statisticRepository.findByMemberIdSortByMatchRateDesc(1L);
         assertThat(statistics.size()).isEqualTo(5);
