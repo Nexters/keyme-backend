@@ -201,6 +201,7 @@ public class TestServiceImpl implements TestService {
                 .map(questionResult -> QuestionSolved.builder()
                         .question(new Question(questionResult.getQuestionId()))
                         .score(questionResult.getScore())
+                        .owner(test.getMember())
                         .testResult(testResult)
                         .build()
                 )

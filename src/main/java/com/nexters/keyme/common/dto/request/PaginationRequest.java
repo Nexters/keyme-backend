@@ -13,6 +13,6 @@ public class PaginationRequest {
     @ApiModelProperty(value = "가져올 갯수", example = "10")
     private int limit = 10;
 
-    @ApiModelProperty(value = "마지막 게시글의 Id", example = "123")
+    @ApiModelProperty(value = "마지막 게시글의 Id(첫 요청시에는 없어도 됨)", example = "123")
     private Long cursor;
 }
