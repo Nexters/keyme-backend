@@ -19,10 +19,10 @@
     </springProfile>
 
     <springProfile name="dev">
-        <include resource="logback-console-appender.xml"/>
+        <include resource="logback-dev-appender.xml"/>
 
         <root level="DEBUG">
-            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="DEV"/>
         </root>
     </springProfile>
 
