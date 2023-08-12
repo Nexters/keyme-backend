@@ -4,10 +4,10 @@ import com.nexters.keyme.common.exceptions.errorcode.ErrorCode;
 
 public class AuthenticationFailedException extends RuntimeException {
     public AuthenticationFailedException() {
-        super(ErrorCode.UNAUTHORIZED.message());
+        super(ErrorCode.UNAUTHORIZED.getMessage());
     }
 
     public AuthenticationFailedException(ErrorCode errorCode) {
-        super(errorCode.message());
+        super(errorCode.getMessage());
     }
 }

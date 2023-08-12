@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AuthenticationFailedException.class)
     public ResponseEntity<ApiResponse> handleAuthorizationFailedException(AuthenticationFailedException e) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse(ErrorCode.UNAUTHORIZED.name(), e.getMessage(), null));
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse(ErrorCode.UNAUTHORIZED.getCode(), e.getMessage(), null));
     }
 
     @ExceptionHandler(InvalidRequestException.class)

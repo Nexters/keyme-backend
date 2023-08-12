@@ -11,8 +11,6 @@ import java.util.List;
 @Configuration
 @RequiredArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
-
-    public static final String AUTHORIZATION_HEADER = "Authorization";
     private final UserInfoArgumentResolver userInfoArgumentResolver;
 
     @Override

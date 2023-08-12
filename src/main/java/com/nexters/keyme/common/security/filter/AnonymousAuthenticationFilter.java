@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
-import static com.nexters.keyme.common.config.WebMvcConfig.AUTHORIZATION_HEADER;
+import static com.nexters.keyme.common.config.ConstantConfig.AUTHORIZATION_HEADER;
 
 @Slf4j
 public class AnonymousAuthenticationFilter extends OncePerRequestFilter {

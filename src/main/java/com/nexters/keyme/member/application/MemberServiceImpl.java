@@ -9,6 +9,7 @@ import com.nexters.keyme.member.domain.internaldto.ValidationInfo;
 import com.nexters.keyme.member.domain.model.MemberEntity;
 import com.nexters.keyme.member.domain.model.MemberOAuth;
 import com.nexters.keyme.member.domain.model.MemberOAuthId;
+import com.nexters.keyme.member.domain.model.ProfileImage;
 import com.nexters.keyme.member.domain.repository.MemberOAuthRepository;
 import com.nexters.keyme.member.domain.repository.MemberRepository;
 import com.nexters.keyme.member.domain.service.NicknameValidator;
@@ -26,6 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
+
+import static com.nexters.keyme.common.config.ConstantConfig.DEFAULT_IMAGE_URL;
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +51,12 @@ public class MemberServiceImpl implements MemberService {
             return new MemberWithTokenResponse(existedMemberOAuth.get().getMember());
         }
 
-        MemberEntity memberEntity = memberRepository.save(new MemberEntity());
+        // TODO : member 생성 시 친구코드도 생성
+        MemberEntity memberEntity = MemberEntity.builder()
+                .profileImage(new ProfileImage(DEFAULT_IMAGE_URL, DEFAULT_IMAGE_URL))
+                .build();
+        memberRepository.save(memberEntity);
+
         MemberOAuth memberOauth = memberOAuthRepository.save(
                 MemberOAuth.builder()
                         .oauthInfo(memberOAuthId)

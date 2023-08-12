@@ -25,6 +25,13 @@ import static com.nexters.keyme.common.config.SwaggerConfig.SWAGGER_AUTHORIZATIO
 public class MemberController {
     private final MemberService memberService;
 
+    @GetMapping
+    @ApiOperation(value = "본인 정보 가져오기")
+    public ResponseEntity<ApiResponse<MemberResponse>> getMemberInfo(@RequestUser UserInfo requestUser) {
+        MemberResponse response = memberService.getMemberInfo(requestUser.getMemberId());
+        return ResponseEntity.ok(new ApiResponse<>(response));
+    }
+
     @GetMapping("/{memberId}")
     @ApiOperation(value = "회원 정보 보기")
     public ResponseEntity<ApiResponse<MemberResponse>> getMemberInfo(@PathVariable(name = "memberId") Long memberId) {
