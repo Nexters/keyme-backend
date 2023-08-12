@@ -38,7 +38,7 @@ public class Statistic {
         }
 
         solverCount += 1;
-        solverAvgScore = (solverAvgScore + score) / solverCount;
+        solverAvgScore = (solverAvgScore * (solverCount - 1) + score) / solverCount;
         matchRate = calculateMatchRate(ownerScore, solverAvgScore);
     }
 
