@@ -6,32 +6,31 @@ import lombok.Getter;
 
 @Getter
 public class ApiResponse<T> {
-    @ApiModelProperty(value="HTTP 상태코드", example = "200")
-    private String state;
+    @ApiModelProperty(value="코드", example = "200")
+    private int code;
     @ApiModelProperty(value="메시지", example = "SUCCESS")
     private String message;
     private T data;
 
     static public ApiResponse emptySuccess() {
-        return new ApiResponse("SUCCESS", "요청에 성공했습니다.", null);
+        return new ApiResponse(200, "요청에 성공했습니다.", null);
     }
 
-    public ApiResponse(String status, String message, T data) {
-        this.state = status;
+    public ApiResponse(int code, String message, T data) {
+        this.code = code;
         this.message = message;
         this.data = data;
     }
 
     public ApiResponse(T data) {
-        this.state = "SUCCESS";
+        this.code = 200;
         this.message = "요청에 성공했습니다.";
         this.data = data;
     }
 
     public ApiResponse(ErrorCode errorCode) {
-        this.state = errorCode.name();
-        this.message = errorCode.message();
+        this.code = errorCode.getCode();
+        this.message = errorCode.getMessage();
         this.data = null;
     }
-
 }
