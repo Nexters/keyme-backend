@@ -10,7 +10,7 @@ import com.nexters.keyme.question.presentation.dto.response.QuestionStatisticRes
 
 public interface QuestionService {
     QuestionResponse getQuestion(Long questionId);
-    QuestionSolvedResponse getQuestionSolvedScore(QuestionSolvedRequest request);
-    QuestionStatisticResponse getQuestionStatistics(QuestionStatisticRequest request);
-    QuestionSolvedListResponse getQuestionSolvedList(QuestionSolvedListRequest request);
+    QuestionSolvedResponse getQuestionSolvedScore(Long questionId, QuestionSolvedRequest request);
+    QuestionStatisticResponse getQuestionStatistic(Long questionId, QuestionStatisticRequest request);
+    QuestionSolvedListResponse getQuestionSolvedList(Long questionId, QuestionSolvedListRequest request);
 }
