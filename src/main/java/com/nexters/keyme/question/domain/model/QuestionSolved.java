@@ -1,6 +1,7 @@
 package com.nexters.keyme.question.domain.model;
 
 import com.nexters.keyme.common.model.BaseTimeEntity;
+import com.nexters.keyme.member.domain.model.MemberEntity;
 import com.nexters.keyme.question.presentation.dto.response.QuestionCategoryResponse;
 import com.nexters.keyme.question.presentation.dto.response.QuestionResponse;
 import com.nexters.keyme.question.presentation.dto.response.QuestionSolvedResponse;
@@ -28,6 +29,10 @@ public class QuestionSolved extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private Question question;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_owner_id")
+    private MemberEntity owner;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "test_result_id")
