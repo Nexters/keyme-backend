@@ -1,6 +1,7 @@
 package com.nexters.keyme.member.application;
 
 import com.nexters.keyme.auth.domain.internaldto.UserInfo;
+import com.nexters.keyme.member.domain.exceptions.NicknameVerificationException;
 import com.nexters.keyme.member.presentation.dto.request.MemberModificationRequest;
 import com.nexters.keyme.member.presentation.dto.request.NicknameVerificationRequest;
 import com.nexters.keyme.member.presentation.dto.response.NicknameVerificationResponse;
@@ -13,6 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @Transactional
@@ -42,11 +44,11 @@ public class MemberServiceTest {
     @DisplayName("닉네임 검증 통합테스트")
     void verifyNickname() {
         NicknameVerificationRequest request = new NicknameVerificationRequest("nick");
-        NicknameVerificationResponse response = memberService.verifyNickname(request);
-        assertThat(response.isValid()).isFalse();
+        NicknameVerificationRequest finalRequest = request;
+        assertThatThrownBy(() -> memberService.verifyNickname(finalRequest)).isInstanceOf(NicknameVerificationException.class);
 
         request = new NicknameVerificationRequest("tom");
-        response = memberService.verifyNickname(request);
+        NicknameVerificationResponse response = memberService.verifyNickname(request);
         assertThat(response.isValid()).isTrue();
     }
 
