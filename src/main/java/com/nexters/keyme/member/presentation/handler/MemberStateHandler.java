@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class MemberStateHandler {
     @ExceptionHandler(NicknameVerificationException.class)
     public ResponseEntity<ApiResponse> handleNicknameVerificationException(NicknameVerificationException e) {
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(e.getState(), e.getMessage(), null));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(e.getCode(), e.getMessage(), null));
     }
 }

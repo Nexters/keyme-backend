@@ -50,6 +50,6 @@ public class ClientTestController {
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse> deleteMember(@RequestUser UserInfo userInfo) {
         clientTestService.clearMember(userInfo.getMemberId());
-        return ResponseEntity.ok(new ApiResponse("SUCCESS", "멤버가 삭제되었습니다.", null));
+        return ResponseEntity.ok(new ApiResponse(200, "멤버가 삭제되었습니다.", null));
     }
 }
