@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.nexters.keyme.common.config.WebMvcConfig.AUTHORIZATION_HEADER;
+import static com.nexters.keyme.common.config.ConstantConfig.AUTHORIZATION_HEADER;
 
 
 @Slf4j
