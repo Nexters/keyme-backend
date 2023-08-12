@@ -54,10 +54,12 @@ public class QuestionController {
 
 
     @GetMapping("/{id}/solved-scores")
+    @ApiOperation(value = "Question 푼 사람 점수리스트 가져오기")
     public ResponseEntity<ApiResponse<QuestionSolvedListResponse>> getQuestionSolvedList(
         @PathVariable("id") Long questionId,
         QuestionSolvedListRequest request
     ) {
-        return null;
+        QuestionSolvedListResponse questionSolvedListResponse = questionService.getQuestionSolvedList(questionId, request);
+        return ResponseEntity.ok(new ApiResponse<>(questionSolvedListResponse));
     }
 }

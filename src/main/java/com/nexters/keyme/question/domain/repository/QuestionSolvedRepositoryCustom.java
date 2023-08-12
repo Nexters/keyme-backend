@@ -1,2 +1,15 @@
-package com.nexters.keyme.question.domain.repository;public interface QuestionSolvedRepositoryCustom {
+package com.nexters.keyme.question.domain.repository;
+
+import com.nexters.keyme.question.domain.model.QuestionSolved;
+import org.springframework.data.domain.Page;
+
+import java.util.List;
+
+public interface QuestionSolvedRepositoryCustom {
+    Page<QuestionSolved> findQuestionSolvedList(
+        Long questionId,
+        Long ownerId,
+        Long cursorId,
+        int limit
+    );
 }
