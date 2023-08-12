@@ -2,9 +2,11 @@ package com.nexters.keyme.common.aop;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
@@ -18,7 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 @Aspect
 public class LoggingAspect {
 
-    @Pointcut("execution(public * com.nexters.keyme..*(..)) ")
+    @Pointcut("execution(public * com.nexters.keyme..*(..)) "
+            + "&& !execution(public * com.nexters.keyme.common..*(..))")
     private void methodExecution() { }
 
     @Pointcut("execution(public * com.nexters.keyme..*Controller.*(..))")
@@ -26,7 +29,23 @@ public class LoggingAspect {
 
     @Around("methodExecution()")
     public Object method(ProceedingJoinPoint joinPoint) throws Throwable {
-        return checkExecutionTime(joinPoint, null);
+        String methodName = null;
+        String targetClass = joinPoint.getTarget().getClass().toString();
+
+        // 시그니처가 메서드 시그니처인지 확인
+        Signature signature = joinPoint.getSignature();
+        if (signature instanceof MethodSignature) {
+            MethodSignature methodSignature = (MethodSignature) signature;
+            methodName = methodSignature.getMethod().getName();
+        }
+
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        Object result = joinPoint.proceed();
+        stopWatch.stop();
+
+        log.info("Method ExcutionTime [{} - {}] - 실행시간 : {}", targetClass, methodName, stopWatch.getTotalTimeMillis());
+        return result;
     }
 
     @Around("controllerExecution()")
@@ -34,18 +53,12 @@ public class LoggingAspect {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         String requestURI = request.getRequestURI();
 
-        return checkExecutionTime(joinPoint, requestURI);
-    }
-
-    private Object checkExecutionTime(ProceedingJoinPoint joinPoint, String requestURI) throws Throwable {
         StopWatch stopWatch = new StopWatch();
-        String targetClass = joinPoint.getTarget().getClass().toString();
-
         stopWatch.start();
         Object result = joinPoint.proceed();
         stopWatch.stop();
 
-        log.info("[{}] - {} 실행시간 : {}", requestURI, targetClass, stopWatch.getTotalTimeMillis());
+        log.info("Request ExcuetionTime [{}] - 실행시간 {}", requestURI, stopWatch.getTotalTimeMillis());
         return result;
     }
 }
