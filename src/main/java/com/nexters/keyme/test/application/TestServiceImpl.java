@@ -103,7 +103,6 @@ public class TestServiceImpl implements TestService {
                 testResultOpt.isEmpty() ||
                 !testResultOpt.get().getCreatedAt().toLocalDate().isEqual(today) )
         ) {
-            log.info("기존에 존재하는 데일리 테스트 리턴");
             return testDataProvider.getTestDeatil(latesetTestOpt.get().getTestId(), memberId);
         }
 
