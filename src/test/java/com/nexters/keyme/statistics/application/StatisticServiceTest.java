@@ -57,19 +57,18 @@ class StatisticServiceTest {
         QuestionResponse question = firstResult.getQuestion();
         assertThat(question.getQuestionId()).isEqualTo(1L);
         assertThat(question.getAvgScore()).isEqualTo(1L);
-        assertThat(question.getDescription()).isEqualTo("새로운 사람들과 대화하는 것을 즐기시겠군요?");
+        assertThat(question.getTitle()).isEqualTo("새로운 사람들과 대화하는 것을 즐기시겠군요?");
         assertThat(question.getKeyword()).isEqualTo("대화");
 
         CategoryResponse category = question.getCategory();
         assertThat(category.getName()).isEqualTo("사회적_활동");
-        assertThat(category.getStartColor()).isEqualTo("FFFFFF");
-        assertThat(category.getEndColor()).isEqualTo("EEEEEE");
+        assertThat(category.getColor()).isEqualTo("FFFFFF");
         assertThat(category.getIconUrl()).isEqualTo("https://keyme-ec2-access-s3.s3.ap-northeast-2.amazonaws.com/test_star.png");
 
         CoordinateResponse coordinate = firstResult.getCoordinate();
-        assertThat(coordinate.getX()).isEqualTo(1L);
-        assertThat(coordinate.getY()).isEqualTo(1L);
-        assertThat(coordinate.getR()).isEqualTo(1L);
+        assertThat(coordinate.getX()).isEqualTo(0.2947799111389068);
+        assertThat(coordinate.getY()).isEqualTo(0.6534475680919012);
+        assertThat(coordinate.getR()).isEqualTo(0.28313953920146934);
 
     }
 }
