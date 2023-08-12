@@ -1,5 +1,6 @@
 package com.nexters.keyme.statistics.domain.model;
 
+import com.nexters.keyme.common.model.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Getter
 @Builder
-public class Statistic {
+public class Statistic extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
