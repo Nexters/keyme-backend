@@ -2,6 +2,7 @@ package com.nexters.keyme.statistics.presentation.controller;
 
 import com.nexters.keyme.common.dto.response.ApiResponse;
 import com.nexters.keyme.statistics.application.StatisticService;
+import com.nexters.keyme.statistics.presentation.dto.AdditionalStatisticRequest;
 import com.nexters.keyme.statistics.presentation.dto.AdditionalStatisticResponse;
 import com.nexters.keyme.statistics.presentation.dto.request.StatisticRequest;
 import com.nexters.keyme.statistics.presentation.dto.response.MemberStatisticResponse;
@@ -12,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -37,8 +37,8 @@ public class StatisticController {
     @ApiOperation(value = "멤버의 성격 더보기")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
     public ResponseEntity<ApiResponse<List<AdditionalStatisticResponse>>> getMemberStatistic(@PathVariable(name = "memberId") Long memberId,
-                                                                                             @RequestParam long cursorId) {
-        List<AdditionalStatisticResponse> response = statisticService.getAdditionalStatistics(memberId, cursorId);
+                                                                                             AdditionalStatisticRequest request) {
+        List<AdditionalStatisticResponse> response = statisticService.getAdditionalStatistics(memberId, request);
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
 }

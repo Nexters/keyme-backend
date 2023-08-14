@@ -9,6 +9,7 @@ import com.nexters.keyme.statistics.domain.internaldto.StatisticInfo;
 import com.nexters.keyme.statistics.domain.model.Statistic;
 import com.nexters.keyme.statistics.domain.repository.StatisticRepository;
 import com.nexters.keyme.statistics.domain.service.CoordinateConversionService;
+import com.nexters.keyme.statistics.presentation.dto.AdditionalStatisticRequest;
 import com.nexters.keyme.statistics.presentation.dto.AdditionalStatisticResponse;
 import com.nexters.keyme.statistics.presentation.dto.request.StatisticRequest;
 import com.nexters.keyme.statistics.presentation.dto.response.CoordinateResponse;
@@ -88,7 +89,7 @@ public class StatisticServiceImpl implements StatisticService {
 
     @Transactional
     @Override
-    public List<AdditionalStatisticResponse> getAdditionalStatistics (long memberId, long cursor) {
+    public List<AdditionalStatisticResponse> getAdditionalStatistics (long memberId, AdditionalStatisticRequest request) {
         List<Statistic> differentStatistics = statisticRepository.findByMemberIdSortByMatchRateAsc(memberId);
         List<Statistic> similarStatistics = statisticRepository.findByMemberIdSortByMatchRateDesc(memberId);
 
@@ -96,10 +97,10 @@ public class StatisticServiceImpl implements StatisticService {
                 .map(Statistic::getQuestionId)
                 .collect(Collectors.toList());
 
-        Statistic cursorStatistic = getCursorStatistic(cursor);
+        Statistic cursorStatistic = getCursorStatistic(request.getCursor());
         double cursorScore = cursorStatistic.getSolverAvgScore();
 
-        List<Statistic> statistics = statisticRepository.findExceptIdsSortByAvgScore(exceptIds, cursor, cursorScore);
+        List<Statistic> statistics = statisticRepository.findExceptIdsSortByAvgScore(exceptIds, request.getCursor(), cursorScore, request.getLimit());
 
         return statistics.stream()
                 .map((statistic) -> {
