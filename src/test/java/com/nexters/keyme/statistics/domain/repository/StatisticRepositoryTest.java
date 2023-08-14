@@ -56,4 +56,13 @@ class StatisticRepositoryTest {
         assertThat(statistics.get(3).getId()).isEqualTo(3);
         assertThat(statistics.get(4).getId()).isEqualTo(2);
     }
+
+    @Test
+    void findExceptIdsSortByAvgScoreTest() {
+        List<Statistic> statistics = statisticRepository.findExceptIdsSortByAvgScore(List.of(1L, 2L), 6, 5);
+
+        assertThat(statistics.size()).isEqualTo(3);
+        assertThat(statistics.get(0).getId()).isEqualTo(5);
+        assertThat(statistics.get(statistics.size() - 1).getId()).isEqualTo(3);
+    }
 }
