@@ -11,10 +11,7 @@ import com.nexters.keyme.question.domain.repository.QuestionSolvedRepository;
 import com.nexters.keyme.question.presentation.dto.request.QuestionSolvedListRequest;
 import com.nexters.keyme.question.presentation.dto.request.QuestionSolvedRequest;
 import com.nexters.keyme.question.presentation.dto.request.QuestionStatisticRequest;
-import com.nexters.keyme.question.presentation.dto.response.QuestionResponse;
-import com.nexters.keyme.question.presentation.dto.response.QuestionSolvedListResponse;
-import com.nexters.keyme.question.presentation.dto.response.QuestionSolvedResponse;
-import com.nexters.keyme.question.presentation.dto.response.QuestionStatisticResponse;
+import com.nexters.keyme.question.presentation.dto.response.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -39,11 +36,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public QuestionSolvedResponse getQuestionSolvedScore(Long questionId, QuestionSolvedRequest request) {
+    public QuestionScoreResponse getQuestionSolvedScore(Long questionId, QuestionSolvedRequest request) {
         Question question = questionRepository.findById(questionId).orElseThrow(ResourceNotFoundException::new);
         MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(ResourceNotFoundException::new);
         QuestionSolved questionSolved = questionSolvedRepository.findByQuestionAndOwner(question, member).orElseThrow(ResourceNotFoundException::new);
-        return new QuestionSolvedResponse(questionSolved);
+        return new QuestionScoreResponse(questionSolved.getScore());
     }
 
     @Override

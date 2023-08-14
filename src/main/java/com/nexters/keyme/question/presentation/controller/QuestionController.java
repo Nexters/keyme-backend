@@ -5,10 +5,7 @@ import com.nexters.keyme.question.application.QuestionService;
 import com.nexters.keyme.question.presentation.dto.request.QuestionSolvedListRequest;
 import com.nexters.keyme.question.presentation.dto.request.QuestionSolvedRequest;
 import com.nexters.keyme.question.presentation.dto.request.QuestionStatisticRequest;
-import com.nexters.keyme.question.presentation.dto.response.QuestionResponse;
-import com.nexters.keyme.question.presentation.dto.response.QuestionSolvedListResponse;
-import com.nexters.keyme.question.presentation.dto.response.QuestionSolvedResponse;
-import com.nexters.keyme.question.presentation.dto.response.QuestionStatisticResponse;
+import com.nexters.keyme.question.presentation.dto.response.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +28,12 @@ public class QuestionController {
 
     @GetMapping("/{id}/score")
     @ApiOperation(value = "Question 점수 가져오기")
-    public ResponseEntity<ApiResponse<QuestionSolvedResponse>> getQuestionSolvedScore(
+    public ResponseEntity<ApiResponse<QuestionScoreResponse>> getQuestionSolvedScore(
         @PathVariable("id") Long questionId,
         QuestionSolvedRequest request
     ) {
-        QuestionSolvedResponse questionSolvedResponse = questionService.getQuestionSolvedScore(questionId, request);
-        return ResponseEntity.ok(new ApiResponse<>(questionSolvedResponse));
+        QuestionScoreResponse questionScoreResponse = questionService.getQuestionSolvedScore(questionId, request);
+        return ResponseEntity.ok(new ApiResponse<>(questionScoreResponse));
     }
 
     @GetMapping("/{id}/statistics")
