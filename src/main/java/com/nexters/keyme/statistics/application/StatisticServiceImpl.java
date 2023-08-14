@@ -9,6 +9,7 @@ import com.nexters.keyme.statistics.domain.internaldto.StatisticInfo;
 import com.nexters.keyme.statistics.domain.model.Statistic;
 import com.nexters.keyme.statistics.domain.repository.StatisticRepository;
 import com.nexters.keyme.statistics.domain.service.CoordinateConversionService;
+import com.nexters.keyme.statistics.presentation.dto.AdditionalStatisticResponse;
 import com.nexters.keyme.statistics.presentation.dto.request.StatisticRequest;
 import com.nexters.keyme.statistics.presentation.dto.response.CoordinateResponse;
 import com.nexters.keyme.statistics.presentation.dto.response.MemberStatisticResponse;
@@ -21,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -81,5 +84,31 @@ public class StatisticServiceImpl implements StatisticService {
         }
 
         return new MemberStatisticResponse(memberId, results);
+    }
+
+    @Transactional
+    @Override
+    public List<AdditionalStatisticResponse> getAdditionalStatistics (long memberId, long cursor) {
+        List<Statistic> differentStatistics = statisticRepository.findByMemberIdSortByMatchRateAsc(memberId);
+        List<Statistic> similarStatistics = statisticRepository.findByMemberIdSortByMatchRateDesc(memberId);
+
+        List<Long> exceptIds = Stream.concat(differentStatistics.stream(), similarStatistics.stream())
+                .map(Statistic::getQuestionId)
+                .collect(Collectors.toList());
+
+        Statistic cursorStatistic = statisticRepository.findById(cursor)
+                .orElseThrow(ResourceNotFoundException::new);
+
+        double cursorScore = cursorStatistic.getSolverAvgScore();
+
+        List<Statistic> statistics = statisticRepository.findExceptIdsSortByAvgScore(exceptIds, cursor, cursorScore);
+
+        return statistics.stream()
+                .map((statistic) -> {
+                    Question question = questionRepository.findById(statistic.getQuestionId())
+                            .orElseThrow(ResourceNotFoundException::new);
+                    return new AdditionalStatisticResponse(question.getKeyword(), statistic.getSolverAvgScore());
+                })
+                .collect(Collectors.toList());
     }
 }
