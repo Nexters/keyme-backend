@@ -39,7 +39,7 @@ public class MemberController {
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
 
-    @GetMapping("/verify-nickname")
+    @PostMapping("/verify-nickname")
     @ApiOperation("닉네임 중복 확인")
     @ApiSecurityIgnore
     public ResponseEntity<ApiResponse<NicknameVerificationResponse>> verifyNickname(NicknameVerificationRequest request) {

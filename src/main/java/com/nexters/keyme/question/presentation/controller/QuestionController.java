@@ -13,10 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "질문", description = "Questino 관련 API")
 @RestController
@@ -54,10 +51,12 @@ public class QuestionController {
 
 
     @GetMapping("/{id}/solved-scores")
+    @ApiOperation(value = "Question 푼 사람 점수리스트 가져오기")
     public ResponseEntity<ApiResponse<QuestionSolvedListResponse>> getQuestionSolvedList(
         @PathVariable("id") Long questionId,
         QuestionSolvedListRequest request
     ) {
-        return null;
+        QuestionSolvedListResponse questionSolvedListResponse = questionService.getQuestionSolvedList(questionId, request);
+        return ResponseEntity.ok(new ApiResponse<>(questionSolvedListResponse));
     }
 }

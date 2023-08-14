@@ -16,12 +16,15 @@ import com.nexters.keyme.question.presentation.dto.response.QuestionSolvedListRe
 import com.nexters.keyme.question.presentation.dto.response.QuestionSolvedResponse;
 import com.nexters.keyme.question.presentation.dto.response.QuestionStatisticResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class QuestionServiceImpl implements QuestionService {
@@ -54,7 +57,11 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionSolvedListResponse getQuestionSolvedList(Long questionId, QuestionSolvedListRequest request) {
+        Question question = questionRepository.findById(questionId).orElseThrow(ResourceNotFoundException::new);
+        MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(ResourceNotFoundException::new);
 
-        return null;
+        Page<QuestionSolved> solvedPage = questionSolvedRepository.findQuestionSolvedList(questionId, request.getOwnerId(), request.getCursor(), request.getLimit());
+
+        return new QuestionSolvedListResponse(solvedPage);
     }
 }

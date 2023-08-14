@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface QuestionSolvedRepository extends JpaRepository<QuestionSolved, Long> {
+public interface QuestionSolvedRepository extends JpaRepository<QuestionSolved, Long>, QuestionSolvedRepositoryCustom {
 
     @Query(
         "select qs from QuestionSolved qs " +
@@ -30,7 +30,7 @@ public interface QuestionSolvedRepository extends JpaRepository<QuestionSolved, 
         "select new com.nexters.keyme.question.domain.internaldto.QuestionStatisticInfo(qs.question.questionId, qs.question.title, qs.question.keyword, qs.question.categoryName, avg(qs.score)) " +
             "from QuestionSolved qs " +
             "where qs.testResult.test.testId = :testId " +
-                "and qs.testResult.solver.id != qs.owner.id " +
+                "and (qs.testResult.solver.id != qs.owner.id or qs.testResult.solver.id IS NULL) " +
             "group by qs.question.questionId "
     )
     List<QuestionStatisticInfo> findAllAssociatedQuestionStatisticsByTestId(Long testId);
@@ -40,7 +40,7 @@ public interface QuestionSolvedRepository extends JpaRepository<QuestionSolved, 
             "from QuestionSolved qs " +
             "where qs.question.questionId = :questionId " +
                 "and qs.owner.id = :ownerId " +
-                "and qs.testResult.solver.id != :ownerId"
+                "and (qs.testResult.solver.id != :ownerId or qs.testResult.solver.id IS NULL)"
     )
     Optional<QuestionStatisticInfo> findQuestionStatisticsByQuestionIdAndOwnerId(Long questionId, Long ownerId);
 
