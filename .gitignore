@@ -39,3 +39,4 @@ out/
 ### Configuration ###
 **/src/**/*.yml
 **/src/**/*.json
+!src/test/**/*.yml
