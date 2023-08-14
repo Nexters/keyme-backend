@@ -21,6 +21,7 @@ public interface StatisticRepository extends JpaRepository<Statistic, Long> {
     @Query(value = "SELECT * FROM statistic st WHERE st.owner_id = :memberId ORDER BY st.match_rate DESC LIMIT 5", nativeQuery = true)
     List<Statistic> findByMemberIdSortByMatchRateDesc(long memberId);
 
-//    @Query("SELECT st FROM Statistic st WHERE st.ownerId = :memberId ORDER BY st.matchRate")
-//    List<Statistic> findByMemberId(long memberId, String sortBy);
+    @Query(value = "SELECT * FROM statistic st WHERE (st.solver_avg_score < :cursorScore OR st.solver_avg_score = :cursorScore AND st.id > :cursor) AND st.id NOT IN :exceptIds ORDER BY st.match_rate DESC, st.id LIMIT 5", nativeQuery = true)
+    List<Statistic> findExceptIdsSortByAvgScore(List<Long> exceptIds, long cursor, double cursorScore);
+
 }
