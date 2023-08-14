@@ -1,8 +1,10 @@
 package com.nexters.keyme.question.domain.repository;
 
 import com.nexters.keyme.common.config.QueryDslConfig;
+import com.nexters.keyme.question.domain.enums.QuestionCategoryType;
 import com.nexters.keyme.question.domain.internaldto.QuestionStatisticInfo;
 import com.nexters.keyme.question.domain.model.QuestionSolved;
+import com.nexters.keyme.question.presentation.dto.response.QuestionStatisticResponse;
 import com.nexters.keyme.test.annotation.RepositoryTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -62,11 +64,14 @@ class QuestionSolvedRepositoryTest {
     @Test
     @DisplayName("특정 Question의 통계를 가져온다.")
     void findQuestionStatisticsByQuestionIdAndOwnerId() {
-        Long questionId = 1L;
+        Long questionId = 2L;
         Long ownerId = 1L;
 
         QuestionStatisticInfo questionStatisticInfo = questionSolvedRepository.findQuestionStatisticsByQuestionIdAndOwnerId(questionId, ownerId).orElse(null);
 
-        assertThat(questionStatisticInfo.getAverageScore()).isEqualTo(2.0);
+        assertAll(
+            () -> assertThat(questionStatisticInfo.getAverageScore()).isEqualTo(2.0),
+            () -> assertThat(questionStatisticInfo.getCategoryName()).isEqualTo(QuestionCategoryType.사회적_활동)
+        );
     }
 }

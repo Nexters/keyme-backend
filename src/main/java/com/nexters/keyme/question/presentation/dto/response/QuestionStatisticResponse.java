@@ -14,7 +14,7 @@ public class QuestionStatisticResponse extends QuestionResponse {
     private float averageScore;
 
     public QuestionStatisticResponse(QuestionStatisticInfo info) {
-        super(info.getQuestionId(), info.getDescription(), info.getKeyword(), new QuestionCategoryResponse(info.getCategoryName()));
+        super(info.getQuestionId(), info.getTitle(), info.getKeyword(), new QuestionCategoryResponse(info.getCategoryName()));
         this.averageScore = info.getAverageScore().floatValue();
     }
 }

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class QuestionStatisticInfo {
     private Long questionId;
-    private String description;
+    private String title;
     private String keyword;
     private QuestionCategoryType categoryName;
     private Double averageScore;
