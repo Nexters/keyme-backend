@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public class AdditionalStatisticResponse {
+    private final long statisticId;
     private final String keyword;
     private final double solverAvgScore;
 }

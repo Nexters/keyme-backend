@@ -107,7 +107,7 @@ public class StatisticServiceImpl implements StatisticService {
                 .map((statistic) -> {
                     Question question = questionRepository.findById(statistic.getQuestionId())
                             .orElseThrow(ResourceNotFoundException::new);
-                    return new AdditionalStatisticResponse(question.getKeyword(), statistic.getSolverAvgScore());
+                    return new AdditionalStatisticResponse(statistic.getId(), question.getKeyword(), statistic.getSolverAvgScore());
                 })
                 .collect(Collectors.toList());
     }

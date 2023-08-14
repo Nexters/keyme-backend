@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Service
 public class PythonCoordinateConversionService implements CoordinateConversionService {
     @Value("${python-server}")
-    private String ConvertingServerUrl;
+    private String convertingServerUrl;
     @Override
     public List<CoordinateInfo> convertFrom(List<Statistic> statistics) {
         List<Double> collect = statistics.stream()
@@ -26,7 +26,7 @@ public class PythonCoordinateConversionService implements CoordinateConversionSe
                 .collect(Collectors.toList());
 
         CoordinateResponse response = WebClient.create().post()
-                .uri("http://101.101.216.41:8000/circle")
+                .uri(convertingServerUrl)
                 .bodyValue(new CoordinateRequest(collect))
                 .accept(MediaType.APPLICATION_JSON)
                 .acceptCharset(StandardCharsets.UTF_8)
