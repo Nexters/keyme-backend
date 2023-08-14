@@ -96,9 +96,7 @@ public class StatisticServiceImpl implements StatisticService {
                 .map(Statistic::getQuestionId)
                 .collect(Collectors.toList());
 
-        Statistic cursorStatistic = statisticRepository.findById(cursor)
-                .orElseThrow(ResourceNotFoundException::new);
-
+        Statistic cursorStatistic = getCursorStatistic(cursor);
         double cursorScore = cursorStatistic.getSolverAvgScore();
 
         List<Statistic> statistics = statisticRepository.findExceptIdsSortByAvgScore(exceptIds, cursor, cursorScore);
@@ -110,5 +108,17 @@ public class StatisticServiceImpl implements StatisticService {
                     return new AdditionalStatisticResponse(statistic.getId(), question.getKeyword(), statistic.getSolverAvgScore());
                 })
                 .collect(Collectors.toList());
+    }
+
+    private Statistic getCursorStatistic(long cursor) {
+        if (cursor == 0) {
+            return Statistic.builder()
+                    .id(0)
+                    .solverAvgScore(Double.MAX_VALUE)
+                    .build();
+        }
+
+        return statisticRepository.findById(cursor)
+                    .orElseThrow(ResourceNotFoundException::new);
     }
 }
