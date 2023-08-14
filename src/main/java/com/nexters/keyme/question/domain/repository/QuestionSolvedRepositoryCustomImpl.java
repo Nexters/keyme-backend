@@ -8,6 +8,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -51,7 +52,8 @@ public class QuestionSolvedRepositoryCustomImpl implements QuestionSolvedReposit
                 .limit(limit)
                 .fetchCount();
 
-        return new PageImpl(questionSolvedList, null, totalCount);
+
+        return new PageImpl(questionSolvedList, Pageable.unpaged(), totalCount);
     }
 
     private BooleanExpression equalQuestionId(Long questionId) {
