@@ -20,6 +20,7 @@ import static com.nexters.keyme.question.domain.model.QQuestionSolved.questionSo
 public class QuestionSolvedRepositoryCustomImpl implements QuestionSolvedRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
+
     @Override
     public Page<QuestionSolved> findQuestionSolvedList(
         Long questionId,
