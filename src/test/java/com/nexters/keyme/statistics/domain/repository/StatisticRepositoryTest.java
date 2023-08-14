@@ -58,6 +58,7 @@ class StatisticRepositoryTest {
     }
 
     @Test
+    @DisplayName("특정 id 제외 통계 가져오기 테스트")
     void findExceptIdsSortByAvgScoreTest() {
         List<Statistic> statistics = statisticRepository.findExceptIdsSortByAvgScore(List.of(1L, 2L), 6, 5);
 
