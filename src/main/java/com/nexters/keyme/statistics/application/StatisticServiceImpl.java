@@ -9,6 +9,8 @@ import com.nexters.keyme.statistics.domain.internaldto.StatisticInfo;
 import com.nexters.keyme.statistics.domain.model.Statistic;
 import com.nexters.keyme.statistics.domain.repository.StatisticRepository;
 import com.nexters.keyme.statistics.domain.service.CoordinateConversionService;
+import com.nexters.keyme.statistics.presentation.dto.AdditionalStatisticRequest;
+import com.nexters.keyme.statistics.presentation.dto.AdditionalStatisticResponse;
 import com.nexters.keyme.statistics.presentation.dto.request.StatisticRequest;
 import com.nexters.keyme.statistics.presentation.dto.response.CoordinateResponse;
 import com.nexters.keyme.statistics.presentation.dto.response.MemberStatisticResponse;
@@ -21,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -81,5 +85,41 @@ public class StatisticServiceImpl implements StatisticService {
         }
 
         return new MemberStatisticResponse(memberId, results);
+    }
+
+    @Transactional
+    @Override
+    public List<AdditionalStatisticResponse> getAdditionalStatistics (long memberId, AdditionalStatisticRequest request) {
+        List<Statistic> differentStatistics = statisticRepository.findByMemberIdSortByMatchRateAsc(memberId);
+        List<Statistic> similarStatistics = statisticRepository.findByMemberIdSortByMatchRateDesc(memberId);
+
+        List<Long> exceptIds = Stream.concat(differentStatistics.stream(), similarStatistics.stream())
+                .map(Statistic::getQuestionId)
+                .collect(Collectors.toList());
+
+        Statistic cursorStatistic = getCursorStatistic(request.getCursor());
+        double cursorScore = cursorStatistic.getSolverAvgScore();
+
+        List<Statistic> statistics = statisticRepository.findExceptIdsSortByAvgScore(exceptIds, request.getCursor(), cursorScore, request.getLimit());
+
+        return statistics.stream()
+                .map((statistic) -> {
+                    Question question = questionRepository.findById(statistic.getQuestionId())
+                            .orElseThrow(ResourceNotFoundException::new);
+                    return new AdditionalStatisticResponse(statistic.getId(), question.getKeyword(), question.getCategoryName().getColor(), question.getCategoryName().getImageUrl(), statistic.getSolverAvgScore());
+                })
+                .collect(Collectors.toList());
+    }
+
+    private Statistic getCursorStatistic(long cursor) {
+        if (cursor == 0) {
+            return Statistic.builder()
+                    .id(0)
+                    .solverAvgScore(Double.MAX_VALUE)
+                    .build();
+        }
+
+        return statisticRepository.findById(cursor)
+                    .orElseThrow(ResourceNotFoundException::new);
     }
 }

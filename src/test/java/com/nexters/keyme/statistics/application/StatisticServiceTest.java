@@ -3,6 +3,8 @@ package com.nexters.keyme.statistics.application;
 import com.nexters.keyme.statistics.application.dto.ScoreInfo;
 import com.nexters.keyme.statistics.domain.internaldto.StatisticInfo;
 import com.nexters.keyme.statistics.domain.model.Statistic;
+import com.nexters.keyme.statistics.presentation.dto.AdditionalStatisticRequest;
+import com.nexters.keyme.statistics.presentation.dto.AdditionalStatisticResponse;
 import com.nexters.keyme.statistics.presentation.dto.request.StatisticRequest;
 import com.nexters.keyme.statistics.presentation.dto.response.*;
 import org.junit.jupiter.api.DisplayName;
@@ -69,6 +71,13 @@ class StatisticServiceTest {
         assertThat(coordinate.getX()).isEqualTo(0.2947799111389068);
         assertThat(coordinate.getY()).isEqualTo(0.6534475680919012);
         assertThat(coordinate.getR()).isEqualTo(0.28313953920146934);
+    }
 
+    @Test
+    @DisplayName("유저 성격 더보기 테스트")
+    void viewAdditionalStatisticTest() {
+        List<AdditionalStatisticResponse> response = statisticService.getAdditionalStatistics(1L, new AdditionalStatisticRequest(5, 0L));
+
+        assertThat(response.size()).isEqualTo(0);
     }
 }
