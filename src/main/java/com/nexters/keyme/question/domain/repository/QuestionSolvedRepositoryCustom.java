@@ -8,7 +8,7 @@ import java.util.List;
 public interface QuestionSolvedRepositoryCustom {
     Page<QuestionSolved> findQuestionSolvedList(
         Long questionId,
-        Long ownerId,
+        Long questionOwnerId,
         Long cursorId,
         int limit
     );

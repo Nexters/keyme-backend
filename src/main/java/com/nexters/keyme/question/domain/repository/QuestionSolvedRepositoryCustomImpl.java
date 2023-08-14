@@ -24,7 +24,7 @@ public class QuestionSolvedRepositoryCustomImpl implements QuestionSolvedReposit
     @Override
     public Page<QuestionSolved> findQuestionSolvedList(
         Long questionId,
-        Long ownerId,
+        Long questionOwnerId,
         Long cursorId,
         int limit
     ) {
@@ -33,8 +33,8 @@ public class QuestionSolvedRepositoryCustomImpl implements QuestionSolvedReposit
                 .leftJoin(questionSolved.testResult).fetchJoin()
                 .where(
                     equalQuestionId(questionId),
-                    equalOwnerId(ownerId),
-                    notEqualOwnerResult(ownerId),
+                    equalOwnerId(questionOwnerId),
+                    notEqualOwnerResult(questionOwnerId),
                     lessThanQuestionSolverId(cursorId)
                 )
                 .orderBy(questionSolved.createdAt.desc())
@@ -45,9 +45,9 @@ public class QuestionSolvedRepositoryCustomImpl implements QuestionSolvedReposit
                 .leftJoin(questionSolved.question).fetchJoin()
                 .leftJoin(questionSolved.testResult).fetchJoin()
                 .where(
-                        equalQuestionId(questionId),
-                        equalOwnerId(ownerId),
-                        notEqualOwnerResult(ownerId)
+                    equalQuestionId(questionId),
+                    equalOwnerId(questionOwnerId),
+                    notEqualOwnerResult(questionOwnerId)
                 )
                 .orderBy(questionSolved.createdAt.desc())
                 .limit(limit)
@@ -66,7 +66,7 @@ public class QuestionSolvedRepositoryCustomImpl implements QuestionSolvedReposit
     }
 
     private BooleanExpression notEqualOwnerResult(Long ownerId) {
-        return ownerId == null ? null : questionSolved.testResult.solver.id.ne(ownerId);
+        return ownerId == null ? null : questionSolved.testResult.solver.id.coalesce(-1L).ne(ownerId);
     }
 
     private BooleanExpression lessThanQuestionSolverId(Long questionSolverId) {
