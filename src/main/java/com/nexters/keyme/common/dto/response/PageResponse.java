@@ -12,10 +12,4 @@ public class PageResponse<T> {
     private long totalCount;
     private boolean hasNext;
     private List<T> results;
-
-    public PageResponse(PageInfo<T> pageInfo) {
-        this.totalCount = pageInfo.getTotalCount();
-        this.hasNext = pageInfo.isHasNext();
-        this.results = pageInfo.getResults();
-    }
 }

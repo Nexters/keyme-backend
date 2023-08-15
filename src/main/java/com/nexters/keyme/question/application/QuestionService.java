@@ -11,5 +11,5 @@ public interface QuestionService {
     QuestionResponse getQuestion(Long questionId);
     QuestionScoreResponse getQuestionSolvedScore(Long questionId, QuestionSolvedRequest request);
     QuestionStatisticResponse getQuestionStatistic(Long questionId, QuestionStatisticRequest request);
-    PageResponse<QuestionSolved> getQuestionSolvedList(Long questionId, QuestionSolvedListRequest request);
+    PageResponse<QuestionSolvedResponse> getQuestionSolvedList(Long questionId, QuestionSolvedListRequest request);
 }
