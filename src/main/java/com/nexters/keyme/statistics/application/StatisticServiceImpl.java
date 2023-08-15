@@ -71,7 +71,7 @@ public class StatisticServiceImpl implements StatisticService {
             statistics = statisticRepository.findByMemberIdSortByMatchRateDesc(memberId);
         }
 
-        if (statistics.size() > 5) {
+        if (checkStatisticExists(statistics)) {
             throw new ResourceNotFoundException();
         }
 
@@ -90,6 +90,10 @@ public class StatisticServiceImpl implements StatisticService {
         }
 
         return new MemberStatisticResponse(memberId, results);
+    }
+
+    private boolean checkStatisticExists(List<Statistic> statistics) {
+        return statistics.size() > 5;
     }
 
     @Transactional
