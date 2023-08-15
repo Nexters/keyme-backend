@@ -1,6 +1,7 @@
 package com.nexters.keyme.question.presentation.dto.response;
 
 import com.nexters.keyme.question.domain.internaldto.QuestionStatisticInfo;
+import com.nexters.keyme.question.domain.model.Question;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,5 +17,10 @@ public class QuestionStatisticResponse extends QuestionResponse {
     public QuestionStatisticResponse(QuestionStatisticInfo info) {
         super(info.getQuestionId(), info.getTitle(), info.getKeyword(), new QuestionCategoryResponse(info.getCategoryName()));
         this.averageScore = info.getAverageScore().floatValue();
+    }
+
+    public QuestionStatisticResponse(Question question) {
+        super(question);
+        this.averageScore = 0.0f;
     }
 }
