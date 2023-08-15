@@ -1,7 +1,9 @@
 package com.nexters.keyme.question.presentation.controller;
 
 import com.nexters.keyme.common.dto.response.ApiResponse;
+import com.nexters.keyme.common.dto.response.PageResponse;
 import com.nexters.keyme.question.application.QuestionService;
+import com.nexters.keyme.question.domain.model.QuestionSolved;
 import com.nexters.keyme.question.presentation.dto.request.QuestionSolvedListRequest;
 import com.nexters.keyme.question.presentation.dto.request.QuestionSolvedRequest;
 import com.nexters.keyme.question.presentation.dto.request.QuestionStatisticRequest;
@@ -49,11 +51,11 @@ public class QuestionController {
 
     @GetMapping("/{id}/solved-scores")
     @ApiOperation(value = "Question 푼 사람 점수리스트 가져오기")
-    public ResponseEntity<ApiResponse<QuestionSolvedListResponse>> getQuestionSolvedList(
+    public ResponseEntity<ApiResponse<PageResponse<QuestionSolved>>> getQuestionSolvedList(
         @PathVariable("id") Long questionId,
         QuestionSolvedListRequest request
     ) {
-        QuestionSolvedListResponse questionSolvedListResponse = questionService.getQuestionSolvedList(questionId, request);
-        return ResponseEntity.ok(new ApiResponse<>(questionSolvedListResponse));
+        PageResponse<QuestionSolved> questionSolvedPageResponse = questionService.getQuestionSolvedList(questionId, request);
+        return ResponseEntity.ok(new ApiResponse<>(questionSolvedPageResponse));
     }
 }
