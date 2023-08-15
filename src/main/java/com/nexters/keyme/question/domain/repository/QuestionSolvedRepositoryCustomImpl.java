@@ -1,5 +1,6 @@
 package com.nexters.keyme.question.domain.repository;
 
+import com.nexters.keyme.common.dto.internal.PageInfo;
 import com.nexters.keyme.question.domain.model.QQuestionSolved;
 import com.nexters.keyme.question.domain.model.QuestionSolved;
 import com.querydsl.core.BooleanBuilder;
@@ -22,7 +23,7 @@ public class QuestionSolvedRepositoryCustomImpl implements QuestionSolvedReposit
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Page<QuestionSolved> findQuestionSolvedList(
+    public PageInfo<QuestionSolved> findQuestionSolvedList(
         Long questionId,
         Long questionOwnerId,
         Long cursorId,
@@ -53,8 +54,7 @@ public class QuestionSolvedRepositoryCustomImpl implements QuestionSolvedReposit
                 .limit(limit)
                 .fetchCount();
 
-
-        return new PageImpl(questionSolvedList, Pageable.unpaged(), totalCount);
+        return new PageInfo(totalCount, questionSolvedList.size() == limit, questionSolvedList);
     }
 
     private BooleanExpression equalQuestionId(Long questionId) {

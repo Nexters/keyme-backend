@@ -1,5 +1,7 @@
 package com.nexters.keyme.question.application;
 
+import com.nexters.keyme.common.dto.internal.PageInfo;
+import com.nexters.keyme.common.dto.response.PageResponse;
 import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
 import com.nexters.keyme.member.domain.model.MemberEntity;
 import com.nexters.keyme.member.domain.repository.MemberRepository;
@@ -49,16 +51,21 @@ public class QuestionServiceImpl implements QuestionService {
         MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(ResourceNotFoundException::new);
         QuestionStatisticInfo questionStatisticInfo = questionSolvedRepository.findQuestionStatisticsByQuestionIdAndOwnerId(questionId, request.getOwnerId()).orElseThrow(ResourceNotFoundException::new);
 
+        // questionStatisticInfo에 값들이 null일 수 있음(푼 사람이 아무도 없을때)
+        if (questionStatisticInfo.getCategoryName() == null) {
+            return new QuestionStatisticResponse(question);
+        }
+
         return new QuestionStatisticResponse(questionStatisticInfo);
     }
 
     @Override
-    public QuestionSolvedListResponse getQuestionSolvedList(Long questionId, QuestionSolvedListRequest request) {
+    public PageResponse<QuestionSolved> getQuestionSolvedList(Long questionId, QuestionSolvedListRequest request) {
         Question question = questionRepository.findById(questionId).orElseThrow(ResourceNotFoundException::new);
         MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(ResourceNotFoundException::new);
 
-        Page<QuestionSolved> solvedPage = questionSolvedRepository.findQuestionSolvedList(questionId, request.getOwnerId(), request.getCursor(), request.getLimit());
+        PageInfo<QuestionSolved> solvedPage = questionSolvedRepository.findQuestionSolvedList(questionId, request.getOwnerId(), request.getCursor(), request.getLimit());
 
-        return new QuestionSolvedListResponse(solvedPage);
+        return new PageResponse<>(solvedPage);
     }
 }

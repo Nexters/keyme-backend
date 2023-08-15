@@ -1,5 +1,7 @@
 package com.nexters.keyme.statistics.application;
 
+import com.nexters.keyme.question.presentation.dto.response.QuestionCategoryResponse;
+import com.nexters.keyme.question.presentation.dto.response.QuestionStatisticResponse;
 import com.nexters.keyme.statistics.application.dto.ScoreInfo;
 import com.nexters.keyme.statistics.domain.internaldto.StatisticInfo;
 import com.nexters.keyme.statistics.domain.model.Statistic;
@@ -56,13 +58,13 @@ class StatisticServiceTest {
 
         StatisticResultResponse firstResult = results.get(0);
 
-        QuestionResponse question = firstResult.getQuestion();
+        QuestionStatisticResponse question = firstResult.getQuestionStatistic();
         assertThat(question.getQuestionId()).isEqualTo(1L);
         assertThat(question.getAvgScore()).isEqualTo(1L);
         assertThat(question.getTitle()).isEqualTo("새로운 사람들과 대화하는 것을 즐기시겠군요?");
         assertThat(question.getKeyword()).isEqualTo("대화");
 
-        CategoryResponse category = question.getCategory();
+        QuestionCategoryResponse category = question.getCategory();
         assertThat(category.getName()).isEqualTo("사회적_활동");
         assertThat(category.getColor()).isEqualTo("FFFFFF");
         assertThat(category.getIconUrl()).isEqualTo("https://keyme-ec2-access-s3.s3.ap-northeast-2.amazonaws.com/test_star.png");
