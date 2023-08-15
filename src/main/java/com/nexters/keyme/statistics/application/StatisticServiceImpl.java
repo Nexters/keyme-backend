@@ -71,6 +71,10 @@ public class StatisticServiceImpl implements StatisticService {
             statistics = statisticRepository.findByMemberIdSortByMatchRateDesc(memberId);
         }
 
+        if (checkStatisticExists(statistics)) {
+            throw new ResourceNotFoundException();
+        }
+
         List<CoordinateInfo> coordinates = conversionService.convertFrom(statistics);
 
         List<StatisticResultResponse> results = new ArrayList<>();
@@ -86,6 +90,10 @@ public class StatisticServiceImpl implements StatisticService {
         }
 
         return new MemberStatisticResponse(memberId, results);
+    }
+
+    private boolean checkStatisticExists(List<Statistic> statistics) {
+        return statistics.size() > 5;
     }
 
     @Transactional
