@@ -70,6 +70,6 @@ public class QuestionSolvedRepositoryCustomImpl implements QuestionSolvedReposit
     }
 
     private BooleanExpression lessThanQuestionSolverId(Long questionSolverId) {
-        return questionSolverId == null ? null : questionSolved.questionSolvedId.lt(questionSolverId);
+        return questionSolverId == null || questionSolverId == 0 ? null : questionSolved.questionSolvedId.lt(questionSolverId);
     }
 }
