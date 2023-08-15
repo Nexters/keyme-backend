@@ -5,6 +5,8 @@ import com.nexters.keyme.common.annotation.ApiSecurityIgnore;
 import com.nexters.keyme.common.annotation.RequestUser;
 import com.nexters.keyme.common.dto.response.ApiResponse;
 import com.nexters.keyme.member.application.MemberService;
+import com.nexters.keyme.member.presentation.dto.request.AddTokenRequest;
+import com.nexters.keyme.member.presentation.dto.request.DeleteTokenRequest;
 import com.nexters.keyme.member.presentation.dto.request.MemberModificationRequest;
 import com.nexters.keyme.member.presentation.dto.request.NicknameVerificationRequest;
 import com.nexters.keyme.member.presentation.dto.response.MemberResponse;
@@ -53,4 +55,19 @@ public class MemberController {
         MemberResponse response = memberService.modifyMemberInfo(request, userInfo);
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
+
+    @PostMapping("/devices")
+    @ApiOperation("멤버 FCM 토큰 추가")
+    public ResponseEntity<ApiResponse> addDeviceToken(@RequestUser UserInfo userInfo, @RequestBody AddTokenRequest request) {
+        memberService.registerDeviceToken(userInfo.getMemberId(), request);
+        return ResponseEntity.ok(new ApiResponse<>(200, "SUCCESS", null));
+    }
+
+    @DeleteMapping("/devices")
+    @ApiOperation("멤버 FCM 토큰 추가")
+    public ResponseEntity<ApiResponse> deleteDeviceToken(@RequestUser UserInfo userInfo, @RequestBody DeleteTokenRequest request) {
+        memberService.deleteDeviceToken(userInfo.getMemberId(), request);
+        return ResponseEntity.ok(new ApiResponse<>(200, "SUCCESS", null));
+    }
+
 }
