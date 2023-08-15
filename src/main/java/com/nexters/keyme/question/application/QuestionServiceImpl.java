@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -60,12 +61,18 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public PageResponse<QuestionSolved> getQuestionSolvedList(Long questionId, QuestionSolvedListRequest request) {
+    public PageResponse<QuestionSolvedResponse> getQuestionSolvedList(Long questionId, QuestionSolvedListRequest request) {
         Question question = questionRepository.findById(questionId).orElseThrow(ResourceNotFoundException::new);
         MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(ResourceNotFoundException::new);
 
         PageInfo<QuestionSolved> solvedPage = questionSolvedRepository.findQuestionSolvedList(questionId, request.getOwnerId(), request.getCursor(), request.getLimit());
 
-        return new PageResponse<>(solvedPage);
+        return new PageResponse<QuestionSolvedResponse>(
+            solvedPage.getTotalCount(),
+            solvedPage.isHasNext(),
+            solvedPage.getResults().stream()
+                    .map(QuestionSolvedResponse::new)
+                    .collect(Collectors.toList())
+        );
     }
 }
