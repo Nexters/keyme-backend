@@ -31,6 +31,7 @@ class QuestionSolvedRepositoryTest {
     @Test
     @DisplayName("해당 문제플 푼 사람들의 점수를 가져온다")
     void findQuestionSolvedList() {
+        // given - data.sql 내 정의
         Long questionId = 1L;
         Long questionOwnerId = 1L;
         Long cursorId = null;
@@ -51,6 +52,7 @@ class QuestionSolvedRepositoryTest {
     @Test
     @DisplayName("Test이 속해있는 모든 Quesetion들의 통계를 가져온다")
     void findAllAssociatedQuestionStatisticsByTestId() {
+        // given - data.sql 내 정의
         Long testId = 1L;
         List<QuestionStatisticInfo> questionStatisticInfoList = questionSolvedRepository.findAllAssociatedQuestionStatisticsByTestId(testId);
 
@@ -64,6 +66,7 @@ class QuestionSolvedRepositoryTest {
     @Test
     @DisplayName("특정 Question의 통계를 가져온다.")
     void findQuestionStatisticsByQuestionIdAndOwnerId() {
+        // given - data.sql 내 정의
         Long questionId = 2L;
         Long ownerId = 1L;
 
