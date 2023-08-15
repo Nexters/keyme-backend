@@ -7,7 +7,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -18,14 +17,15 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Component
 @Aspect
-public class LoggingAspect {
+public class LogExecutionTImeAspect {
 
-    @Pointcut("execution(public * com.nexters.keyme..*(..)) "
-            + "&& !execution(public * com.nexters.keyme.common..*(..))")
+    @Pointcut("execution(public * com.nexters.keyme..*(..)) " +
+            "&& !execution(public * com.nexters.keyme.common..*(..))" +
+            "&& !execution(public * com.nexters.keyme..*Controller.*(..))")
     private void methodExecution() { }
 
     @Pointcut("execution(public * com.nexters.keyme..*Controller.*(..))")
-    private void controllerExecution() { }
+    private void requestExecution() { }
 
     @Around("methodExecution()")
     public Object method(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -48,7 +48,7 @@ public class LoggingAspect {
         return result;
     }
 
-    @Around("controllerExecution()")
+    @Around("requestExecution()")
     public Object request(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         String requestURI = request.getRequestURI();
