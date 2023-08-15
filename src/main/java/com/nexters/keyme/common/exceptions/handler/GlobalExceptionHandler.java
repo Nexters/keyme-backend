@@ -5,8 +5,10 @@ import com.nexters.keyme.common.exceptions.*;
 import com.nexters.keyme.common.exceptions.errorcode.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -34,6 +36,16 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponse> handleResourceAlreadyExistsException(ResourceAlreadyExistsException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse(ErrorCode.RESOURCE_ALREADY_EXIST));
 	}
+
+    // 잘못된 형식의 요청
+    @ExceptionHandler({
+        IllegalArgumentException.class,
+        MethodArgumentTypeMismatchException.class,
+        HttpRequestMethodNotSupportedException.class
+    })
+    public ResponseEntity<ApiResponse> handleNotFulfilledException(Exception e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(ErrorCode.INVALID_REQUEST));
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse> handleUnHandleException(Exception e) {
