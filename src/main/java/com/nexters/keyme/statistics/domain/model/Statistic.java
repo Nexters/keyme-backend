@@ -33,8 +33,8 @@ public class Statistic extends BaseTimeEntity {
         this.ownerScore = ownerScore;
     }
 
-    public void addNewScore(long solverId, int score) {
-        if (solverId == ownerId) {
+    public void addNewScore(Long solverId, int score) {
+        if (solverId != null && solverId == ownerId) {
             return;
         }
 
