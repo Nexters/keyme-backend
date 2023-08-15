@@ -15,5 +15,5 @@ public class QuestionStatisticInfo {
     private String title;
     private String keyword;
     private QuestionCategoryType categoryName;
-    private Double averageScore;
+    private Double avgScore;
 }

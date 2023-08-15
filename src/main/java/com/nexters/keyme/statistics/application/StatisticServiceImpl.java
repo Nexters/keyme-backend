@@ -3,6 +3,7 @@ package com.nexters.keyme.statistics.application;
 import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
 import com.nexters.keyme.question.domain.model.Question;
 import com.nexters.keyme.question.domain.repository.QuestionRepository;
+import com.nexters.keyme.question.presentation.dto.response.QuestionStatisticResponse;
 import com.nexters.keyme.statistics.application.dto.ScoreInfo;
 import com.nexters.keyme.statistics.domain.internaldto.CoordinateInfo;
 import com.nexters.keyme.statistics.domain.internaldto.StatisticInfo;
@@ -14,7 +15,6 @@ import com.nexters.keyme.statistics.presentation.dto.AdditionalStatisticResponse
 import com.nexters.keyme.statistics.presentation.dto.request.StatisticRequest;
 import com.nexters.keyme.statistics.presentation.dto.response.CoordinateResponse;
 import com.nexters.keyme.statistics.presentation.dto.response.MemberStatisticResponse;
-import com.nexters.keyme.statistics.presentation.dto.response.QuestionResponse;
 import com.nexters.keyme.statistics.presentation.dto.response.StatisticResultResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
@@ -50,6 +50,7 @@ public class StatisticServiceImpl implements StatisticService {
     @Async
     @Override
     public void addNewScores(ScoreInfo scoreInfo) {
+        // FIXME - 내부에서만 사용중 domain service로 뺄것
         Statistic statistic = statisticRepository.findByOwnerIdAndQuestionIdWithLock(scoreInfo.getOwnerId(), scoreInfo.getQuestionId())
                 .orElseGet(() -> {
                     StatisticInfo info = new StatisticInfo(scoreInfo.getOwnerId(), scoreInfo.getQuestionId(), scoreInfo.getScore());
@@ -81,7 +82,7 @@ public class StatisticServiceImpl implements StatisticService {
             Question question = questionRepository.findById(statistic.getQuestionId())
                     .orElseThrow(ResourceNotFoundException::new);
 
-            results.add(new StatisticResultResponse(new QuestionResponse(question, statistic.getSolverAvgScore()), new CoordinateResponse(coordinateInfo)));
+            results.add(new StatisticResultResponse(new QuestionStatisticResponse(question, statistic.getSolverAvgScore()), new CoordinateResponse(coordinateInfo)));
         }
 
         return new MemberStatisticResponse(memberId, results);
