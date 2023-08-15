@@ -1,12 +1,14 @@
 package com.nexters.keyme.member.presentation.dto.request;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class AddTokenRequest {
     @ApiModelProperty(value = "FCM 토큰", example = "(token)")
-    private final String token;
+    private String token;
 }
