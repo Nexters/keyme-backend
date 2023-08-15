@@ -51,11 +51,11 @@ public class QuestionController {
 
     @GetMapping("/{id}/solved-scores")
     @ApiOperation(value = "Question 푼 사람 점수리스트 가져오기")
-    public ResponseEntity<ApiResponse<PageResponse<QuestionSolvedResponse>>> getQuestionSolvedList(
+    public ResponseEntity<ApiResponse<PageResponse<QuestionSolvedScoreInfoResponse>>> getQuestionSolvedList(
         @PathVariable("id") Long questionId,
         QuestionSolvedListRequest request
     ) {
-        PageResponse<QuestionSolvedResponse> questionSolvedPageResponse = questionService.getQuestionSolvedList(questionId, request);
+        PageResponse<QuestionSolvedScoreInfoResponse> questionSolvedPageResponse = questionService.getQuestionSolvedList(questionId, request);
         return ResponseEntity.ok(new ApiResponse<>(questionSolvedPageResponse));
     }
 }

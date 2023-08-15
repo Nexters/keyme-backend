@@ -61,17 +61,17 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public PageResponse<QuestionSolvedResponse> getQuestionSolvedList(Long questionId, QuestionSolvedListRequest request) {
+    public PageResponse<QuestionSolvedScoreInfoResponse> getQuestionSolvedList(Long questionId, QuestionSolvedListRequest request) {
         Question question = questionRepository.findById(questionId).orElseThrow(ResourceNotFoundException::new);
         MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(ResourceNotFoundException::new);
 
         PageInfo<QuestionSolved> solvedPage = questionSolvedRepository.findQuestionSolvedList(questionId, request.getOwnerId(), request.getCursor(), request.getLimit());
 
-        return new PageResponse<QuestionSolvedResponse>(
+        return new PageResponse(
             solvedPage.getTotalCount(),
             solvedPage.isHasNext(),
             solvedPage.getResults().stream()
-                    .map(QuestionSolvedResponse::new)
+                    .map(QuestionSolvedScoreInfoResponse::new)
                     .collect(Collectors.toList())
         );
     }
