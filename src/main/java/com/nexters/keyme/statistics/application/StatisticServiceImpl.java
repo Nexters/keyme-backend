@@ -71,6 +71,10 @@ public class StatisticServiceImpl implements StatisticService {
             statistics = statisticRepository.findByMemberIdSortByMatchRateDesc(memberId);
         }
 
+        if (statistics.size() > 5) {
+            throw new ResourceNotFoundException();
+        }
+
         List<CoordinateInfo> coordinates = conversionService.convertFrom(statistics);
 
         List<StatisticResultResponse> results = new ArrayList<>();
