@@ -61,7 +61,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-	testImplementation 'org.querydsl:querydsl-jpa'
+
 
 	// querydsl 디펜던시
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
@@ -86,7 +86,7 @@ jar {
 }
 
 // querydsl 사용할 경로
-def querydslDir = "$buildDir/generated/'querydsl'"
+def querydslDir = "$buildDir/generated/querydsl"
 
 // JPA 사용여부 및 사용 경로 설정
 querydsl {
