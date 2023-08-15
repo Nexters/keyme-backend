@@ -1,7 +1,6 @@
 package com.nexters.keyme.test.presentation.dto.response;
 
 import com.nexters.keyme.question.presentation.dto.response.QuestionSolvedResponse;
-import com.nexters.keyme.question.presentation.dto.response.QuestionWithCoordinateResponse;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
