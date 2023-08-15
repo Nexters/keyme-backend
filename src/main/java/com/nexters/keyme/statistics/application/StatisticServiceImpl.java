@@ -93,7 +93,7 @@ public class StatisticServiceImpl implements StatisticService {
     }
 
     private boolean checkStatisticExists(List<Statistic> statistics) {
-        return statistics.size() > 5;
+        return statistics.size() < 5;
     }
 
     @Transactional
