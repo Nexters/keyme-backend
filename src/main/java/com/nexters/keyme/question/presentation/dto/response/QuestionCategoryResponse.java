@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class QuestionCategoryResponse {
 
     @ApiModelProperty(value = "카테고리 아이콘 url")
-    private String imageUrl;
+    private String iconUrl;
 
     @ApiModelProperty(value = "카테고리 이름")
     private String name;
@@ -25,7 +25,7 @@ public class QuestionCategoryResponse {
     private String color;
 
     public QuestionCategoryResponse(QuestionCategoryType type) {
-        this.imageUrl = type.getImageUrl();
+        this.iconUrl = type.getImageUrl();
         this.name = type.name();
         this.color = type.getColor();
     }

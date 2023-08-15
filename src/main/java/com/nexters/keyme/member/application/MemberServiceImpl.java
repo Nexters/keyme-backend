@@ -2,18 +2,19 @@ package com.nexters.keyme.member.application;
 
 import com.nexters.keyme.auth.domain.internaldto.OAuthUserInfo;
 import com.nexters.keyme.auth.domain.internaldto.UserInfo;
+import com.nexters.keyme.common.exceptions.ResourceAlreadyExistsException;
 import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
 import com.nexters.keyme.member.domain.internaldto.ImageInfo;
 import com.nexters.keyme.member.domain.internaldto.MemberModificationInfo;
 import com.nexters.keyme.member.domain.internaldto.ValidationInfo;
-import com.nexters.keyme.member.domain.model.MemberEntity;
-import com.nexters.keyme.member.domain.model.MemberOAuth;
-import com.nexters.keyme.member.domain.model.MemberOAuthId;
-import com.nexters.keyme.member.domain.model.ProfileImage;
+import com.nexters.keyme.member.domain.model.*;
+import com.nexters.keyme.member.domain.repository.MemberDeviceRepository;
 import com.nexters.keyme.member.domain.repository.MemberOAuthRepository;
 import com.nexters.keyme.member.domain.repository.MemberRepository;
 import com.nexters.keyme.member.domain.service.NicknameValidator;
 import com.nexters.keyme.member.domain.service.ImageUploader;
+import com.nexters.keyme.member.presentation.dto.request.AddTokenRequest;
+import com.nexters.keyme.member.presentation.dto.request.DeleteTokenRequest;
 import com.nexters.keyme.member.presentation.dto.request.MemberModificationRequest;
 import com.nexters.keyme.member.presentation.dto.request.NicknameVerificationRequest;
 import com.nexters.keyme.member.presentation.dto.response.ImageResponse;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.nexters.keyme.common.config.ConstantConfig.DEFAULT_IMAGE_URL;
@@ -37,6 +39,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final MemberOAuthRepository memberOAuthRepository;
+    private final MemberDeviceRepository memberDeviceRepository;
     private final NicknameValidator nicknameValidator;
     private final ImageUploader imageUploader;
 
@@ -106,5 +109,40 @@ public class MemberServiceImpl implements MemberService {
     public ImageResponse uploadImage(MultipartFile image) {
         ImageInfo imageInfo = imageUploader.uploadImage(image);
         return ImageResponse.from(imageInfo);
+    }
+
+
+    @Transactional
+    @Override
+    public void registerDeviceToken(long userId, AddTokenRequest request) {
+        MemberEntity member = memberRepository.findById(userId)
+                .orElseThrow(ResourceNotFoundException::new);
+
+        checkAlreadyExists(member.getMemberDevice(), request.getToken());
+
+        MemberDevice device = MemberDevice
+                .builder()
+                .member(member)
+                .token(request.getToken())
+                .build();
+
+        memberDeviceRepository.save(device);
+    }
+
+    private void checkAlreadyExists(List<MemberDevice> memberDevice, String token) {
+        for (MemberDevice device : memberDevice) {
+            if (device.getToken().equals(token)) {
+                throw new ResourceAlreadyExistsException();
+            }
+        }
+    }
+
+    @Transactional
+    @Override
+    public void deleteDeviceToken(long memberId, DeleteTokenRequest request) {
+        MemberDevice device = memberDeviceRepository.findByMemberIdAndToken(memberId, request.getToken())
+                .orElseThrow(ResourceNotFoundException::new);
+
+        memberDeviceRepository.delete(device);
     }
 }

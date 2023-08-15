@@ -30,5 +30,4 @@ public class QuestionSolvedListResponse {
                 .map(q -> new QuestionSolvedSimpleResponse(q))
                 .collect(Collectors.toList());
     }
-
 }

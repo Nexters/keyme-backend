@@ -61,6 +61,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.querydsl:querydsl-jpa'
 
 	// querydsl 디펜던시
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"

@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@ApiModel(value = "푼 Question 정보 응답객체")
+@ApiModel(description = "푼 Question 정보 응답객체")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
