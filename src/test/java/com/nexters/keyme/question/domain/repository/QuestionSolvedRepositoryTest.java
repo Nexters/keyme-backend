@@ -1,6 +1,7 @@
 package com.nexters.keyme.question.domain.repository;
 
 import com.nexters.keyme.common.config.QueryDslConfig;
+import com.nexters.keyme.common.dto.internal.PageInfo;
 import com.nexters.keyme.question.domain.enums.QuestionCategoryType;
 import com.nexters.keyme.question.domain.internaldto.QuestionStatisticInfo;
 import com.nexters.keyme.question.domain.model.QuestionSolved;
@@ -36,15 +37,16 @@ class QuestionSolvedRepositoryTest {
         Long cursorId = null;
         int limit = 10;
 
-        Page<QuestionSolved> questionSolvedList = questionSolvedRepository.findQuestionSolvedList(questionId, questionOwnerId, cursorId, limit);
-        List<Long> questionSolvedIdList = questionSolvedList.getContent()
+        PageInfo<QuestionSolved> questionSolvedPageInfo = questionSolvedRepository.findQuestionSolvedList(questionId, questionOwnerId, cursorId, limit);
+        List<Long> questionSolvedIdList = questionSolvedPageInfo.getResults()
                 .stream()
                 .map(qs -> qs.getQuestionSolvedId())
                 .collect(Collectors.toList());
 
         assertAll(
             () -> assertThat(questionSolvedIdList.get(0)).isEqualTo(21),
-            () -> assertThat(questionSolvedList.getContent().size()).isEqualTo(2)
+            () -> assertThat(questionSolvedPageInfo.getResults().size()).isEqualTo(2),
+            () -> assertThat(questionSolvedPageInfo.isHasNext()).isEqualTo(false)
         );
     }
 
@@ -56,7 +58,7 @@ class QuestionSolvedRepositoryTest {
 
         assertAll(
             () -> assertThat(questionStatisticInfoList.get(0).getQuestionId()).isEqualTo(1),
-            () -> assertThat(questionStatisticInfoList.get(0).getAverageScore()).isEqualTo(2.0),
+            () -> assertThat(questionStatisticInfoList.get(0).getAvgScore()).isEqualTo(2.0),
             () -> assertThat(questionStatisticInfoList.size()).isEqualTo(10)
         );
     }
@@ -70,7 +72,7 @@ class QuestionSolvedRepositoryTest {
         QuestionStatisticInfo questionStatisticInfo = questionSolvedRepository.findQuestionStatisticsByQuestionIdAndOwnerId(questionId, ownerId).orElse(null);
 
         assertAll(
-            () -> assertThat(questionStatisticInfo.getAverageScore()).isEqualTo(2.0),
+            () -> assertThat(questionStatisticInfo.getAvgScore()).isEqualTo(2.0),
             () -> assertThat(questionStatisticInfo.getCategoryName()).isEqualTo(QuestionCategoryType.사회적_활동)
         );
     }
