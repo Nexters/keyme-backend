@@ -83,7 +83,7 @@ public class TestServiceImpl implements TestService {
                 .testResultId(null)
                 .solvedCount(0)
                 .title(test.getTitle())
-                .presenterProfile(new TestSimpleMemberResponse(member))
+                .owner(new TestSimpleMemberResponse(member))
                 .questions(questionList.stream().map(QuestionResponse::new).collect(Collectors.toList()))
                 .build();
     }
@@ -132,7 +132,7 @@ public class TestServiceImpl implements TestService {
                 .testResultId(null)
                 .solvedCount(0)
                 .title(test.getTitle())
-                .presenterProfile(new TestSimpleMemberResponse(member))
+                .owner(new TestSimpleMemberResponse(member))
                 .questions(questionList.stream().map(QuestionResponse::new).collect(Collectors.toList()))
                 .build();
     }

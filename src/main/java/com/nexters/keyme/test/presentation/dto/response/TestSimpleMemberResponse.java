@@ -13,13 +13,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class TestSimpleMemberResponse {
-    private Long memberId;
+    private Long id;
     private String nickname;
-    private String thumbnailUrl;
+    private String profileThumbnail;
 
     public TestSimpleMemberResponse(MemberEntity member) {
-        this.memberId = member.getId();
+        this.id = member.getId();
         this.nickname = member.getNickname();
-        this.thumbnailUrl = member.getProfileImage().getThumbnailUrl();
+        this.profileThumbnail = member.getProfileImage().getThumbnailUrl();
     }
 }

@@ -50,6 +50,7 @@ public class QuestionController {
     }
 
     @GetMapping("/result/scores")
+    @Deprecated
     @ApiOperation(value = "ids 기반으로 점수리스트 가져오기")
     public ResponseEntity<ApiResponse<List<QuestionScoreInfoResponse>>> getQuestionListScore(
         QuestionListScoreRequest request

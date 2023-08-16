@@ -76,7 +76,7 @@ class QuestionSolvedRepositoryTest {
 
         assertAll(
             () -> assertThat(questionStatisticInfo.getAvgScore()).isEqualTo(2.0),
-            () -> assertThat(questionStatisticInfo.getCategoryName()).isEqualTo(QuestionCategoryType.사회적_활동)
+            () -> assertThat(questionStatisticInfo.getCategoryName()).isEqualTo(QuestionCategoryType.BODY)
         );
     }
 }

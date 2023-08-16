@@ -48,7 +48,7 @@ public class TestDataProvider {
                     .testResultId(testResultId)
                     .title(test.getTitle())
                     .solvedCount(test.getTestResultList().size()) // ??? 어떻게 처리할 것인가
-                    .presenterProfile(new TestSimpleMemberResponse(test.getMember()))
+                    .owner(new TestSimpleMemberResponse(test.getMember()))
                     .questions(questionResponseList)
                     .build();
         }).join();

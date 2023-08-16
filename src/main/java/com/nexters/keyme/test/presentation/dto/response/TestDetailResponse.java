@@ -16,6 +16,6 @@ public class TestDetailResponse {
     private Long testResultId;
     private int solvedCount;
     private String title;
-    private TestSimpleMemberResponse presenterProfile;
+    private TestSimpleMemberResponse owner;
     private List<QuestionResponse> questions;
 }
