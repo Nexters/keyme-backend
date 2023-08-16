@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -36,7 +37,7 @@ public class S3ImageUploader implements ImageUploader {
             originalUrl = uploadToS3AndGetUrl(image.getInputStream(), extension);
             thumbnailUrl = uploadToS3AndGetUrl(resizeForThumbnail(image), extension);
         } catch (IOException e) {
-            log.error(e.getMessage());
+            log.error(Arrays.toString(e.getStackTrace()));
             throw new FileUploadFailedException();
         }
 
