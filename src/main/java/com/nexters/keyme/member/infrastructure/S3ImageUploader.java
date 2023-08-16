@@ -47,6 +47,7 @@ public class S3ImageUploader implements ImageUploader {
     private File resizeForThumbnail(MultipartFile image) throws IOException {
         String extension = extractExtension(image);
         File thumbnail = new File(tempImagePath + UUID.randomUUID() + "." + extension);
+        thumbnail.createNewFile();
 
         Thumbnails.of(image.getInputStream())
             .size(700, 400)
