@@ -154,6 +154,9 @@ public class TestServiceImpl implements TestService {
 
         // FIXME : 두 통계 쿼리 병렬 수행 필요
         TestResultStatisticInfo testResultStatisticInfo = testResultRepository.findStatisticsByTestId(testId).orElseThrow(ResourceNotFoundException::new);
+        if (testResultStatisticInfo.getSolvedCount() == null || testResultStatisticInfo.getSolvedCount() == 0) {
+            throw new InvalidRequestException();
+        }
         List<QuestionStatisticInfo> questionStatisticInfoList = questionSolvedRepository.findAllAssociatedQuestionStatisticsByTestId(testId);
 
         return SingleTestStatisticsResponse.builder()
