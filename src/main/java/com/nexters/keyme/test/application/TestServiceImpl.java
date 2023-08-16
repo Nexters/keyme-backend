@@ -225,15 +225,14 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public TestResultResponse getTestResult(Long testId, Long resultId) {
+    public TestResultResponse getTestResult(Long resultId) {
         TestResult testResult = testResultRepository.findById(resultId)
-                .filter(ts -> ts.getTest().getTestId() == testId)
                 .orElseThrow(ResourceNotFoundException::new);
 
         List<QuestionSolved> questionSolvedList = questionSolvedRepository.findAllByTestResultIdWithQuestion(resultId);
 
         return TestResultResponse.builder()
-                .testId(testId)
+                .testId(testResult.getTest().getTestId())
                 .testResultId(resultId)
                 .matchRate(testResult.getMatchRate())
                 .results(questionSolvedList.stream()
