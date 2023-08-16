@@ -60,5 +60,4 @@ public class GlobalExceptionHandler {
         log.error("예상치 못한 에러발생! 😭");
         return ResponseEntity.internalServerError().body(new ApiResponse(ErrorCode.SERVER_ERROR));
     }
-
 }
