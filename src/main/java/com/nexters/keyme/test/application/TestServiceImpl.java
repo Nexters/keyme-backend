@@ -24,6 +24,7 @@ import com.nexters.keyme.test.domain.model.TestResult;
 import com.nexters.keyme.test.domain.repository.TestRepository;
 import com.nexters.keyme.test.domain.repository.TestResultRepository;
 import com.nexters.keyme.test.events.AddStatisticEvent;
+import com.nexters.keyme.test.events.SendNotificationEvent;
 import com.nexters.keyme.test.presentation.dto.request.TestListRequest;
 import com.nexters.keyme.test.presentation.dto.request.TestSubmissionRequest;
 import com.nexters.keyme.test.presentation.dto.response.*;
@@ -211,6 +212,7 @@ public class TestServiceImpl implements TestService {
         questionSolvedRepository.saveAll(questionSolvedList);
 
         eventPublisher.publishEvent(new AddStatisticEvent(test.getMember().getId(), solverId, questionSolvedList));
+        eventPublisher.publishEvent(new SendNotificationEvent(List.of(test.getMember().getId())));
 
         String resultCode = null;
         if (solverId == null) {
