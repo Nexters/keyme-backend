@@ -32,4 +32,19 @@ class NotificationServiceTest {
 
         Assertions.assertThat(response.get()).isTrue();
     }
+
+//    @Test
+//    @DisplayName("토큰 정보가 없는 유저 알림 발송 테스트")
+    void sendByUsersWithNoToken() throws ExecutionException, InterruptedException {
+        UserNotificationRequest request = UserNotificationRequest.builder()
+                .title("title")
+                .body("body")
+                .userIds(List.of(10L))
+                .info("infoKey", "value")
+                .build();
+
+        CompletableFuture<Boolean> response = notificationService.sendByUsers(request);
+
+        Assertions.assertThat(response.get()).isTrue();
+    }
 }
