@@ -57,11 +57,6 @@ public class StatisticServiceImpl implements StatisticService {
                     return createStatistic(info);
                 });
 
-        System.out.println("here!!!");
-//        System.out.println(scoreInfo.getSolverId());
-//        System.out.println(scoreInfo.getScore());
-//        System.out.println(statistic == null);
-
         statistic.addNewScore(scoreInfo.getSolverId(), scoreInfo.getScore());
     }
 
