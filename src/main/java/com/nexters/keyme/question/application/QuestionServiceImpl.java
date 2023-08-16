@@ -10,18 +10,16 @@ import com.nexters.keyme.question.domain.model.Question;
 import com.nexters.keyme.question.domain.model.QuestionSolved;
 import com.nexters.keyme.question.domain.repository.QuestionRepository;
 import com.nexters.keyme.question.domain.repository.QuestionSolvedRepository;
-import com.nexters.keyme.question.presentation.dto.request.QuestionSolvedListRequest;
-import com.nexters.keyme.question.presentation.dto.request.QuestionSolvedRequest;
+import com.nexters.keyme.question.presentation.dto.request.QuestionScoreListRequest;
+import com.nexters.keyme.question.presentation.dto.request.QuestionListScoreRequest;
 import com.nexters.keyme.question.presentation.dto.request.QuestionStatisticRequest;
 import com.nexters.keyme.question.presentation.dto.response.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -39,14 +37,6 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public QuestionScoreResponse getQuestionSolvedScore(Long questionId, QuestionSolvedRequest request) {
-        Question question = questionRepository.findById(questionId).orElseThrow(ResourceNotFoundException::new);
-        MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(ResourceNotFoundException::new);
-        QuestionSolved questionSolved = questionSolvedRepository.findByQuestionAndOwner(question, member).orElseThrow(ResourceNotFoundException::new);
-        return new QuestionScoreResponse(questionSolved.getScore());
-    }
-
-    @Override
     public QuestionStatisticResponse getQuestionStatistic(Long questionId, QuestionStatisticRequest request) {
         Question question = questionRepository.findById(questionId).orElseThrow(ResourceNotFoundException::new);
         MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(ResourceNotFoundException::new);
@@ -61,7 +51,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public PageResponse<QuestionSolvedScoreInfoResponse> getQuestionSolvedList(Long questionId, QuestionSolvedListRequest request) {
+    public PageResponse<QuestionScoreInfoResponse> getQuestionSolvedList(Long questionId, QuestionScoreListRequest request) {
         Question question = questionRepository.findById(questionId).orElseThrow(ResourceNotFoundException::new);
         MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(ResourceNotFoundException::new);
 
@@ -71,8 +61,23 @@ public class QuestionServiceImpl implements QuestionService {
             solvedPage.getTotalCount(),
             solvedPage.isHasNext(),
             solvedPage.getResults().stream()
-                    .map(QuestionSolvedScoreInfoResponse::new)
+                    .map(QuestionScoreInfoResponse::new)
                     .collect(Collectors.toList())
         );
+    }
+
+    @Override
+    public List<QuestionScoreInfoResponse> getQuestionSolvedScore(QuestionListScoreRequest request) {
+        List<Question> question = questionRepository.findAllById(request.getIds());
+        if (question.size() != request.getIds().size()) {
+            throw new ResourceNotFoundException();
+        }
+
+        MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(ResourceNotFoundException::new);
+        List<QuestionSolved> questionSolvedList = questionSolvedRepository.findByQuestionIdsAndOwnerIdAndSolverId(request.getIds(), request.getOwnerId(), request.getSolverId());
+
+        return questionSolvedList.stream()
+                .map(QuestionScoreInfoResponse::new)
+                .collect(Collectors.toList());
     }
 }

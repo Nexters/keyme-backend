@@ -3,9 +3,8 @@ package com.nexters.keyme.question.presentation.controller;
 import com.nexters.keyme.common.dto.response.ApiResponse;
 import com.nexters.keyme.common.dto.response.PageResponse;
 import com.nexters.keyme.question.application.QuestionService;
-import com.nexters.keyme.question.domain.model.QuestionSolved;
-import com.nexters.keyme.question.presentation.dto.request.QuestionSolvedListRequest;
-import com.nexters.keyme.question.presentation.dto.request.QuestionSolvedRequest;
+import com.nexters.keyme.question.presentation.dto.request.QuestionScoreListRequest;
+import com.nexters.keyme.question.presentation.dto.request.QuestionListScoreRequest;
 import com.nexters.keyme.question.presentation.dto.request.QuestionStatisticRequest;
 import com.nexters.keyme.question.presentation.dto.response.*;
 import io.swagger.annotations.Api;
@@ -13,6 +12,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Api(tags = "질문", description = "Questino 관련 API")
 @RestController
@@ -28,17 +29,17 @@ public class QuestionController {
         return ResponseEntity.ok(new ApiResponse<>(questionResponse));
     }
 
-    @GetMapping("/{id}/score")
-    @ApiOperation(value = "Question 점수 가져오기")
-    public ResponseEntity<ApiResponse<QuestionScoreResponse>> getQuestionSolvedScore(
+    @GetMapping("/{id}/result/scores")
+    @ApiOperation(value = "해당 Question을 푼 사람들의 점수리스트 가져오기")
+    public ResponseEntity<ApiResponse<PageResponse<QuestionScoreInfoResponse>>> getQuestionResultScoreList(
         @PathVariable("id") Long questionId,
-        QuestionSolvedRequest request
+        QuestionScoreListRequest request
     ) {
-        QuestionScoreResponse questionScoreResponse = questionService.getQuestionSolvedScore(questionId, request);
-        return ResponseEntity.ok(new ApiResponse<>(questionScoreResponse));
+        PageResponse<QuestionScoreInfoResponse> questionSolvedPageResponse = questionService.getQuestionSolvedList(questionId, request);
+        return ResponseEntity.ok(new ApiResponse<>(questionSolvedPageResponse));
     }
 
-    @GetMapping("/{id}/statistics")
+    @GetMapping("/{id}/result/statistics")
     @ApiOperation(value = "Question 통계 가져오기")
     public ResponseEntity<ApiResponse<QuestionStatisticResponse>> getQuestionStatistic(
         @PathVariable("id") Long questionId,
@@ -48,14 +49,12 @@ public class QuestionController {
         return ResponseEntity.ok(new ApiResponse<>(questionStatisticResponse));
     }
 
-
-    @GetMapping("/{id}/solved-scores")
-    @ApiOperation(value = "Question 푼 사람 점수리스트 가져오기")
-    public ResponseEntity<ApiResponse<PageResponse<QuestionSolvedScoreInfoResponse>>> getQuestionSolvedList(
-        @PathVariable("id") Long questionId,
-        QuestionSolvedListRequest request
+    @GetMapping("/result/scores")
+    @ApiOperation(value = "ids 기반으로 점수리스트 가져오기")
+    public ResponseEntity<ApiResponse<List<QuestionScoreInfoResponse>>> getQuestionListScore(
+        QuestionListScoreRequest request
     ) {
-        PageResponse<QuestionSolvedScoreInfoResponse> questionSolvedPageResponse = questionService.getQuestionSolvedList(questionId, request);
-        return ResponseEntity.ok(new ApiResponse<>(questionSolvedPageResponse));
+        List<QuestionScoreInfoResponse> questionScoreResponse = questionService.getQuestionSolvedScore(request);
+        return ResponseEntity.ok(new ApiResponse<>(questionScoreResponse));
     }
 }
