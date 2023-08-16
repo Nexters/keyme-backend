@@ -13,12 +13,9 @@ import com.nexters.keyme.member.presentation.dto.response.MemberResponse;
 import com.nexters.keyme.member.presentation.dto.response.NicknameVerificationResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import static com.nexters.keyme.common.config.SwaggerConfig.SWAGGER_AUTHORIZATION_SCHEME;
 
 @RestController
 @RequestMapping("/members")
@@ -44,7 +41,7 @@ public class MemberController {
     @PostMapping("/verify-nickname")
     @ApiOperation("닉네임 중복 확인")
     @ApiSecurityIgnore
-    public ResponseEntity<ApiResponse<NicknameVerificationResponse>> verifyNickname(NicknameVerificationRequest request) {
+    public ResponseEntity<ApiResponse<NicknameVerificationResponse>> verifyNickname(@RequestBody NicknameVerificationRequest request) {
         NicknameVerificationResponse response = memberService.verifyNickname(request);
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
