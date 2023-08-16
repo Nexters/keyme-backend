@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RequiredArgsConstructor
 @Service
@@ -21,7 +22,7 @@ public class NotificationServiceImpl implements NotificationService {
     private final MemberRepository memberRepository;
 
     @Async("NotificationThreadPool")
-    public void sendByUsers(UserNotificationRequest request) {
+    public CompletableFuture<Boolean> sendByUsers(UserNotificationRequest request) {
         List<String> tokens = new ArrayList<>();
 
         for (MemberEntity member : memberRepository.findAllById(request.getUserIds())) {
@@ -32,6 +33,7 @@ public class NotificationServiceImpl implements NotificationService {
         }
 
         notificationSender.sendByTokens(tokens, request.getTitle(), request.getBody(), request.getData());
+        return CompletableFuture.completedFuture(Boolean.TRUE);
     }
 
     @Async("NotificationThreadPool")
