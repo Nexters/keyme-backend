@@ -13,5 +13,5 @@ public interface TestService {
     SingleTestStatisticsResponse getTestStatistics(Long memberId, Long testId);
     List<TestFeedResponse> getTestList(Long memberId, TestListRequest requestInfo);
     TestSubmitResponse createTestResult(Long solvedMemberId, Long testId, TestSubmissionRequest submitInfo);
-    TestResultResponse getTestResult(Long testId, Long resultId);
+    TestResultResponse getTestResult(Long resultId);
 }

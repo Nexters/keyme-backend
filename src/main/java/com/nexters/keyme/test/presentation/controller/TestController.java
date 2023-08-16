@@ -58,14 +58,14 @@ public class TestController {
     }
 
     // Not MMVP
-    @GetMapping
-    @ApiOperation(value = "테스트 리스트 가져오기")
-    public ResponseEntity<ApiResponse<List<TestFeedResponse>>> getTestList(
-        @RequestUser UserInfo requestUser,
-        TestListRequest requestParameters
-    ) {
-        return null;
-    }
+//    @GetMapping
+//    @ApiOperation(value = "테스트 리스트 가져오기")
+//    public ResponseEntity<ApiResponse<List<TestFeedResponse>>> getTestList(
+//        @RequestUser UserInfo requestUser,
+//        TestListRequest requestParameters
+//    ) {
+//        return null;
+//    }
 
     @PostMapping("/{id}/submit")
     @ApiOperation(value = "테스트 제출")
@@ -78,20 +78,13 @@ public class TestController {
         return ResponseEntity.ok(new ApiResponse(testSubmitResponse) );
     }
 
-    @GetMapping("/{id}/result/{resultId}")
-    @ApiOperation(value = "해당 테스트의 결과 가져오기")
+    @GetMapping("/result/{resultId}")
+    @ApiOperation(value = "test resultId로 결과확인")
     public ResponseEntity<ApiResponse<TestResultResponse>> getResult(
         @RequestUser UserInfo userInfo,
-        @PathVariable("id") Long testId,
         @PathVariable("resultId") Long resultId
     ) {
-        TestResultResponse testResultResponse = testService.getTestResult(testId, resultId);
+        TestResultResponse testResultResponse = testService.getTestResult(resultId);
         return ResponseEntity.ok(new ApiResponse(testResultResponse) );
     }
-
-    @GetMapping("/{id}/solved-members")
-    @ApiOperation(value = "해당 테스트를 푼 유저리스트")
-    public void getSolvedMembers(
-        @PathVariable("id") Long testId
-    ) { }
 }

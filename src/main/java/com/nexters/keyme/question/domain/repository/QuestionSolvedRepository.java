@@ -44,5 +44,10 @@ public interface QuestionSolvedRepository extends JpaRepository<QuestionSolved, 
     )
     Optional<QuestionStatisticInfo> findQuestionStatisticsByQuestionIdAndOwnerId(Long questionId, Long ownerId);
 
-    Optional<QuestionSolved> findByQuestionAndOwner(Question question, MemberEntity owner);
+    @Query(value = "SELECT * FROM question_solved qs " +
+            "JOIN test_result ts on ts.test_result_id = qs.test_result_id " +
+            "WHERE qs.question_id IN :questionIds AND qs.question_owner_id = :ownerId AND ts.solver_id = :solverId",
+            nativeQuery = true
+    )
+    List<QuestionSolved> findByQuestionIdsAndOwnerIdAndSolverId(List<Long> questionIds, Long ownerId, Long solverId);
 }

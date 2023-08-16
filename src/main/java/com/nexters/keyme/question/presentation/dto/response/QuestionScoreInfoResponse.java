@@ -3,6 +3,7 @@ package com.nexters.keyme.question.presentation.dto.response;
 
 import com.nexters.keyme.question.domain.model.QuestionSolved;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,12 +16,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class QuestionSolvedScoreInfoResponse {
+public class QuestionScoreInfoResponse {
+
+
+    @ApiModelProperty("question result Id")
     private Long id;
     private int score;
     private LocalDateTime createdAt;
 
-    public QuestionSolvedScoreInfoResponse(QuestionSolved questionSolved) {
+    public QuestionScoreInfoResponse(QuestionSolved questionSolved) {
         this.id = questionSolved.getQuestionSolvedId();
         this.score = questionSolved.getScore();
         this.createdAt = questionSolved.getCreatedAt();
