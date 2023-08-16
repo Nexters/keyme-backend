@@ -2,7 +2,7 @@
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>
-                [%-5level] --- %msg --- %X{traceId} --- %X{requestUri} --- %d{yyyy:MM:dd HH:mm:ss.SSS} --- [%thread] --- [%C %M] --- [%logger{100}:%line] %n
+                [%-5level] --- %msg --- %X{traceId} --- %X{requestUri} --- %d{yyyy:MM:dd HH:mm:ss.SSS, ${logback.timezone:-Asia/Seoul}} --- [%thread] --- [%C %M] --- [%logger{40}:%line] %n
             </pattern>
         </encoder>
     </appender>
