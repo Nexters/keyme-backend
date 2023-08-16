@@ -16,6 +16,7 @@ public class LoggingTraceFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         MDC.put("traceId", UUID.randomUUID().toString());
         MDC.put("requestUri", request.getRequestURI());
+        MDC.put("requestStartTime", String.valueOf(System.currentTimeMillis()));
 
         try {
             filterChain.doFilter(request, response);
