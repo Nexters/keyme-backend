@@ -66,15 +66,15 @@ public class LoggingFilter extends OncePerRequestFilter {
 
     private String getBodyString(HttpServletRequest request) throws UnsupportedEncodingException {
         String method = request.getMethod();
-        if (!(method == HttpMethod.POST.name() ||
-                method == HttpMethod.PUT.name() ||
-                method == HttpMethod.PATCH.name())
+        if (!(method.equals(HttpMethod.POST.name()) ||
+                method.equals(HttpMethod.PUT.name()) ||
+                method.equals(HttpMethod.PATCH.name()))
         ) return "";
 
         if (request instanceof ContentCachingRequestWrapper) {
             ContentCachingRequestWrapper cachingRequestWrapper = (ContentCachingRequestWrapper) request;
             byte[] content = cachingRequestWrapper.getContentAsByteArray();
-            return new String(content, 0, 1024, cachingRequestWrapper.getCharacterEncoding());
+            return new String(content, cachingRequestWrapper.getCharacterEncoding());
         }
 
         return "";
