@@ -18,6 +18,6 @@ public class UserNotificationRequest {
     private final Map<String, String> data;
 
     public Map<String, String> getData() {
-        return new HashMap<>(data);
+        return data == null ? new HashMap<>() : new HashMap<>(data);
     }
 }
