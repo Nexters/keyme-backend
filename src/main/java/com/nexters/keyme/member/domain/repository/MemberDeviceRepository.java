@@ -14,4 +14,7 @@ public interface MemberDeviceRepository extends JpaRepository<MemberDevice, Long
 
     @Query("SELECT md FROM MemberDevice md WHERE md.member.id IN :memberIds")
     List<MemberDevice> findAllByMemberIds(@Param(value = "memberIds") List<Long> memberIds);
+
+    @Query("SELECT md FROM MemberDevice md WHERE md.member.id = :memberId")
+    List<MemberDevice> findAllByMemberId(@Param(value = "memberId") Long memberId);
 }

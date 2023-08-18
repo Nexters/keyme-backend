@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @RequiredArgsConstructor
 @Component
 @Slf4j
@@ -29,13 +31,15 @@ public class TestEventHandler {
 
     @EventListener
     public void handleSendNotificationEvent(SendNotificationEvent event) {
-        log.info("notification logging test");
-        try {
-            UserNotificationRequest request = new UserNotificationRequest(event.getUserIds(), "내 문제를 푼 친구가 있어요!", "지금 Keyme에서 확인해보세요.", null);
-            notificationService.sendByUsers(request);
-        } catch (Exception e) {
-            log.error(e.getMessage());
+        Long solverId = event.getSolverId();
+        Long ownerId = event.getOwnerId();
+
+        if (Objects.equals(ownerId, solverId)) {
+            return;
         }
+
+        UserNotificationRequest request = new UserNotificationRequest(event.getOwnerId(), "내 문제를 푼 친구가 있어요!", "지금 Keyme에서 확인해보세요.", null);
+        notificationService.sendByUser(request);
     }
 
 }

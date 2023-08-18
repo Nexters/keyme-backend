@@ -1,21 +1,15 @@
 package com.nexters.keyme.question.domain.repository;
 
-import com.nexters.keyme.common.config.QueryDslConfig;
 import com.nexters.keyme.common.dto.internal.PageInfo;
 import com.nexters.keyme.question.domain.enums.QuestionCategoryType;
 import com.nexters.keyme.question.domain.internaldto.QuestionStatisticInfo;
 import com.nexters.keyme.question.domain.model.QuestionSolved;
-import com.nexters.keyme.question.presentation.dto.response.QuestionStatisticResponse;
 import com.nexters.keyme.test.annotation.RepositoryTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.Page;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 
 @RepositoryTest
-@Import(QueryDslConfig.class)
 class QuestionSolvedRepositoryTest {
 
     @Autowired

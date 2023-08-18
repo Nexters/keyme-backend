@@ -1,6 +1,5 @@
 package com.nexters.keyme.member.domain.repository;
 
-import com.nexters.keyme.common.config.QueryDslConfig;
 import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
 import com.nexters.keyme.member.domain.model.MemberDevice;
 import com.nexters.keyme.test.annotation.RepositoryTest;
@@ -8,12 +7,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
 
 import java.util.List;
 
 @RepositoryTest
-@Import(QueryDslConfig.class)
 class MemberDeviceRepositoryTest {
     @Autowired
     private MemberDeviceRepository memberDeviceRepository;
@@ -29,9 +26,18 @@ class MemberDeviceRepositoryTest {
     }
 
     @Test
-    @DisplayName("멤버 id와 토큰으로 Device 조회")
-    void findByMemberIdsTest() {
-        List<MemberDevice> devices = memberDeviceRepository.findAllByMemberIds(List.of(2L));
+    @DisplayName("멤버 id 리스트로 Device 조회")
+    void findAllByMemberIdsTest() {
+        List<MemberDevice> devices = memberDeviceRepository.findAllByMemberIds(List.of(1L));
+
+        Assertions.assertThat(devices.size()).isEqualTo(3);
+        Assertions.assertThat(devices.get(0).getToken()).isEqualTo("token1");
+    }
+
+    @Test
+    @DisplayName("멤버 id로 Device 조회")
+    void findAllByMemberIdTest() {
+        List<MemberDevice> devices = memberDeviceRepository.findAllByMemberId(1L);
 
         Assertions.assertThat(devices.size()).isEqualTo(3);
         Assertions.assertThat(devices.get(0).getToken()).isEqualTo("token1");

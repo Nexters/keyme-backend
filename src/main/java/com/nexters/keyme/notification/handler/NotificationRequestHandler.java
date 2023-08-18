@@ -15,7 +15,7 @@ public class NotificationRequestHandler {
 
     @EventListener
     public void handleUserNotificationRequest(UserNotificationRequest request) {
-        notificationService.sendByUsers(request);
+        notificationService.sendByUser(request);
     }
 
     @EventListener

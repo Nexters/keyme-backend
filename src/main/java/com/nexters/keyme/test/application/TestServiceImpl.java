@@ -37,6 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -150,7 +151,7 @@ public class TestServiceImpl implements TestService {
         // test 존재확인, owner가 호출자와 맞는지 확인
         testRepository.findById(testId)
                 .map(test -> test.getMember().getId())
-                .filter(testOwnerId -> testOwnerId == memberId)
+                .filter(testOwnerId -> Objects.equals(testOwnerId, memberId))
                 .orElseThrow(ResourceNotFoundException::new);
 
         // FIXME : 두 통계 쿼리 병렬 수행 필요
@@ -194,7 +195,7 @@ public class TestServiceImpl implements TestService {
         }
 
         // TODO : 일치율 계산 로직 추가 및 domain service로 분리
-        Float matchRate = test.getMember().getId() == solverId ? 100f : 0f;
+        Float matchRate = Objects.equals(test.getMember().getId(), solverId) ? 100f : 0f;
 
         // FIXME : Create TestResult 로직 분리
         TestResult testResult = TestResult.builder()
@@ -216,7 +217,7 @@ public class TestServiceImpl implements TestService {
         questionSolvedRepository.saveAll(questionSolvedList);
 
         eventPublisher.publishEvent(new AddStatisticEvent(test.getMember().getId(), solverId, questionSolvedList));
-        eventPublisher.publishEvent(new SendNotificationEvent(List.of(test.getMember().getId())));
+        eventPublisher.publishEvent(new SendNotificationEvent(test.getMember().getId(), solverId));
 
         String resultCode = null;
         if (solverId == null) {
