@@ -6,7 +6,7 @@ import com.nexters.keyme.notification.dto.UserNotificationRequest;
 import java.util.concurrent.CompletableFuture;
 
 public interface NotificationService {
-    CompletableFuture<Boolean> sendByUsers(UserNotificationRequest request);
+    CompletableFuture<Boolean> sendByUser(UserNotificationRequest request);
 
     void sendByTopics(TopicNotificationRequest request);
 }
