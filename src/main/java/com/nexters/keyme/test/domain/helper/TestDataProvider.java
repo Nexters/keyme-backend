@@ -35,8 +35,11 @@ public class TestDataProvider {
         Test test = testRepository.findById(testId).orElseThrow(ResourceNotFoundException::new);
         MemberEntity member = solverId == null ? null : memberRepository.findById(solverId).orElseThrow(ResourceNotFoundException::new);
 
+        log.info("log 1");
         CompletableFuture<Optional<TestResult>> testResultFuture = testResultAsyncDataProvider.asyncFindByTestAndSolver(test, member);
+        log.info("log 2");
         CompletableFuture<List<Question>> questionListFuture = questionAsyncDataProvider.asyncFindAllQuestionByTestId(testId);
+        log.info("log 3");
 
         return questionListFuture.thenCombine(testResultFuture, (questionList, testResultOpt) -> {
             Long testResultId = testResultOpt.map(ts -> ts.getTestResultId()).orElse(null);
