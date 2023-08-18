@@ -60,7 +60,7 @@ class StatisticServiceTest {
 
         StatisticResultResponse firstResult = results.get(0);
 
-        StatisticQuestionResponse question = firstResult.getStatisticQuestion();
+        StatisticQuestionResponse question = firstResult.getQuestionStatistic();
         assertThat(question.getQuestionId()).isEqualTo(1L);
         assertThat(question.getAvgScore()).isEqualTo(1L);
         assertThat(question.getTitle()).isEqualTo("새로운 사람들과 대화하는 것을 즐기시겠군요?");

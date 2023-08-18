@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class StatisticResultResponse {
     @ApiModelProperty(value="문제별 통계 정보")
-    private final StatisticQuestionResponse statisticQuestion;
+    private final StatisticQuestionResponse questionStatistic;
     @ApiModelProperty(value="포도송이 좌표값 정보")
     private final CoordinateResponse coordinate;
 }
