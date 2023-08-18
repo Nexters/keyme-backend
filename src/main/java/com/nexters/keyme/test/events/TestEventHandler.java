@@ -6,11 +6,13 @@ import com.nexters.keyme.question.domain.model.QuestionSolved;
 import com.nexters.keyme.statistics.application.StatisticService;
 import com.nexters.keyme.statistics.application.dto.ScoreInfo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class TestEventHandler {
 
     private final StatisticService statisticService;
@@ -27,8 +29,13 @@ public class TestEventHandler {
 
     @EventListener
     public void handleSendNotificationEvent(SendNotificationEvent event) {
-        UserNotificationRequest request = new UserNotificationRequest(event.getUserIds(), "내 문제를 푼 친구가 있어요!", "지금 Keyme에서 확인해보세요.", null);
-        notificationService.sendByUsers(request);
+        log.info("notification logging test");
+        try {
+            UserNotificationRequest request = new UserNotificationRequest(event.getUserIds(), "내 문제를 푼 친구가 있어요!", "지금 Keyme에서 확인해보세요.", null);
+            notificationService.sendByUsers(request);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
     }
 
 }
