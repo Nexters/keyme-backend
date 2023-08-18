@@ -22,7 +22,7 @@ public class PythonCoordinateConversionService implements CoordinateConversionSe
     @Override
     public List<CoordinateInfo> convertFrom(List<Statistic> statistics) {
         List<Double> collect = statistics.stream()
-                .map((s) -> Double.valueOf(s.getMatchRate()))
+                .map(Statistic::getSolverAvgScore)
                 .collect(Collectors.toList());
 
         CoordinateResponse response = WebClient.create().post()
@@ -36,7 +36,7 @@ public class PythonCoordinateConversionService implements CoordinateConversionSe
                 .bodyToFlux(CoordinateResponse.class)
                 .toStream()
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(RuntimeException::new);
 
         return response.getCircles().stream()
                 .map((circle) -> new CoordinateInfo(circle.getX(), circle.getY(), circle.getR()))
