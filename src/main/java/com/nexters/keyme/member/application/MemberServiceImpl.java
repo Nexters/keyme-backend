@@ -2,7 +2,6 @@ package com.nexters.keyme.member.application;
 
 import com.nexters.keyme.auth.domain.internaldto.OAuthUserInfo;
 import com.nexters.keyme.auth.domain.internaldto.UserInfo;
-import com.nexters.keyme.common.exceptions.ResourceAlreadyExistsException;
 import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
 import com.nexters.keyme.member.domain.internaldto.ImageInfo;
 import com.nexters.keyme.member.domain.internaldto.MemberModificationInfo;
@@ -11,16 +10,16 @@ import com.nexters.keyme.member.domain.model.*;
 import com.nexters.keyme.member.domain.repository.MemberDeviceRepository;
 import com.nexters.keyme.member.domain.repository.MemberOAuthRepository;
 import com.nexters.keyme.member.domain.repository.MemberRepository;
-import com.nexters.keyme.member.domain.service.NicknameValidator;
 import com.nexters.keyme.member.domain.service.ImageUploader;
+import com.nexters.keyme.member.domain.service.NicknameValidator;
 import com.nexters.keyme.member.presentation.dto.request.AddTokenRequest;
 import com.nexters.keyme.member.presentation.dto.request.DeleteTokenRequest;
 import com.nexters.keyme.member.presentation.dto.request.MemberModificationRequest;
 import com.nexters.keyme.member.presentation.dto.request.NicknameVerificationRequest;
 import com.nexters.keyme.member.presentation.dto.response.ImageResponse;
-import com.nexters.keyme.member.presentation.dto.response.NicknameVerificationResponse;
 import com.nexters.keyme.member.presentation.dto.response.MemberResponse;
 import com.nexters.keyme.member.presentation.dto.response.MemberWithTokenResponse;
+import com.nexters.keyme.member.presentation.dto.response.NicknameVerificationResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -118,7 +117,10 @@ public class MemberServiceImpl implements MemberService {
         MemberEntity member = memberRepository.findById(userId)
                 .orElseThrow(ResourceNotFoundException::new);
 
-        checkAlreadyExists(member.getMemberDevice(), request.getToken());
+        if (isAlreadyExists(member.getMemberDevice(), request.getToken())) {
+            log.info("Registering FCM token --- token already exists: {}", request.getToken());
+            return;
+        }
 
         MemberDevice device = MemberDevice
                 .builder()
@@ -129,12 +131,13 @@ public class MemberServiceImpl implements MemberService {
         memberDeviceRepository.save(device);
     }
 
-    private void checkAlreadyExists(List<MemberDevice> memberDevice, String token) {
+    private boolean isAlreadyExists(List<MemberDevice> memberDevice, String token) {
         for (MemberDevice device : memberDevice) {
             if (device.getToken().equals(token)) {
-                throw new ResourceAlreadyExistsException();
+                return true;
             }
         }
+        return false;
     }
 
     @Transactional
