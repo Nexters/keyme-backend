@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -75,6 +76,8 @@ public class StatisticServiceImpl implements StatisticService {
             throw new ResourceNotFoundException();
         }
 
+        statistics.sort(getStatisticComparator());
+
         List<CoordinateInfo> coordinates = conversionService.convertFrom(statistics);
 
         List<StatisticResultResponse> results = new ArrayList<>();
@@ -90,6 +93,17 @@ public class StatisticServiceImpl implements StatisticService {
         }
 
         return new MemberStatisticResponse(memberId, results);
+    }
+
+    private static Comparator<Statistic> getStatisticComparator() {
+        return (s1, s2) -> {
+            if (s1.getSolverAvgScore() > s2.getSolverAvgScore()) {
+                return 1;
+            } else if (s1.getSolverAvgScore() < s2.getSolverAvgScore()) {
+                return -1;
+            }
+            return 0;
+        };
     }
 
     private boolean checkStatisticExists(List<Statistic> statistics) {
