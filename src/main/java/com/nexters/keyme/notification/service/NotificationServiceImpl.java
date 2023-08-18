@@ -24,16 +24,12 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Async
     public CompletableFuture<Boolean> sendByUsers(UserNotificationRequest request) {
-        log.info("start notificationService!");
         List<String> tokens = new ArrayList<>();
         List<MemberDevice> devices = memberDeviceRepository.findAllByMemberIds(request.getUserIds());
 
         for (MemberDevice device : devices) {
             tokens.add(String.valueOf(device.getToken()));
-            log.info("token: {}", device.getToken());
         }
-
-
 
         notificationSender.sendByTokens(tokens, request.getTitle(), request.getBody(), request.getData());
         return CompletableFuture.completedFuture(Boolean.TRUE);
