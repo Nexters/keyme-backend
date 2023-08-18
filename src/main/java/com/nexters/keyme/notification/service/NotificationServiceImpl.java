@@ -22,8 +22,9 @@ public class NotificationServiceImpl implements NotificationService {
     private final NotificationSender notificationSender;
     private final MemberDeviceRepository memberDeviceRepository;
 
-    @Async("NotificationThreadPool")
+    @Async
     public CompletableFuture<Boolean> sendByUsers(UserNotificationRequest request) {
+        log.info("start notificationService!");
         List<String> tokens = new ArrayList<>();
         List<MemberDevice> devices = memberDeviceRepository.findAllByMemberIds(request.getUserIds());
 
