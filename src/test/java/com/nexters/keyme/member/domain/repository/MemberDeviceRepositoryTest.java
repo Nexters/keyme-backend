@@ -29,9 +29,18 @@ class MemberDeviceRepositoryTest {
     }
 
     @Test
-    @DisplayName("멤버 id와 토큰으로 Device 조회")
-    void findByMemberIdsTest() {
-        List<MemberDevice> devices = memberDeviceRepository.findAllByMemberIds(List.of(2L));
+    @DisplayName("멤버 id 리스트로 Device 조회")
+    void findAllByMemberIdsTest() {
+        List<MemberDevice> devices = memberDeviceRepository.findAllByMemberIds(List.of(1L));
+
+        Assertions.assertThat(devices.size()).isEqualTo(3);
+        Assertions.assertThat(devices.get(0).getToken()).isEqualTo("token1");
+    }
+
+    @Test
+    @DisplayName("멤버 id로 Device 조회")
+    void findAllByMemberIdTest() {
+        List<MemberDevice> devices = memberDeviceRepository.findAllByMemberId(1L);
 
         Assertions.assertThat(devices.size()).isEqualTo(3);
         Assertions.assertThat(devices.get(0).getToken()).isEqualTo("token1");
