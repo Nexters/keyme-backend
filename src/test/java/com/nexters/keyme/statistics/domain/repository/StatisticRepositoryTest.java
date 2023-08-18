@@ -2,20 +2,16 @@ package com.nexters.keyme.statistics.domain.repository;
 
 import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
 import com.nexters.keyme.statistics.domain.model.Statistic;
+import com.nexters.keyme.test.annotation.RepositoryTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
-@AutoConfigureTestDatabase
-@ActiveProfiles("test")
+@RepositoryTest
 class StatisticRepositoryTest {
     @Autowired
     private StatisticRepository statisticRepository;

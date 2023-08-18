@@ -1,6 +1,5 @@
 package com.nexters.keyme.member.domain.repository;
 
-import com.nexters.keyme.common.config.QueryDslConfig;
 import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
 import com.nexters.keyme.member.domain.model.MemberDevice;
 import com.nexters.keyme.test.annotation.RepositoryTest;
@@ -8,12 +7,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
 
 import java.util.List;
 
 @RepositoryTest
-@Import(QueryDslConfig.class)
 class MemberDeviceRepositoryTest {
     @Autowired
     private MemberDeviceRepository memberDeviceRepository;

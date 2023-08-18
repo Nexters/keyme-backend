@@ -1,5 +1,6 @@
 package com.nexters.keyme.test.annotation;
 
+import com.nexters.keyme.common.config.QueryDslConfig;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
@@ -13,5 +14,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @DataJpaTest
 @ActiveProfiles("test")
+@Import(QueryDslConfig.class)
 public @interface RepositoryTest {
 }
