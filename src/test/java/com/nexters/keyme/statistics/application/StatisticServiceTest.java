@@ -1,14 +1,16 @@
 package com.nexters.keyme.statistics.application;
 
 import com.nexters.keyme.question.presentation.dto.response.QuestionCategoryResponse;
-import com.nexters.keyme.question.presentation.dto.response.QuestionStatisticResponse;
 import com.nexters.keyme.statistics.application.dto.ScoreInfo;
 import com.nexters.keyme.statistics.domain.internaldto.StatisticInfo;
 import com.nexters.keyme.statistics.domain.model.Statistic;
 import com.nexters.keyme.statistics.presentation.dto.AdditionalStatisticRequest;
 import com.nexters.keyme.statistics.presentation.dto.AdditionalStatisticResponse;
 import com.nexters.keyme.statistics.presentation.dto.request.StatisticRequest;
-import com.nexters.keyme.statistics.presentation.dto.response.*;
+import com.nexters.keyme.statistics.presentation.dto.response.CoordinateResponse;
+import com.nexters.keyme.statistics.presentation.dto.response.MemberStatisticResponse;
+import com.nexters.keyme.statistics.presentation.dto.response.StatisticQuestionResponse;
+import com.nexters.keyme.statistics.presentation.dto.response.StatisticResultResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +60,7 @@ class StatisticServiceTest {
 
         StatisticResultResponse firstResult = results.get(0);
 
-        QuestionStatisticResponse question = firstResult.getQuestionStatistic();
+        StatisticQuestionResponse question = firstResult.getStatisticQuestion();
         assertThat(question.getQuestionId()).isEqualTo(1L);
         assertThat(question.getAvgScore()).isEqualTo(1L);
         assertThat(question.getTitle()).isEqualTo("새로운 사람들과 대화하는 것을 즐기시겠군요?");
