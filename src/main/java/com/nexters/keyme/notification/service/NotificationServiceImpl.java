@@ -6,6 +6,7 @@ import com.nexters.keyme.notification.dto.TopicNotificationRequest;
 import com.nexters.keyme.notification.dto.UserNotificationRequest;
 import com.nexters.keyme.notification.helper.NotificationSender;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationSender notificationSender;
@@ -27,7 +29,10 @@ public class NotificationServiceImpl implements NotificationService {
 
         for (MemberDevice device : devices) {
             tokens.add(String.valueOf(device.getToken()));
+            log.info("token: {}", device.getToken());
         }
+
+
 
         notificationSender.sendByTokens(tokens, request.getTitle(), request.getBody(), request.getData());
         return CompletableFuture.completedFuture(Boolean.TRUE);
