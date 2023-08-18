@@ -8,11 +8,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 @RepositoryTest
 @Import(QueryDslConfig.class)
@@ -28,5 +26,14 @@ class MemberDeviceRepositoryTest {
 
         Assertions.assertThat(device.getId()).isEqualTo(1L);
         Assertions.assertThat(device.getToken()).isEqualTo("token1");
+    }
+
+    @Test
+    @DisplayName("멤버 id와 토큰으로 Device 조회")
+    void findByMemberIdsTest() {
+        List<MemberDevice> devices = memberDeviceRepository.findAllByMemberIds(List.of(2L));
+
+        Assertions.assertThat(devices.size()).isEqualTo(3);
+        Assertions.assertThat(devices.get(0).getToken()).isEqualTo("token1");
     }
 }

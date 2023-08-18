@@ -1,9 +1,6 @@
 package com.nexters.keyme.notification.helper;
 
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingException;
-import com.google.firebase.messaging.Message;
-import com.google.firebase.messaging.Notification;
+import com.google.firebase.messaging.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -26,7 +23,22 @@ public class FCMNotificationSender implements NotificationSender {
                 .setBody(body)
                 .build();
 
-        List<Message> messages = tokens.stream()
+        List<Message> messages = convertToMessages(tokens, data, notification);
+
+        if (messages.size() == 0) {
+            return;
+        }
+
+        for (String token : tokens) {
+            log.info("Sending FCM Notification --- token: {}", token);
+        }
+
+        BatchResponse batchResponse = sendAndGetBatchResponse(messages);
+        logError(batchResponse);
+    }
+
+    private List<Message> convertToMessages(List<String> tokens, Map<String, String> data, Notification notification) {
+        return tokens.stream()
                 .map(token ->
                         Message.builder()
                                 .setNotification(notification)
@@ -34,16 +46,34 @@ public class FCMNotificationSender implements NotificationSender {
                                 .putAllData(data)
                                 .build())
                 .collect(Collectors.toList());
+    }
 
-        if (messages.size() == 0) {
-            return;
-        }
-
+    private BatchResponse sendAndGetBatchResponse(List<Message> messages) {
+        BatchResponse batchResponse;
         try {
-            firebaseMessaging.sendAll(messages);
+
+             batchResponse = firebaseMessaging.sendAll(messages);
+
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new RuntimeException("메시지 발송 중 문제가 발생했습니다.");
+        }
+        return batchResponse;
+    }
+
+    private void logError(BatchResponse batchResponse) {
+        if (batchResponse.getFailureCount() == 0) {
+            return;
+        }
+
+        for (SendResponse response : batchResponse.getResponses()) {
+            if (response.getException() != null) {
+                FirebaseMessagingException exception = response.getException();
+
+                String message = exception.getMessage();
+                String fcmErrorCode = exception.getErrorCode().name();
+                log.error("Sending FCM notification failed --- {} --- {}\n", fcmErrorCode, message);
+            }
         }
     }
 
