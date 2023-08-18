@@ -26,6 +26,7 @@ public class FCMNotificationSender implements NotificationSender {
         List<Message> messages = convertToMessages(tokens, data, notification);
 
         if (messages.size() == 0) {
+            log.warn("Sending FCM Notification --- token list is empty");
             return;
         }
 
