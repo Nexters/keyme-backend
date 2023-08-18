@@ -29,13 +29,8 @@ public class TestEventHandler {
 
     @EventListener
     public void handleSendNotificationEvent(SendNotificationEvent event) {
-        log.info("notification logging test");
-        try {
-            UserNotificationRequest request = new UserNotificationRequest(event.getUserIds(), "내 문제를 푼 친구가 있어요!", "지금 Keyme에서 확인해보세요.", null);
-            notificationService.sendByUsers(request);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+        UserNotificationRequest request = new UserNotificationRequest(event.getUserIds(), "내 문제를 푼 친구가 있어요!", "지금 Keyme에서 확인해보세요.", null);
+        notificationService.sendByUsers(request);
     }
 
 }
