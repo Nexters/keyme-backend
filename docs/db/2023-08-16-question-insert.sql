@@ -25,7 +25,72 @@ VALUES
 
 INSERT INTO `question` (`title`, `keyword`, `category_name`, `is_onboarding`)
 VALUES
-    ('님은 돈관리를 잘한다', '돈관리 마스터', 'MONEY', false);
+    ('님은 모임에서 주도적인 역할을 할 때가 많다', '사회자', 'PASSION', false),
+    ('님은 평소 집중력이 좋다', '집중력', 'PASSION', false),
+    ('님은 내가 좋아하는 것들 이외에는 관심이 없다', '마이웨이', 'PASSION', false),
+    ('님은 일처리에 만족할 때까지 시간을 많이 쓰는 편이다', '완벽주의', 'PASSION', false),
+    ('님은 정말 몰두하는 일이 한 가지 이상이 있다', '덕후체질', 'PASSION', false),
+    ('님은 동료들과 경쟁을 하는 것을 좋아한다', '이기자', 'PASSION', false),
+    ('님은 작은 게임도 목숨 걸고 이기려고 한다', '승부사', 'PASSION', false),
+    ('님은 새로운 상황을 만났을때 걱정이 많은 편이다', '걱정왕', 'PASSION', false),
+    ('님은 무섭거나 스릴있는 걸 잘한다', '담력', 'PASSION', false),
+    ('님은 평소 자신이 말하는 것을 행동으로 잘 옮긴다', '실천력', 'PASSION', false),
+    ('님은 길고양이를 위해 항상 츄르를 준비하고 있다', '동물좋아', 'PASSION', false);
+
+INSERT INTO `question` (`title`, `keyword`, `category_name`, `is_onboarding`)
+VALUES
+    ('님은 똘끼가 있다', '똘끼', 'HUMOR', false);
+
+INSERT INTO `question` (`title`, `keyword`, `category_name`, `is_onboarding`)
+VALUES
+    ('님은 노래를 잘 부른다', '나가수', 'BODY', false),
+    ('님은 주사가 얌전하다', '술선비', 'BODY', false),
+    ('님은 술을 잘 먹는다', '술부심', 'BODY', false),
+    ('님은 커피없이는 못 살 것 같다', '카페인 중독자', 'BODY', false);
 
 
-DELETE FROM `question`;
+INSERT INTO `question` (`title`, `keyword`, `category_name`, `is_onboarding`)
+VALUES
+    ('님은 항상 먹을 것을 챙겨서 친구들에게 나눠주고는 한다', '혜자', 'FOOD', false),
+    ('님은 매운걸 잘 먹는다', '맵부심', 'FOOD', false);
+
+INSERT INTO `question` (`title`, `keyword`, `category_name`, `is_onboarding`)
+VALUES
+    ('님은 남들이 보지 못한 걸 잘 보는 사람이다', '통찰력', 'SENSE', false),
+    ('님은 새로운 곳을 가면 잘 적응한다', '적응력', 'SENSE', false);
+
+INSERT INTO `question` (`title`, `keyword`, `category_name`, `is_onboarding`)
+VALUES
+    ('님은 시험준비를 할 때 꾸준히 공부하기보단 벼락치기한다', '강심장', 'PLANNING', false),
+    ('님은 모르는 장소에 갈 때 로드뷰까지 꼼꼼히 살펴보는 타입이다', '꼼꼼왕', 'PLANNING', false),
+    ('님은 약속이 있으면 꼭 늦는다', '코리안타임', 'PLANNING', false);
+
+INSERT INTO `question` (`title`, `keyword`, `category_name`, `is_onboarding`)
+VALUES
+    ('님은 논리적이지 못한 말을 들으면 참을 수 없다', '논리왕', 'SENSIBILITY', false),
+    ('님은 남 몰래 우는 경우가 많다', '쿠크다스', 'SENSIBILITY', false),
+    ('님은 화를 잘 내는 편이다', '다혈질', 'SENSIBILITY', false),
+    ('님은 드라마에서 주인공에게 과몰입한다', '과몰입러', 'SENSIBILITY', false),
+    ('님은 가성비보다는 최고의 제품을 산다', '가성비', 'SENSIBILITY', false),
+    ('님은 비오는 날에 창 밖을 보며 여유를 즐길 것 같다', '감성파', 'SENSIBILITY', false);
+
+INSERT INTO `question` (`title`, `keyword`, `category_name`, `is_onboarding`)
+VALUES
+    ('님은 친구와 노는 중 근처에 있는 지인을 부를 수 있다', '인싸', 'RELATIONSHIPS', false),
+    ('님은 하루뿐인 휴가를 집에서 보낸다', '이불과한몸', 'RELATIONSHIPS', false),
+    ('님은 약속이 있는데 갑자기 비가 오면 다음에 본다', '집순이', 'RELATIONSHIPS', false),
+    ('님은 혼자만의 시간을 가질 때 행복감을 느끼는 편이다', '독립적', 'RELATIONSHIPS', false),
+    ('님은 분위기를 잘 띄운다', '광대력', 'RELATIONSHIPS', false),
+    ('님은 약속이 가득 차서 친구한테 한참 뒤에 보자고 한 적이 있다', '핵인싸', 'RELATIONSHIPS', false),
+    ('님은 뒤끝이 없다', '쿨워터', 'RELATIONSHIPS', false),
+    ('님은 다른 사람 부탁을 다 들어주다가 자기 일을 못한 적이 있다', '봇짐러', 'RELATIONSHIPS', false),
+    ('님은 혼자 고민하기보다 동료들과 함께 문제를 해결한다', '협력왕', 'RELATIONSHIPS', false),
+    ('님은 친구가 100만원을 빌려달라고 하면 빌려줄 것 같다', '의리의리', 'RELATIONSHIPS', false),
+    ('님은 첫인상과 후인상이 정말 다른 사람이다', '반전매력', 'RELATIONSHIPS', false),
+    ('님은 표정관리를 잘한다', '포커페이스', 'RELATIONSHIPS', false),
+    ('님은 친구 생일 선물 고르는 데에 시간을 많이 쓴다', '챙김러', 'RELATIONSHIPS', false);
+
+INSERT INTO `question` (`title`, `keyword`, `category_name`, `is_onboarding`)
+VALUES
+    ('님은 인스타 피드에 여자 인플루언서가 많이 나오는 편이다', '여미새', 'AFFECTION', false),
+    ('님은 연애 할 때 질투심이 많은 편이다', '질투의 화신', 'AFFECTION', false);

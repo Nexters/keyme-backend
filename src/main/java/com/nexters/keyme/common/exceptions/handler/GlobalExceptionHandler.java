@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.util.Arrays;
+
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -57,7 +59,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse> handleUnHandleException(Exception e) {
-        log.error("예상치 못한 에러발생! 😭");
+        log.error("예상치 못한 에러발생! 😭 {} {} {}", e.getCause(), e.getMessage(), Arrays.toString(e.getStackTrace()));
         return ResponseEntity.internalServerError().body(new ApiResponse(ErrorCode.SERVER_ERROR));
     }
 }

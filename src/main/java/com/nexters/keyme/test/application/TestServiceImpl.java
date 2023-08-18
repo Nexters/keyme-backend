@@ -63,11 +63,12 @@ public class TestServiceImpl implements TestService {
                 .map(test -> test.getTestId())
                 .orElse(null);
 
+        // 온보딩이 이미 존재
         if (existOnboardingId != null) {
             return testDataProvider.getTestDeatil(existOnboardingId, memberId);
         }
 
-        // FIXME : Create Test - member, questionList 필요
+        // FIXME : Create Test - isOnboarding, member, questionList 필요
         List<Question> questionList = questionRepository.findAllByIsOnboarding(true);
         Test test = new Test(true, member, questionList.get(0).getTitle());
         testRepository.save(test);
