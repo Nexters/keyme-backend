@@ -113,6 +113,7 @@ public class TestServiceImpl implements TestService {
 
         // 랜덤발급으로 수정 필요
         // 온보딩 문제 풀었는지 확인 FIXME : 랜덤발급 로직으로 수정 시 필요없음
+        // 온보딩 안풀어도 Daily 호출할 수 있도록
         List<QuestionSolved> questionSolvedList = questionSolvedRepository.findFirstLastestQuestionSolved(memberId, memberId);
         if (questionSolvedList.isEmpty()) {
             log.error("온보딩 문제를 풀기 전 데일리 문제 호출");
