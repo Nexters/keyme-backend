@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface StatisticRepository extends JpaRepository<Statistic, Long> {
 
-    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
+//    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT st FROM Statistic st WHERE st.ownerId = :ownerId AND st.questionId = :questionId")
     Optional<Statistic> findByOwnerIdAndQuestionIdWithLock(@Param(value = "ownerId") long ownerId, @Param(value = "questionId") long questionId);
 
