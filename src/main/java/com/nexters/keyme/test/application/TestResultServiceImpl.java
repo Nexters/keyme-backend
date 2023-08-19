@@ -4,6 +4,9 @@ import com.nexters.keyme.common.exceptions.ResourceAlreadyExistsException;
 import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
 import com.nexters.keyme.member.domain.model.MemberEntity;
 import com.nexters.keyme.member.domain.repository.MemberRepository;
+import com.nexters.keyme.question.domain.model.QuestionSolved;
+import com.nexters.keyme.question.domain.repository.QuestionSolvedRepository;
+import com.nexters.keyme.question.presentation.dto.response.QuestionSolvedResponse;
 import com.nexters.keyme.test.domain.model.Test;
 import com.nexters.keyme.test.domain.model.TestResult;
 import com.nexters.keyme.test.domain.model.TestResultCode;
@@ -14,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,7 +25,7 @@ import java.util.Optional;
 public class TestResultServiceImpl implements TestResultService {
 
     private final TestResultRepository testResultRepository;
-    private final TestRepository testRepository;
+    private final QuestionSolvedRepository questionSolvedRepository;
     private final TestResultCodeRepository testResultCodeRepository;
     private final MemberRepository memberRepository;
 
@@ -37,11 +41,15 @@ public class TestResultServiceImpl implements TestResultService {
 
         // 유저가 해당 test를 이미 풀었을 경우
         Optional<TestResult> test = testResultRepository.findByTestAndSolver(testResult.getTest(), member);
+        testResultCodeRepository.deleteById(resultCode);
+
+        // FIXME - Update가 아닌 예외 던지기로 바꾸기
         if (test.isPresent()) {
-            throw new ResourceAlreadyExistsException();
+            List<QuestionSolved> questionSolvedList = questionSolvedRepository.findAllByTestResultIdWithQuestion(test.get().getTestResultId());
+            questionSolvedRepository.deleteAll(questionSolvedList);
+            testResultRepository.delete(test.get());
         }
 
-        testResultCodeRepository.deleteById(resultCode);
         testResult.setSolver(member);
     }
 }
