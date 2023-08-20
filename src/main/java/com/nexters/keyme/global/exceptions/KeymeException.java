@@ -2,9 +2,12 @@ package com.nexters.keyme.global.exceptions;
 
 import com.nexters.keyme.global.exceptions.code.ErrorCode;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class KeymeException extends RuntimeException {
-    private ErrorCode code;
-    private String message;
+    private final HttpStatus httpStatus;
+    private final String message;
+    private final int code;
 }
