@@ -12,6 +12,7 @@ import java.util.List;
 @Data
 @Builder
 public class RequestLogInfo {
+    private Long requestMemberId;
     private String uri;
     private String method;
     private String param;

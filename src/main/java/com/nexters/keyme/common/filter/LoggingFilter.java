@@ -2,11 +2,13 @@ package com.nexters.keyme.common.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nexters.keyme.auth.domain.internaldto.UserInfo;
 import com.nexters.keyme.common.dto.internal.RequestLogInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
@@ -43,8 +45,15 @@ public class LoggingFilter extends OncePerRequestFilter {
 
     private void printRequestLog(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException, UnsupportedEncodingException {
         long executionTime = System.currentTimeMillis() - Long.parseLong(MDC.get("requestStartTime"));
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long memberId = null;
+        
+        if (principal instanceof UserInfo) {
+            memberId = ((UserInfo)principal).getMemberId();
+        }
 
         RequestLogInfo requestLogInfo = RequestLogInfo.builder()
+                .requestMemberId(memberId)
                 .uri(request.getRequestURI())
                 .method(request.getMethod())
                 .param(getParamString(request))
