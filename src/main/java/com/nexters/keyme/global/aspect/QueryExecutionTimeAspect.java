@@ -1,4 +1,4 @@
-package com.nexters.keyme.global.aop;
+package com.nexters.keyme.global.aspect;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
