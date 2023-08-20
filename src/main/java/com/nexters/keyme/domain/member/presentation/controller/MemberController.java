@@ -1,6 +1,6 @@
 package com.nexters.keyme.domain.member.presentation.controller;
 
-import com.nexters.keyme.domain.auth.domain.internaldto.UserInfo;
+import com.nexters.keyme.global.dto.internal.UserInfo;
 import com.nexters.keyme.domain.member.application.MemberService;
 import com.nexters.keyme.domain.member.presentation.dto.request.AddTokenRequest;
 import com.nexters.keyme.domain.member.presentation.dto.request.DeleteTokenRequest;

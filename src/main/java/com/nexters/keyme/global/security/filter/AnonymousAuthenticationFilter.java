@@ -1,6 +1,6 @@
 package com.nexters.keyme.global.security.filter;
 
-import com.nexters.keyme.domain.auth.domain.internaldto.UserInfo;
+import com.nexters.keyme.global.dto.internal.UserInfo;
 import com.nexters.keyme.global.enums.AuthRole;
 import com.nexters.keyme.global.security.token.JwtAuthenticationToken;
 import lombok.extern.slf4j.Slf4j;

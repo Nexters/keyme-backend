@@ -1,7 +1,7 @@
 package com.nexters.keyme.global.util;
 
 import com.nexters.keyme.global.enums.AuthRole;
-import com.nexters.keyme.global.exceptions.AuthenticationFailedException;
+import com.nexters.keyme.global.exceptions.KeymeUnauthorizedException;
 import com.nexters.keyme.global.exceptions.code.ErrorCode;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
@@ -90,17 +90,13 @@ public class JwtTokenProvider {
     try {
       return parser.parseClaimsJws(token).getBody();
     } catch (MalformedJwtException e) {
-      log.error("Invalid JWT token");
-      throw new AuthenticationFailedException(ErrorCode.TOKEN_INVALID);
+      throw new KeymeUnauthorizedException(ErrorCode.TOKEN_INVALID);
     } catch (ExpiredJwtException e) {
-      log.error("Expired JWT token");
-      throw new AuthenticationFailedException(ErrorCode.TOKEN_EXPIRED);
+      throw new KeymeUnauthorizedException(ErrorCode.TOKEN_EXPIRED);
     } catch (UnsupportedJwtException e) {
-      log.error("Unsupported JWT token");
-      throw new AuthenticationFailedException(ErrorCode.TOKEN_INVALID);
+      throw new KeymeUnauthorizedException(ErrorCode.TOKEN_INVALID);
     } catch (IllegalArgumentException e) {
-      log.error("JWT claims string is empty.");
-      throw new AuthenticationFailedException(ErrorCode.UNAUTHORIZED);
+      throw new KeymeUnauthorizedException(ErrorCode.UNAUTHORIZED);
     }
   }
 }

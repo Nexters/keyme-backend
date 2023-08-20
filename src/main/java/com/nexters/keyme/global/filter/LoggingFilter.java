@@ -2,7 +2,7 @@ package com.nexters.keyme.global.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nexters.keyme.domain.auth.domain.internaldto.UserInfo;
+import com.nexters.keyme.global.dto.internal.UserInfo;
 import com.nexters.keyme.global.dto.internal.RequestLogInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

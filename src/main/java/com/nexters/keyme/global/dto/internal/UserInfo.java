@@ -1,4 +1,4 @@
-package com.nexters.keyme.domain.auth.domain.internaldto;
+package com.nexters.keyme.global.dto.internal;
 
 
 import lombok.AllArgsConstructor;

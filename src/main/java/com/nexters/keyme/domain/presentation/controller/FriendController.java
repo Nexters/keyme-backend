@@ -1,6 +1,6 @@
 package com.nexters.keyme.domain.presentation.controller;
 
-import com.nexters.keyme.domain.auth.domain.internaldto.UserInfo;
+import com.nexters.keyme.global.dto.internal.UserInfo;
 import com.nexters.keyme.domain.presentation.dto.request.FriendAcceptRequest;
 import com.nexters.keyme.domain.presentation.dto.request.FriendAddRequest;
 import com.nexters.keyme.domain.presentation.dto.response.FriendResponse;

@@ -7,7 +7,6 @@ import com.nexters.keyme.domain.question.presentation.dto.response.QuestionScore
 import com.nexters.keyme.domain.question.presentation.dto.response.QuestionStatisticResponse;
 import com.nexters.keyme.global.dto.internal.PageInfo;
 import com.nexters.keyme.global.dto.response.PageResponse;
-import com.nexters.keyme.global.exceptions.ResourceNotFoundException;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
 import com.nexters.keyme.domain.question.domain.internaldto.QuestionStatisticInfo;

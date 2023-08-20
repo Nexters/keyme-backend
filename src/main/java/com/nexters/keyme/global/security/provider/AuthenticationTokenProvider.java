@@ -1,7 +1,7 @@
 package com.nexters.keyme.global.security.provider;
 
 import com.nexters.keyme.global.security.token.JwtAuthenticationToken;
-import com.nexters.keyme.domain.auth.domain.internaldto.UserInfo;
+import com.nexters.keyme.global.dto.internal.UserInfo;
 import io.jsonwebtoken.Claims;
 
 import lombok.extern.slf4j.Slf4j;

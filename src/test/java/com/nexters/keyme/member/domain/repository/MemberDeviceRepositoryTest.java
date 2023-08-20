@@ -1,7 +1,6 @@
 package com.nexters.keyme.member.domain.repository;
 
 import com.nexters.keyme.domain.member.domain.repository.MemberDeviceRepository;
-import com.nexters.keyme.global.exceptions.ResourceNotFoundException;
 import com.nexters.keyme.domain.member.domain.model.MemberDevice;
 import com.nexters.keyme.test.annotation.RepositoryTest;
 import org.assertj.core.api.Assertions;

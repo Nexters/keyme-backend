@@ -2,7 +2,6 @@ package com.nexters.keyme.domain.clienttest.application;
 
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
-import com.nexters.keyme.global.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

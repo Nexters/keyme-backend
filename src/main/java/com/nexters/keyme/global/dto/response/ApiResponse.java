@@ -12,25 +12,25 @@ public class ApiResponse<T> {
     private String message;
     private T data;
 
+    static public ApiResponse success(Object data) {
+        return new ApiResponse(200, "요청에 성공했습니다.", data);
+    }
+
     static public ApiResponse emptySuccess() {
         return new ApiResponse(200, "요청에 성공했습니다.", null);
+    }
+
+    static public ApiResponse error(String message, int code) {
+        return new ApiResponse(code, message, null);
+    }
+
+    static public ApiResponse internalError() {
+        return new ApiResponse(500, "문제가 발생했습니다. 문의주세요!", null);
     }
 
     public ApiResponse(int code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
-    }
-
-    public ApiResponse(T data) {
-        this.code = 200;
-        this.message = "요청에 성공했습니다.";
-        this.data = data;
-    }
-
-    public ApiResponse(ErrorCode errorCode) {
-        this.code = errorCode.getCode();
-        this.message = errorCode.getMessage();
-        this.data = null;
     }
 }

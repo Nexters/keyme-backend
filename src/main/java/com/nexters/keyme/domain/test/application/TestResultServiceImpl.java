@@ -3,8 +3,6 @@ package com.nexters.keyme.domain.test.application;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
 import com.nexters.keyme.domain.question.domain.repository.QuestionSolvedRepository;
-import com.nexters.keyme.global.exceptions.ResourceAlreadyExistsException;
-import com.nexters.keyme.global.exceptions.ResourceNotFoundException;
 import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
 import com.nexters.keyme.domain.test.domain.model.TestResult;
 import com.nexters.keyme.domain.test.domain.model.TestResultCode;

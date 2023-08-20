@@ -1,6 +1,6 @@
 package com.nexters.keyme.domain.clienttest.presentation.controller;
 
-import com.nexters.keyme.domain.auth.domain.internaldto.UserInfo;
+import com.nexters.keyme.global.dto.internal.UserInfo;
 import com.nexters.keyme.domain.clienttest.application.ClientTestService;
 import com.nexters.keyme.global.annotation.RequestUser;
 import com.nexters.keyme.global.dto.response.ApiResponse;

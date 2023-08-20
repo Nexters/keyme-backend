@@ -9,7 +9,6 @@ import com.nexters.keyme.domain.test.domain.model.Test;
 import com.nexters.keyme.domain.test.domain.repository.TestRepository;
 import com.nexters.keyme.domain.test.presentation.dto.response.TestDetailResponse;
 import com.nexters.keyme.domain.test.presentation.dto.response.TestSimpleMemberResponse;
-import com.nexters.keyme.global.exceptions.ResourceNotFoundException;
 import com.nexters.keyme.domain.test.domain.model.TestResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
