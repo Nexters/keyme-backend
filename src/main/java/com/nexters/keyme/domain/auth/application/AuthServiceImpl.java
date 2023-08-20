@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nexters.keyme.domain.auth.domain.client.AppleClient;
 import com.nexters.keyme.domain.auth.domain.client.KakaoClient;
+import com.nexters.keyme.domain.auth.domain.exceptions.InvalidAppleTokenException;
 import com.nexters.keyme.domain.auth.domain.internaldto.AppleJwtBodyInfo;
 import com.nexters.keyme.domain.auth.domain.internaldto.OAuthUserInfo;
 import com.nexters.keyme.domain.auth.presentation.dto.request.LoginRequest;
@@ -49,8 +50,6 @@ public class AuthServiceImpl implements AuthService {
         TokenResponse tokenObject = new TokenResponse(jwtToken);
         memberResponse.setToken(tokenObject);
 
-        // refresh 토큰정책 있으면 member에 저장
-
         return memberResponse;
     }
 
@@ -60,10 +59,12 @@ public class AuthServiceImpl implements AuthService {
         PublicKey key = applePublicKeyProvider.getPublicKey(jwtHeaderString, authKeys);
         Boolean isVerified  = jwtTokenProvider.verifyToken(identityToken, key);
 
-        if (!isVerified) { throw new RuntimeException(); }
+        if (!isVerified) {
+            throw new InvalidAppleTokenException();
+        }
 
+        String jwtBodyString = jwtTokenProvider.extractJwtBodyString(identityToken);
         try {
-            String jwtBodyString = jwtTokenProvider.extractJwtBodyString(identityToken);
             AppleJwtBodyInfo jwtBody = objectMapper.readValue(jwtBodyString, AppleJwtBodyInfo.class);
 
             return OAuthUserInfo.builder()
@@ -71,7 +72,7 @@ public class AuthServiceImpl implements AuthService {
                     .oauthType(OAuthType.APPLE)
                     .build();
         } catch(JsonProcessingException e) {
-            throw new RuntimeException();
+            throw new InvalidAppleTokenException();
         }
     }
 

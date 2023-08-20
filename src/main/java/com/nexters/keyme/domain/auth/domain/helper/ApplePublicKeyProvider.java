@@ -3,6 +3,7 @@ package com.nexters.keyme.domain.auth.domain.helper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nexters.keyme.domain.auth.domain.exceptions.InvalidAppleKeyException;
 import com.nexters.keyme.domain.auth.domain.internaldto.JwtHeaderInfo;
 import com.nexters.keyme.domain.auth.presentation.dto.response.AppleAuthKeysResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,7 @@ import java.security.spec.RSAPublicKeySpec;
 @Component
 @RequiredArgsConstructor
 public class ApplePublicKeyProvider {
-  private final String ALG_HEADER_KEY = "alg";
-  private final String KID_HEADER_KEY = "kid";
+
   private final int POSITIVE_SIGNUM = 1;
 
   private final ObjectMapper objectMapper;
@@ -34,30 +34,18 @@ public class ApplePublicKeyProvider {
               .findAny()
               .orElseThrow();
       return createPublicKey(publicKey);
-    } catch (JsonMappingException e) {
-      System.out.println("jwt 역직렬화 실패");
-    } catch (JsonProcessingException e) {
-      System.out.println("JSON 문제");
-    } catch (Exception e) {
-      System.out.println("일치하는 키 없음");
+    } catch (JsonProcessingException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+      throw new InvalidAppleKeyException();
     }
-
-    return null;
   }
 
-  private PublicKey createPublicKey(AppleAuthKeysResponse.Key publicKey) {
+  private PublicKey createPublicKey(AppleAuthKeysResponse.Key publicKey) throws NoSuchAlgorithmException, InvalidKeySpecException {
     byte[] n = Base64Utils.decodeFromUrlSafeString(publicKey.getN());
     byte[] e = Base64Utils.decodeFromUrlSafeString(publicKey.getE());
     RSAPublicKeySpec publicKeySpec =
             new RSAPublicKeySpec(new BigInteger(POSITIVE_SIGNUM, n), new BigInteger(POSITIVE_SIGNUM, e));
 
-    try {
-      KeyFactory keyFactory = KeyFactory.getInstance(publicKey.getKty());
-      return keyFactory.generatePublic(publicKeySpec);
-    } catch (NoSuchAlgorithmException | InvalidKeySpecException exception) {
-      System.out.println("PublicKey 생성불가");
-    }
-
-    return null;
+    KeyFactory keyFactory = KeyFactory.getInstance(publicKey.getKty());
+    return keyFactory.generatePublic(publicKeySpec);
   }
 }
