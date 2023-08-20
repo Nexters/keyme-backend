@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.nexters.keyme.global.config.ConstantConfig.AUTHORIZATION_HEADER;
+import static com.nexters.keyme.global.constant.ConstantString.AUTHORIZATION_HEADER;
 
 
 @Slf4j

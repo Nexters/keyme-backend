@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Optional;
 
-import static com.nexters.keyme.global.config.ConstantConfig.DEFAULT_IMAGE_URL;
+import static com.nexters.keyme.global.constant.ConstantString.DEFAULT_IMAGE_URL;
 
 @Service
 @RequiredArgsConstructor
