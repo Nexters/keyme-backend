@@ -2,7 +2,7 @@ package com.nexters.keyme.common.util;
 
 import com.nexters.keyme.common.enums.AuthRole;
 import com.nexters.keyme.common.exceptions.AuthenticationFailedException;
-import com.nexters.keyme.common.exceptions.errorcode.ErrorCode;
+import com.nexters.keyme.common.exceptions.code.ErrorCode;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;

@@ -2,7 +2,7 @@ package com.nexters.keyme.common.exceptions.handler;
 
 import com.nexters.keyme.common.dto.response.ApiResponse;
 import com.nexters.keyme.common.exceptions.*;
-import com.nexters.keyme.common.exceptions.errorcode.ErrorCode;
+import com.nexters.keyme.common.exceptions.code.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

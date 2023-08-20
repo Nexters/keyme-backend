@@ -1,6 +1,6 @@
 package com.nexters.keyme.common.dto.response;
 
-import com.nexters.keyme.common.exceptions.errorcode.ErrorCode;
+import com.nexters.keyme.common.exceptions.code.ErrorCode;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 

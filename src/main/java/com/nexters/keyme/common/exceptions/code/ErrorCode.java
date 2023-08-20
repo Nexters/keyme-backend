@@ -1,4 +1,4 @@
-package com.nexters.keyme.common.exceptions.errorcode;
+package com.nexters.keyme.common.exceptions.code;
 
 public enum ErrorCode {
     INVALID_REQUEST(400, "올바르지 않은 요청입니다. 요청 형식 등을 확인하세요."),

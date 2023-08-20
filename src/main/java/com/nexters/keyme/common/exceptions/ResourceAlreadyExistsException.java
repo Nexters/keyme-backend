@@ -1,6 +1,6 @@
 package com.nexters.keyme.common.exceptions;
 
-import com.nexters.keyme.common.exceptions.errorcode.ErrorCode;
+import com.nexters.keyme.common.exceptions.code.ErrorCode;
 
 public class ResourceAlreadyExistsException extends RuntimeException {
 
