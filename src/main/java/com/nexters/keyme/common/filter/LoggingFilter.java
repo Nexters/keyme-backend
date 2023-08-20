@@ -47,7 +47,7 @@ public class LoggingFilter extends OncePerRequestFilter {
         long executionTime = System.currentTimeMillis() - Long.parseLong(MDC.get("requestStartTime"));
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long memberId = null;
-        
+
         if (principal instanceof UserInfo) {
             memberId = ((UserInfo)principal).getMemberId();
         }
