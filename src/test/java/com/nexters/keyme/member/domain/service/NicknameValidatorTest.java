@@ -1,8 +1,9 @@
 package com.nexters.keyme.member.domain.service;
 
-import com.nexters.keyme.member.domain.exceptions.NicknameVerificationException;
-import com.nexters.keyme.member.domain.model.MemberEntity;
-import com.nexters.keyme.member.domain.repository.MemberRepository;
+import com.nexters.keyme.domain.member.domain.exceptions.NicknameVerificationException;
+import com.nexters.keyme.domain.member.domain.model.MemberEntity;
+import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
+import com.nexters.keyme.domain.member.domain.service.NicknameValidator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

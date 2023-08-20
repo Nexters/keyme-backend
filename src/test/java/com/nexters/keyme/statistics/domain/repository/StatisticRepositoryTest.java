@@ -1,7 +1,8 @@
 package com.nexters.keyme.statistics.domain.repository;
 
-import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
-import com.nexters.keyme.statistics.domain.model.Statistic;
+import com.nexters.keyme.domain.statistics.domain.repository.StatisticRepository;
+import com.nexters.keyme.global.exceptions.ResourceNotFoundException;
+import com.nexters.keyme.domain.statistics.domain.model.Statistic;
 import com.nexters.keyme.test.annotation.RepositoryTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

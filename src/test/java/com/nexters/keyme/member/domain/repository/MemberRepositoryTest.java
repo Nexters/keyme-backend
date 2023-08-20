@@ -1,7 +1,8 @@
 package com.nexters.keyme.member.domain.repository;
 
-import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
-import com.nexters.keyme.member.domain.model.MemberEntity;
+import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
+import com.nexters.keyme.global.exceptions.ResourceNotFoundException;
+import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.test.annotation.RepositoryTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

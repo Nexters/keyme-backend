@@ -1,6 +1,7 @@
 package com.nexters.keyme.clienttest.application;
 
-import com.nexters.keyme.member.domain.repository.MemberRepository;
+import com.nexters.keyme.domain.clienttest.application.ClientTestService;
+import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

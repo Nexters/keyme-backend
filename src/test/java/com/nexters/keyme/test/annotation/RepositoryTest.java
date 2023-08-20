@@ -1,6 +1,6 @@
 package com.nexters.keyme.test.annotation;
 
-import com.nexters.keyme.common.config.QueryDslConfig;
+import com.nexters.keyme.global.config.QueryDslConfig;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;

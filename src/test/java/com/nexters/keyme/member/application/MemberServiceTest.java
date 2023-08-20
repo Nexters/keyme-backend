@@ -1,11 +1,12 @@
 package com.nexters.keyme.member.application;
 
-import com.nexters.keyme.auth.domain.internaldto.UserInfo;
-import com.nexters.keyme.member.domain.exceptions.NicknameVerificationException;
-import com.nexters.keyme.member.presentation.dto.request.MemberModificationRequest;
-import com.nexters.keyme.member.presentation.dto.request.NicknameVerificationRequest;
-import com.nexters.keyme.member.presentation.dto.response.NicknameVerificationResponse;
-import com.nexters.keyme.member.presentation.dto.response.MemberResponse;
+import com.nexters.keyme.domain.auth.domain.internaldto.UserInfo;
+import com.nexters.keyme.domain.member.application.MemberService;
+import com.nexters.keyme.domain.member.domain.exceptions.NicknameVerificationException;
+import com.nexters.keyme.domain.member.presentation.dto.request.MemberModificationRequest;
+import com.nexters.keyme.domain.member.presentation.dto.request.NicknameVerificationRequest;
+import com.nexters.keyme.domain.member.presentation.dto.response.NicknameVerificationResponse;
+import com.nexters.keyme.domain.member.presentation.dto.response.MemberResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
