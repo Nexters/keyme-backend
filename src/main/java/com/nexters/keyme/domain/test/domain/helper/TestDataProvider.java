@@ -1,10 +1,12 @@
 package com.nexters.keyme.domain.test.domain.helper;
 
+import com.nexters.keyme.domain.member.domain.exceptions.NotFoundMemberException;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
 import com.nexters.keyme.domain.question.domain.helper.QuestionAsyncDataProvider;
 import com.nexters.keyme.domain.question.domain.model.Question;
 import com.nexters.keyme.domain.question.presentation.dto.response.QuestionResponse;
+import com.nexters.keyme.domain.test.domain.exceptions.NotFoundTestException;
 import com.nexters.keyme.domain.test.domain.model.Test;
 import com.nexters.keyme.domain.test.domain.repository.TestRepository;
 import com.nexters.keyme.domain.test.presentation.dto.response.TestDetailResponse;
@@ -31,8 +33,8 @@ public class TestDataProvider {
 
     @Transactional
     public TestDetailResponse getTestDeatil(Long testId, Long solverId) {
-        Test test = testRepository.findById(testId).orElseThrow(ResourceNotFoundException::new);
-        MemberEntity member = solverId == null ? null : memberRepository.findById(solverId).orElseThrow(ResourceNotFoundException::new);
+        Test test = testRepository.findById(testId).orElseThrow(NotFoundTestException::new);
+        MemberEntity member = solverId == null ? null : memberRepository.findById(solverId).orElseThrow(NotFoundMemberException::new);
 
         CompletableFuture<Optional<TestResult>> testResultFuture = testResultAsyncDataProvider.asyncFindByTestAndSolver(test, member);
         CompletableFuture<List<Question>> questionListFuture = questionAsyncDataProvider.asyncFindAllQuestionByTestId(testId);

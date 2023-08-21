@@ -1,9 +1,12 @@
 package com.nexters.keyme.domain.test.application;
 
+import com.nexters.keyme.domain.member.domain.exceptions.NotFoundMemberException;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
 import com.nexters.keyme.domain.question.domain.repository.QuestionSolvedRepository;
 import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
+import com.nexters.keyme.domain.test.domain.exceptions.AlreadyExistTestResultOwnerException;
+import com.nexters.keyme.domain.test.domain.exceptions.NotFoundTestResultCodeException;
 import com.nexters.keyme.domain.test.domain.model.TestResult;
 import com.nexters.keyme.domain.test.domain.model.TestResultCode;
 import com.nexters.keyme.domain.test.domain.repository.TestResultCodeRepository;
@@ -28,11 +31,11 @@ public class TestResultServiceImpl implements TestResultService {
     @Override
     public void injectTestResultToUser(Long memberId, String resultCode) {
         // 체킹 - member 확인, resultCode확인, TestResult 존재확인
-        MemberEntity member = memberRepository.findById(memberId).orElseThrow(ResourceNotFoundException::new);
-        TestResultCode testResultCode = testResultCodeRepository.findById(resultCode).orElseThrow(ResourceNotFoundException::new);
+        MemberEntity member = memberRepository.findById(memberId).orElseThrow(NotFoundMemberException::new);
+        TestResultCode testResultCode = testResultCodeRepository.findById(resultCode).orElseThrow(NotFoundTestResultCodeException::new);
         TestResult testResult = testResultRepository.findById(testResultCode.getResultId())
                 .filter(ts -> ts.getSolver() == null)
-                .orElseThrow(ResourceAlreadyExistsException::new);
+                .orElseThrow(AlreadyExistTestResultOwnerException::new);
 
         // 유저가 해당 test를 이미 풀었을 경우
         Optional<TestResult> test = testResultRepository.findByTestAndSolver(testResult.getTest(), member);

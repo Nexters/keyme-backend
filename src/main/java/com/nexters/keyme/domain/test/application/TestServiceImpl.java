@@ -1,5 +1,6 @@
 package com.nexters.keyme.domain.test.application;
 
+import com.nexters.keyme.domain.member.domain.exceptions.NotFoundMemberException;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.domain.question.domain.internaldto.QuestionStatisticInfo;
 import com.nexters.keyme.domain.question.domain.model.Question;
@@ -12,6 +13,10 @@ import com.nexters.keyme.domain.question.domain.repository.QuestionSolvedReposit
 import com.nexters.keyme.domain.question.presentation.dto.response.QuestionResponse;
 import com.nexters.keyme.domain.question.presentation.dto.response.QuestionSolvedResponse;
 import com.nexters.keyme.domain.question.presentation.dto.response.QuestionStatisticResponse;
+import com.nexters.keyme.domain.test.domain.exceptions.AlreadyExistTestResultException;
+import com.nexters.keyme.domain.test.domain.exceptions.InvalidDailyTestException;
+import com.nexters.keyme.domain.test.domain.exceptions.NotFoundTestException;
+import com.nexters.keyme.domain.test.domain.exceptions.NotFoundTestResultException;
 import com.nexters.keyme.domain.test.events.SendNotificationEvent;
 import com.nexters.keyme.domain.test.presentation.dto.request.TestListRequest;
 import com.nexters.keyme.domain.test.presentation.dto.request.TestSubmissionRequest;
@@ -56,7 +61,7 @@ public class TestServiceImpl implements TestService {
     @Transactional
     @Override
     public TestDetailResponse getOrCreateOnboardingTest(Long memberId) {
-        MemberEntity member = memberRepository.findById(memberId).orElseThrow(ResourceNotFoundException::new);
+        MemberEntity member = memberRepository.findById(memberId).orElseThrow(NotFoundMemberException::new);
         Long existOnboardingId = testRepository.findFirstByMemberAndIsOnboardingOrderByCreatedAtDesc(member, true)
                 .map(test -> test.getTestId())
                 .orElse(null);
@@ -90,7 +95,7 @@ public class TestServiceImpl implements TestService {
     @Transactional
     @Override
     public TestDetailResponse getOrCreateDailyTest(Long memberId) {
-        MemberEntity member = memberRepository.findById(memberId).orElseThrow(ResourceNotFoundException::new);
+        MemberEntity member = memberRepository.findById(memberId).orElseThrow(NotFoundMemberException::new);
 
         // 최근 test가 존재하며, 해당 test를 풀지 않았거나 오늘 풀었으면 기존 테스트 리턴
         // FIXME : 체킹로직 메서드로 빼기
@@ -113,8 +118,7 @@ public class TestServiceImpl implements TestService {
         // 온보딩 안풀어도 Daily 호출할 수 있도록
         List<QuestionSolved> questionSolvedList = questionSolvedRepository.findFirstLastestQuestionSolved(memberId, memberId);
         if (questionSolvedList.isEmpty()) {
-            log.error("온보딩 문제를 풀기 전 데일리 문제 호출");
-            throw new InvalidRequestException();
+            throw new InvalidDailyTestException();
         }
 
         Long lastSolvedQuestionId = questionSolvedList.get(0).getQuestion().getQuestionId();
@@ -150,13 +154,10 @@ public class TestServiceImpl implements TestService {
         testRepository.findById(testId)
                 .map(test -> test.getMember().getId())
                 .filter(testOwnerId -> Objects.equals(testOwnerId, memberId))
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(NotFoundTestException::new);
 
         // FIXME : 두 통계 쿼리 병렬 수행 필요
-        TestResultStatisticInfo testResultStatisticInfo = testResultRepository.findStatisticsByTestId(testId).orElseThrow(ResourceNotFoundException::new);
-        if (testResultStatisticInfo.getSolvedCount() == null || testResultStatisticInfo.getSolvedCount() == 0) {
-            throw new InvalidRequestException();
-        }
+        TestResultStatisticInfo testResultStatisticInfo = testResultRepository.findStatisticsByTestId(testId);
         List<QuestionStatisticInfo> questionStatisticInfoList = questionSolvedRepository.findAllAssociatedQuestionStatisticsByTestId(testId);
 
         return SingleTestStatisticsResponse.builder()
@@ -178,17 +179,16 @@ public class TestServiceImpl implements TestService {
     @Transactional
     @Override
     public TestSubmitResponse createTestResult(Long solverId, Long testId, TestSubmissionRequest submitInfo) {
-        Test test = testRepository.findById(testId).orElseThrow(ResourceNotFoundException::new);
+        Test test = testRepository.findById(testId).orElseThrow(NotFoundTestException::new);
         MemberEntity member = null;
 
         // FIXME : TestResult 이미 존재하는지 확인하는 로직 domain service로 분리
         // 익명유저가 아닌경우에만
         if (solverId != null) {
-            member = memberRepository.findById(solverId).orElseThrow(ResourceNotFoundException::new);
+            member = memberRepository.findById(solverId).orElseThrow(NotFoundMemberException::new);
             Optional<TestResult> existTestResultOpt = testResultRepository.findByTestAndSolver(test, member);
             if (existTestResultOpt.isPresent()) {
-                log.error("Client Error : Test 결과가 이미 존재합니다.");
-                throw new ResourceAlreadyExistsException();
+                throw new AlreadyExistTestResultException();
             }
         }
 
@@ -232,7 +232,7 @@ public class TestServiceImpl implements TestService {
     @Override
     public TestResultResponse getTestResult(Long resultId) {
         TestResult testResult = testResultRepository.findById(resultId)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(NotFoundTestResultException::new);
 
         List<QuestionSolved> questionSolvedList = questionSolvedRepository.findAllByTestResultIdWithQuestion(resultId);
 
