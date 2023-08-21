@@ -1,6 +1,7 @@
 package com.nexters.keyme.domain.member.application;
 
 import com.nexters.keyme.domain.auth.domain.internaldto.OAuthUserInfo;
+import com.nexters.keyme.domain.member.domain.exceptions.NotFoundMemberException;
 import com.nexters.keyme.global.dto.internal.UserInfo;
 import com.nexters.keyme.domain.member.domain.model.*;
 import com.nexters.keyme.domain.member.domain.internaldto.ImageInfo;
@@ -72,7 +73,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public MemberResponse getMemberInfo(Long memberId) {
         MemberEntity member = memberRepository.findById(memberId)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(NotFoundMemberException::new);
 
         return new MemberResponse(member);
     }
@@ -97,7 +98,7 @@ public class MemberServiceImpl implements MemberService {
         nicknameValidator.validateNickname(modificationInfo.getNickname());
 
         MemberEntity member = memberRepository.findById(userInfo.getMemberId())
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(NotFoundMemberException::new);
         member.modifyMemberInfo(modificationInfo);
 
         return new MemberResponse(member);
@@ -114,7 +115,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void registerDeviceToken(long userId, AddTokenRequest request) {
         MemberEntity member = memberRepository.findById(userId)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(NotFoundMemberException::new);
 
         if (isAlreadyExists(member.getMemberDevice(), request.getToken())) {
             log.info("Registering FCM token --- token already exists: {}", request.getToken());
@@ -142,9 +143,9 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     @Override
     public void deleteDeviceToken(long memberId, DeleteTokenRequest request) {
-        MemberDevice device = memberDeviceRepository.findByMemberIdAndToken(memberId, request.getToken())
-                .orElseThrow(ResourceNotFoundException::new);
-
-        memberDeviceRepository.delete(device);
+        Optional<MemberDevice> device = memberDeviceRepository.findByMemberIdAndToken(memberId, request.getToken());
+        if (device.isPresent()) {
+            memberDeviceRepository.delete(device.get());
+        }
     }
 }
