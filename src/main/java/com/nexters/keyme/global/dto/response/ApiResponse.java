@@ -33,4 +33,10 @@ public class ApiResponse<T> {
         this.message = message;
         this.data = data;
     }
+
+    public ApiResponse(T data) {
+        this.code = 200;
+        this.message = "요청에 성공했습니다.";
+        this.data = data;
+    }
 }
