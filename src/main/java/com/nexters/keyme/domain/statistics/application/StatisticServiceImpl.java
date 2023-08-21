@@ -1,8 +1,11 @@
 package com.nexters.keyme.domain.statistics.application;
 
+import com.nexters.keyme.domain.question.domain.exceptions.NotFoundQuestionException;
 import com.nexters.keyme.domain.question.domain.model.Question;
 import com.nexters.keyme.domain.question.domain.repository.QuestionRepository;
 import com.nexters.keyme.domain.statistics.application.dto.ScoreInfo;
+import com.nexters.keyme.domain.statistics.domain.exceptions.NotEnoughStatisticsException;
+import com.nexters.keyme.domain.statistics.domain.exceptions.NotFoundStatisticsException;
 import com.nexters.keyme.domain.statistics.domain.internaldto.CoordinateInfo;
 import com.nexters.keyme.domain.statistics.domain.internaldto.StatisticInfo;
 import com.nexters.keyme.domain.statistics.domain.model.Statistic;
@@ -72,7 +75,7 @@ public class StatisticServiceImpl implements StatisticService {
         }
 
         if (checkStatisticExists(statistics)) {
-            throw new ResourceNotFoundException();
+            throw new NotEnoughStatisticsException();
         }
 
         statistics.sort(getStatisticComparator());
@@ -86,7 +89,7 @@ public class StatisticServiceImpl implements StatisticService {
             CoordinateInfo coordinateInfo = coordinates.get(i);
 
             Question question = questionRepository.findById(statistic.getQuestionId())
-                    .orElseThrow(ResourceNotFoundException::new);
+                    .orElseThrow(NotFoundQuestionException::new);
 
             results.add(new StatisticResultResponse(new StatisticQuestionResponse(question, statistic.getOwnerScore(), statistic.getSolverAvgScore()), new CoordinateResponse(coordinateInfo)));
         }
@@ -127,7 +130,7 @@ public class StatisticServiceImpl implements StatisticService {
         return statistics.stream()
                 .map((statistic) -> {
                     Question question = questionRepository.findById(statistic.getQuestionId())
-                            .orElseThrow(ResourceNotFoundException::new);
+                            .orElseThrow(NotFoundQuestionException::new);
                     return new AdditionalStatisticResponse(statistic.getId(), question.getKeyword(), question.getCategoryName().getColor(), question.getCategoryName().getImageUrl(), statistic.getSolverAvgScore());
                 })
                 .collect(Collectors.toList());
@@ -139,9 +142,10 @@ public class StatisticServiceImpl implements StatisticService {
                     .id(0)
                     .solverAvgScore(Double.MAX_VALUE)
                     .build();
+
         }
 
         return statisticRepository.findById(cursor)
-                    .orElseThrow(ResourceNotFoundException::new);
+                    .orElseThrow(NotFoundStatisticsException::new);
     }
 }
