@@ -1,5 +1,6 @@
 package com.nexters.keyme.member.application;
 
+import com.nexters.keyme.domain.member.domain.exceptions.NicknameDuplicateException;
 import com.nexters.keyme.global.dto.internal.UserInfo;
 import com.nexters.keyme.domain.member.application.MemberService;
 import com.nexters.keyme.domain.member.presentation.dto.request.MemberModificationRequest;
@@ -46,7 +47,7 @@ public class MemberServiceTest {
     void verifyNickname() {
         NicknameVerificationRequest request = new NicknameVerificationRequest("nick");
         NicknameVerificationRequest finalRequest = request;
-        assertThatThrownBy(() -> memberService.verifyNickname(finalRequest)).isInstanceOf(KeymeSuccessInfoException.class);
+        assertThatThrownBy(() -> memberService.verifyNickname(finalRequest)).isInstanceOf(NicknameDuplicateException.class);
 
         request = new NicknameVerificationRequest("tom");
         NicknameVerificationResponse response = memberService.verifyNickname(request);

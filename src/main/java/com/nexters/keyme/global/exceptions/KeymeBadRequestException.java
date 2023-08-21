@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 
 public class KeymeBadRequestException extends KeymeException {
     public KeymeBadRequestException(String message, int code) {
-        super(HttpStatus.NOT_FOUND, message, code);
+
+        super(HttpStatus.OK, message, code);
     }
 }
