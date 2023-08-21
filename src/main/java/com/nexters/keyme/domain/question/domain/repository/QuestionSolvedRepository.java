@@ -40,7 +40,7 @@ public interface QuestionSolvedRepository extends JpaRepository<QuestionSolved, 
                 "and qs.owner.id = :ownerId " +
                 "and (qs.testResult.solver.id != :ownerId or qs.testResult.solver.id IS NULL)"
     )
-    Optional<QuestionStatisticInfo> findQuestionStatisticsByQuestionIdAndOwnerId(Long questionId, Long ownerId);
+    QuestionStatisticInfo findQuestionStatisticsByQuestionIdAndOwnerId(Long questionId, Long ownerId);
 
     @Query(value = "SELECT * FROM question_solved qs " +
             "JOIN test_result ts on ts.test_result_id = qs.test_result_id " +

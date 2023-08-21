@@ -1,5 +1,7 @@
 package com.nexters.keyme.domain.question.application;
 
+import com.nexters.keyme.domain.member.domain.exceptions.NotFoundMemberException;
+import com.nexters.keyme.domain.question.domain.exceptions.NotFoundQuestionException;
 import com.nexters.keyme.domain.question.domain.model.Question;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
 import com.nexters.keyme.domain.question.presentation.dto.response.QuestionResponse;
@@ -32,28 +34,23 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionResponse getQuestion(Long questionId) {
-        Question question = questionRepository.findById(questionId).orElseThrow(ResourceNotFoundException::new);
+        Question question = questionRepository.findById(questionId).orElseThrow(NotFoundQuestionException::new);
         return new QuestionResponse(question);
     }
 
     @Override
     public QuestionStatisticResponse getQuestionStatistic(Long questionId, QuestionStatisticRequest request) {
-        Question question = questionRepository.findById(questionId).orElseThrow(ResourceNotFoundException::new);
-        MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(ResourceNotFoundException::new);
-        QuestionStatisticInfo questionStatisticInfo = questionSolvedRepository.findQuestionStatisticsByQuestionIdAndOwnerId(questionId, request.getOwnerId()).orElseThrow(ResourceNotFoundException::new);
-
-        // questionStatisticInfo에 값들이 null일 수 있음(푼 사람이 아무도 없을때)
-        if (questionStatisticInfo.getCategoryName() == null) {
-            return new QuestionStatisticResponse(question);
-        }
+        Question question = questionRepository.findById(questionId).orElseThrow(NotFoundQuestionException::new);
+        MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(NotFoundMemberException::new);
+        QuestionStatisticInfo questionStatisticInfo = questionSolvedRepository.findQuestionStatisticsByQuestionIdAndOwnerId(questionId, request.getOwnerId());
 
         return new QuestionStatisticResponse(questionStatisticInfo);
     }
 
     @Override
     public PageResponse<QuestionScoreInfoResponse> getQuestionSolvedList(Long questionId, QuestionScoreListRequest request) {
-        Question question = questionRepository.findById(questionId).orElseThrow(ResourceNotFoundException::new);
-        MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(ResourceNotFoundException::new);
+        Question question = questionRepository.findById(questionId).orElseThrow(NotFoundQuestionException::new);
+        MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(NotFoundMemberException::new);
 
         PageInfo<QuestionSolved> solvedPage = questionSolvedRepository.findQuestionSolvedList(questionId, request.getOwnerId(), request.getCursor(), request.getLimit());
 
@@ -67,13 +64,14 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    @Deprecated
     public List<QuestionScoreInfoResponse> getQuestionSolvedScore(QuestionListScoreRequest request) {
         List<Question> question = questionRepository.findAllById(request.getIds());
         if (question.size() != request.getIds().size()) {
-            throw new ResourceNotFoundException();
+            throw new NotFoundQuestionException();
         }
 
-        MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(ResourceNotFoundException::new);
+        MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(NotFoundMemberException::new);
         List<QuestionSolved> questionSolvedList = questionSolvedRepository.findByQuestionIdsAndOwnerIdAndSolverId(request.getIds(), request.getOwnerId(), request.getSolverId());
 
         return questionSolvedList.stream()
