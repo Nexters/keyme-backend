@@ -35,6 +35,6 @@ public class NotificationController {
                 .isRead(false)
                 .build();
 
-        return ResponseEntity.ok(new ApiResponse<>(List.of(notification)));
+        return ResponseEntity.ok(ApiResponse.success(List.of(notification)));
     }
 }
