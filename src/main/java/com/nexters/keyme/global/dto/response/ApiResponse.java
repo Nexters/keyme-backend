@@ -24,10 +24,6 @@ public class ApiResponse<T> {
         return new ApiResponse(code, message, null);
     }
 
-    static public ApiResponse internalError() {
-        return new ApiResponse(500, "문제가 발생했습니다. 문의주세요!", null);
-    }
-
     public ApiResponse(int code, String message, T data) {
         this.code = code;
         this.message = message;
