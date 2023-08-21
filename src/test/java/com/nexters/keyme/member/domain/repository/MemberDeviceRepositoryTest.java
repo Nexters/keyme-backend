@@ -19,7 +19,7 @@ class MemberDeviceRepositoryTest {
     @DisplayName("멤버 id와 토큰으로 Device 조회")
     void findByMemberIdAndToken() {
         MemberDevice device = memberDeviceRepository.findByMemberIdAndToken(1L, "token1")
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(RuntimeException::new);
 
         Assertions.assertThat(device.getId()).isEqualTo(1L);
         Assertions.assertThat(device.getToken()).isEqualTo("token1");
