@@ -1,6 +1,7 @@
 package com.nexters.keyme.notification.service;
 
-import com.nexters.keyme.notification.dto.UserNotificationRequest;
+import com.nexters.keyme.domain.notification.dto.UserNotificationRequest;
+import com.nexters.keyme.domain.notification.service.NotificationService;
 import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,7 +1,8 @@
 package com.nexters.keyme.statistics.domain.repository;
 
-import com.nexters.keyme.common.exceptions.ResourceNotFoundException;
-import com.nexters.keyme.statistics.domain.model.Statistic;
+import com.nexters.keyme.domain.statistics.domain.exceptions.NotFoundStatisticsException;
+import com.nexters.keyme.domain.statistics.domain.repository.StatisticRepository;
+import com.nexters.keyme.domain.statistics.domain.model.Statistic;
 import com.nexters.keyme.test.annotation.RepositoryTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ class StatisticRepositoryTest {
     @DisplayName("통계 정보 가져오기 테스트")
     void findByOwnerIdAndQuestionIdWithLock() {
         Statistic statistic = statisticRepository.findByOwnerIdAndQuestionIdWithLock(1, 2)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(NotFoundStatisticsException::new);
 
         assertThat(statistic.getQuestionId()).isEqualTo(2L);
         assertThat(statistic.getOwnerId()).isEqualTo(1L);
