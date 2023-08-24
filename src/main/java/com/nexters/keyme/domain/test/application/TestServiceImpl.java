@@ -1,6 +1,7 @@
 package com.nexters.keyme.domain.test.application;
 
 import com.nexters.keyme.domain.member.domain.exceptions.NotFoundMemberException;
+import com.nexters.keyme.domain.member.domain.helper.validator.MemberValidator;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.domain.question.domain.internaldto.QuestionStatisticInfo;
 import com.nexters.keyme.domain.question.domain.model.Question;
@@ -22,8 +23,8 @@ import com.nexters.keyme.domain.test.presentation.dto.request.TestListRequest;
 import com.nexters.keyme.domain.test.presentation.dto.request.TestSubmissionRequest;
 import com.nexters.keyme.domain.test.presentation.dto.response.*;
 import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
-import com.nexters.keyme.domain.test.domain.helper.TestDataProvider;
-import com.nexters.keyme.domain.test.domain.helper.TestResultCodeProvider;
+import com.nexters.keyme.domain.test.domain.helper.provider.TestDataProvider;
+import com.nexters.keyme.domain.test.domain.helper.provider.TestResultCodeProvider;
 import com.nexters.keyme.domain.test.domain.internaldto.TestResultStatisticInfo;
 import com.nexters.keyme.domain.test.domain.model.Test;
 import com.nexters.keyme.domain.test.domain.model.TestResult;
@@ -49,6 +50,7 @@ import java.util.stream.Collectors;
 public class TestServiceImpl implements TestService {
 
     private final TestDataProvider testDataProvider;
+    private final MemberValidator memberValidator;
     private final MemberRepository memberRepository;
     private final TestRepository testRepository;
     private final TestResultRepository testResultRepository;
@@ -60,8 +62,25 @@ public class TestServiceImpl implements TestService {
 
     @Transactional
     @Override
-    public TestDetailResponse getOrCreateOnboardingTest(Long memberId) {
-        MemberEntity member = memberRepository.findById(memberId).orElseThrow(NotFoundMemberException::new);
+    public TestDetailResponse getOnboardingTest(Long memberId) {
+        /*
+            TODO : 로직순서
+            1. validate
+            2. getExistOnboardingTest
+            3. createOnboardingTest
+        */
+
+        // validation
+        MemberEntity member = memberValidator.validateMember(memberId);
+
+        // business
+
+
+        // mapper
+
+
+
+
         Long existOnboardingId = testRepository.findFirstByMemberAndIsOnboardingOrderByCreatedAtDesc(member, true)
                 .map(test -> test.getTestId())
                 .orElse(null);
@@ -82,6 +101,7 @@ public class TestServiceImpl implements TestService {
         );
 
         // FIXME : Create TestDeatilResponse - test, member, questionList
+        // testId와 내가 푼정보만 있으면?
         return TestDetailResponse.builder()
                 .testId(test.getTestId())
                 .testResultId(null)
@@ -94,8 +114,17 @@ public class TestServiceImpl implements TestService {
 
     @Transactional
     @Override
-    public TestDetailResponse getOrCreateDailyTest(Long memberId) {
+    public TestDetailResponse getDailyTest(Long memberId) {
+        /*
+            TODO : 로직 순서
+            1. validate
+            2. getExistDailyTest
+            3. createDailyTest
+        */
+
+
         MemberEntity member = memberRepository.findById(memberId).orElseThrow(NotFoundMemberException::new);
+
 
         // 최근 test가 존재하며, 해당 test를 풀지 않았거나 오늘 풀었으면 기존 테스트 리턴
         // FIXME : 체킹로직 메서드로 빼기
@@ -148,8 +177,16 @@ public class TestServiceImpl implements TestService {
         return testDataProvider.getTestDeatil(testId, solvedMemberId);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public SingleTestStatisticsResponse getTestStatistics(Long memberId, Long testId) {
+        /*
+            TODO : 로직 순서
+            1. validate - test, member
+            2. getTestQuestion Statistics
+        */
+
+
         // test 존재확인, owner가 호출자와 맞는지 확인
         testRepository.findById(testId)
                 .map(test -> test.getMember().getId())
@@ -179,6 +216,14 @@ public class TestServiceImpl implements TestService {
     @Transactional
     @Override
     public TestSubmitResponse createTestResult(Long solverId, Long testId, TestSubmissionRequest submitInfo) {
+        /*
+            TODO : 로직 순서
+            1. validate - test, member, testResult 존재유무확인(기명유저인 경우)
+            2. 일치율 계산
+            3. create test result
+            4. event 뿌리기
+        */
+
         Test test = testRepository.findById(testId).orElseThrow(NotFoundTestException::new);
         MemberEntity member = null;
 
@@ -229,6 +274,7 @@ public class TestServiceImpl implements TestService {
                 .build();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public TestResultResponse getTestResult(Long resultId) {
         TestResult testResult = testResultRepository.findById(resultId)

@@ -6,8 +6,8 @@ import com.nexters.keyme.domain.question.presentation.dto.request.QuestionStatis
 import com.nexters.keyme.domain.question.presentation.dto.response.QuestionResponse;
 import com.nexters.keyme.domain.question.presentation.dto.response.QuestionScoreInfoResponse;
 import com.nexters.keyme.domain.question.presentation.dto.response.QuestionStatisticResponse;
-import com.nexters.keyme.global.dto.response.ApiResponse;
-import com.nexters.keyme.global.dto.response.PageResponse;
+import com.nexters.keyme.global.common.dto.response.ApiResponse;
+import com.nexters.keyme.global.common.dto.response.PageResponse;
 import com.nexters.keyme.domain.question.presentation.dto.request.QuestionScoreListRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

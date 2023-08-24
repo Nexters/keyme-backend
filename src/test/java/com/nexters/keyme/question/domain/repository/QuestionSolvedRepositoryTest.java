@@ -1,7 +1,7 @@
 package com.nexters.keyme.question.domain.repository;
 
 import com.nexters.keyme.domain.question.domain.repository.QuestionSolvedRepository;
-import com.nexters.keyme.global.dto.internal.PageInfo;
+import com.nexters.keyme.global.common.dto.internal.PageInfo;
 import com.nexters.keyme.domain.question.domain.enums.QuestionCategoryType;
 import com.nexters.keyme.domain.question.domain.internaldto.QuestionStatisticInfo;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;

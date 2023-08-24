@@ -7,8 +7,8 @@ import com.nexters.keyme.domain.test.presentation.dto.response.*;
 import java.util.List;
 
 public interface TestService {
-    TestDetailResponse getOrCreateDailyTest(Long memberId);
-    TestDetailResponse getOrCreateOnboardingTest(Long memberId);
+    TestDetailResponse getDailyTest(Long memberId);
+    TestDetailResponse getOnboardingTest(Long memberId);
     TestDetailResponse getSpecificTest(Long memberId, Long testId);
     SingleTestStatisticsResponse getTestStatistics(Long memberId, Long testId);
     List<TestFeedResponse> getTestList(Long memberId, TestListRequest requestInfo);

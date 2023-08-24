@@ -12,8 +12,8 @@ import com.nexters.keyme.domain.auth.presentation.dto.response.AppleAuthKeysResp
 import com.nexters.keyme.domain.auth.presentation.dto.response.KakaoUserInfoResponse;
 import com.nexters.keyme.domain.auth.presentation.dto.response.TokenResponse;
 import com.nexters.keyme.domain.auth.domain.helper.ApplePublicKeyProvider;
-import com.nexters.keyme.global.util.JwtTokenProvider;
-import com.nexters.keyme.global.enums.OAuthType;
+import com.nexters.keyme.global.common.util.JwtTokenProvider;
+import com.nexters.keyme.global.common.enums.OAuthType;
 import com.nexters.keyme.domain.member.application.MemberService;
 import com.nexters.keyme.domain.member.presentation.dto.response.MemberWithTokenResponse;
 import lombok.RequiredArgsConstructor;

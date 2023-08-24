@@ -3,7 +3,7 @@ package com.nexters.keyme.domain.statistics.presentation.controller;
 import com.nexters.keyme.domain.statistics.application.StatisticService;
 import com.nexters.keyme.domain.statistics.presentation.dto.AdditionalStatisticResponse;
 import com.nexters.keyme.domain.statistics.presentation.dto.request.StatisticRequest;
-import com.nexters.keyme.global.dto.response.ApiResponse;
+import com.nexters.keyme.global.common.dto.response.ApiResponse;
 import com.nexters.keyme.domain.statistics.presentation.dto.AdditionalStatisticRequest;
 import com.nexters.keyme.domain.statistics.presentation.dto.response.MemberStatisticResponse;
 import io.swagger.annotations.Api;

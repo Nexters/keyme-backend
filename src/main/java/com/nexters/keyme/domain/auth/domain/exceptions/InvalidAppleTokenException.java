@@ -1,8 +1,7 @@
 package com.nexters.keyme.domain.auth.domain.exceptions;
 
 import com.nexters.keyme.domain.auth.domain.exceptions.code.AuthErrorCode;
-import com.nexters.keyme.global.exceptions.KeymeBadRequestException;
-import org.springframework.http.HttpStatus;
+import com.nexters.keyme.global.common.exceptions.KeymeBadRequestException;
 
 public class InvalidAppleTokenException extends KeymeBadRequestException {
     public InvalidAppleTokenException() {

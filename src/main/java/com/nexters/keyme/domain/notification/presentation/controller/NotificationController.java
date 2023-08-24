@@ -1,6 +1,6 @@
 package com.nexters.keyme.domain.notification.presentation.controller;
 
-import com.nexters.keyme.global.dto.response.ApiResponse;
+import com.nexters.keyme.global.common.dto.response.ApiResponse;
 import com.nexters.keyme.domain.notification.presentation.dto.NotificationResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

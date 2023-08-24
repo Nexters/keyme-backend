@@ -2,7 +2,7 @@ package com.nexters.keyme.domain.member.domain.model;
 
 
 import com.nexters.keyme.domain.auth.domain.internaldto.OAuthUserInfo;
-import com.nexters.keyme.global.enums.OAuthType;
+import com.nexters.keyme.global.common.enums.OAuthType;
 import lombok.*;
 
 import javax.persistence.Column;

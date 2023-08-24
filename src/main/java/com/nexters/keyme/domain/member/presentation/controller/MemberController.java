@@ -1,14 +1,14 @@
 package com.nexters.keyme.domain.member.presentation.controller;
 
-import com.nexters.keyme.global.dto.internal.UserInfo;
+import com.nexters.keyme.global.common.dto.internal.UserInfo;
 import com.nexters.keyme.domain.member.application.MemberService;
 import com.nexters.keyme.domain.member.presentation.dto.request.AddTokenRequest;
 import com.nexters.keyme.domain.member.presentation.dto.request.DeleteTokenRequest;
 import com.nexters.keyme.domain.member.presentation.dto.request.MemberModificationRequest;
 import com.nexters.keyme.domain.member.presentation.dto.request.NicknameVerificationRequest;
-import com.nexters.keyme.global.annotation.ApiSecurityIgnore;
-import com.nexters.keyme.global.annotation.RequestUser;
-import com.nexters.keyme.global.dto.response.ApiResponse;
+import com.nexters.keyme.global.common.annotation.ApiSecurityIgnore;
+import com.nexters.keyme.global.common.annotation.RequestUser;
+import com.nexters.keyme.global.common.dto.response.ApiResponse;
 import com.nexters.keyme.domain.member.presentation.dto.response.MemberResponse;
 import com.nexters.keyme.domain.member.presentation.dto.response.NicknameVerificationResponse;
 import io.swagger.annotations.Api;

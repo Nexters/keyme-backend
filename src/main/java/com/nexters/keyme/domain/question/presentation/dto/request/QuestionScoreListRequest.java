@@ -1,6 +1,6 @@
 package com.nexters.keyme.domain.question.presentation.dto.request;
 
-import com.nexters.keyme.global.dto.request.PaginationRequest;
+import com.nexters.keyme.global.common.dto.request.PaginationRequest;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

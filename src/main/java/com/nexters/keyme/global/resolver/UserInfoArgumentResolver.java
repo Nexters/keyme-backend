@@ -1,7 +1,7 @@
 package com.nexters.keyme.global.resolver;
 
-import com.nexters.keyme.global.dto.internal.UserInfo;
-import com.nexters.keyme.global.annotation.RequestUser;
+import com.nexters.keyme.global.common.dto.internal.UserInfo;
+import com.nexters.keyme.global.common.annotation.RequestUser;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;

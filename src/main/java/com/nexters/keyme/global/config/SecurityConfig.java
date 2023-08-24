@@ -5,7 +5,7 @@ import com.nexters.keyme.global.security.exception.RestAuthenticationEntryPoint;
 import com.nexters.keyme.global.security.filter.AuthenticationExceptionFilter;
 import com.nexters.keyme.global.security.filter.JwtAuthenticationFilter;
 import com.nexters.keyme.global.security.provider.AuthenticationTokenProvider;
-import com.nexters.keyme.global.util.JwtTokenProvider;
+import com.nexters.keyme.global.common.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;

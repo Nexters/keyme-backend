@@ -1,7 +1,7 @@
 package com.nexters.keyme.domain.test.domain.exceptions;
 
 import com.nexters.keyme.domain.test.domain.exceptions.code.TestErrorCode;
-import com.nexters.keyme.global.exceptions.KeymeBadRequestException;
+import com.nexters.keyme.global.common.exceptions.KeymeBadRequestException;
 
 public class InvalidDailyTestException extends KeymeBadRequestException {
     public InvalidDailyTestException() {

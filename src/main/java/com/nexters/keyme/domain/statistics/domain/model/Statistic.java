@@ -1,6 +1,6 @@
 package com.nexters.keyme.domain.statistics.domain.model;
 
-import com.nexters.keyme.global.model.BaseTimeEntity;
+import com.nexters.keyme.global.common.model.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

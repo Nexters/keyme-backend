@@ -1,7 +1,7 @@
 package com.nexters.keyme.global.security.filter;
 
-import com.nexters.keyme.global.dto.internal.UserInfo;
-import com.nexters.keyme.global.enums.AuthRole;
+import com.nexters.keyme.global.common.dto.internal.UserInfo;
+import com.nexters.keyme.global.common.enums.AuthRole;
 import com.nexters.keyme.global.security.token.JwtAuthenticationToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
-import static com.nexters.keyme.global.constant.ConstantString.AUTHORIZATION_HEADER;
+import static com.nexters.keyme.global.common.constant.ConstantString.AUTHORIZATION_HEADER;
 
 @Slf4j
 public class AnonymousAuthenticationFilter extends OncePerRequestFilter {

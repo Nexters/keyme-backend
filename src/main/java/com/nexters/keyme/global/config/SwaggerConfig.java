@@ -1,7 +1,7 @@
 package com.nexters.keyme.global.config;
 
-import com.nexters.keyme.global.annotation.ApiSecurityIgnore;
-import com.nexters.keyme.global.annotation.RequestUser;
+import com.nexters.keyme.global.common.annotation.ApiSecurityIgnore;
+import com.nexters.keyme.global.common.annotation.RequestUser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;

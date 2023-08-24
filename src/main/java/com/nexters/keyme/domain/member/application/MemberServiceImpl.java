@@ -2,7 +2,7 @@ package com.nexters.keyme.domain.member.application;
 
 import com.nexters.keyme.domain.auth.domain.internaldto.OAuthUserInfo;
 import com.nexters.keyme.domain.member.domain.exceptions.NotFoundMemberException;
-import com.nexters.keyme.global.dto.internal.UserInfo;
+import com.nexters.keyme.global.common.dto.internal.UserInfo;
 import com.nexters.keyme.domain.member.domain.model.*;
 import com.nexters.keyme.domain.member.domain.internaldto.ImageInfo;
 import com.nexters.keyme.domain.member.domain.internaldto.MemberModificationInfo;
@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Optional;
 
-import static com.nexters.keyme.global.constant.ConstantString.DEFAULT_IMAGE_URL;
+import static com.nexters.keyme.global.common.constant.ConstantString.DEFAULT_IMAGE_URL;
 
 @Service
 @RequiredArgsConstructor

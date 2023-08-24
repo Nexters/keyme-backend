@@ -1,7 +1,7 @@
 package com.nexters.keyme.global.security.filter;
 
 import com.nexters.keyme.global.security.provider.AuthenticationTokenProvider;
-import com.nexters.keyme.global.util.JwtTokenProvider;
+import com.nexters.keyme.global.common.util.JwtTokenProvider;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.nexters.keyme.global.constant.ConstantString.AUTHORIZATION_HEADER;
+import static com.nexters.keyme.global.common.constant.ConstantString.AUTHORIZATION_HEADER;
 
 
 @Slf4j

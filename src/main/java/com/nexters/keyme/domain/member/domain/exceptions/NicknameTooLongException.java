@@ -1,7 +1,7 @@
 package com.nexters.keyme.domain.member.domain.exceptions;
 
 import com.nexters.keyme.domain.member.domain.exceptions.code.MemberErrorCode;
-import com.nexters.keyme.global.exceptions.KeymeSuccessInfoException;
+import com.nexters.keyme.global.common.exceptions.KeymeSuccessInfoException;
 
 public class NicknameTooLongException extends KeymeSuccessInfoException {
     public NicknameTooLongException() {

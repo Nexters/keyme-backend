@@ -1,7 +1,7 @@
 package com.nexters.keyme.domain.test.domain.exceptions;
 
 import com.nexters.keyme.domain.test.domain.exceptions.code.TestErrorCode;
-import com.nexters.keyme.global.exceptions.KeymeNotFoundException;
+import com.nexters.keyme.global.common.exceptions.KeymeNotFoundException;
 
 public class NotFoundTestException extends KeymeNotFoundException {
     public NotFoundTestException() {

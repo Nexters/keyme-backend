@@ -2,7 +2,7 @@ package com.nexters.keyme.domain.test.domain.model;
 
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
-import com.nexters.keyme.global.model.BaseTimeEntity;
+import com.nexters.keyme.global.common.model.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
