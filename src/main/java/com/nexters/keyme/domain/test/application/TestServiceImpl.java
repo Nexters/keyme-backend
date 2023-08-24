@@ -14,17 +14,19 @@ import com.nexters.keyme.domain.question.domain.repository.QuestionSolvedReposit
 import com.nexters.keyme.domain.question.presentation.dto.response.QuestionResponse;
 import com.nexters.keyme.domain.question.presentation.dto.response.QuestionSolvedResponse;
 import com.nexters.keyme.domain.question.presentation.dto.response.QuestionStatisticResponse;
-import com.nexters.keyme.domain.test.domain.exceptions.AlreadyExistTestResultException;
-import com.nexters.keyme.domain.test.domain.exceptions.InvalidDailyTestException;
-import com.nexters.keyme.domain.test.domain.exceptions.NotFoundTestException;
-import com.nexters.keyme.domain.test.domain.exceptions.NotFoundTestResultException;
+import com.nexters.keyme.domain.test.domain.internaldto.TestDetailInfo;
+import com.nexters.keyme.domain.test.exceptions.AlreadyExistTestResultException;
+import com.nexters.keyme.domain.test.exceptions.InvalidDailyTestException;
+import com.nexters.keyme.domain.test.exceptions.NotFoundTestException;
+import com.nexters.keyme.domain.test.exceptions.NotFoundTestResultException;
 import com.nexters.keyme.domain.test.events.SendNotificationEvent;
+import com.nexters.keyme.domain.test.helper.validator.TestValidator;
 import com.nexters.keyme.domain.test.presentation.dto.request.TestListRequest;
 import com.nexters.keyme.domain.test.presentation.dto.request.TestSubmissionRequest;
 import com.nexters.keyme.domain.test.presentation.dto.response.*;
 import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
-import com.nexters.keyme.domain.test.domain.helper.provider.TestDataProvider;
-import com.nexters.keyme.domain.test.domain.helper.provider.TestResultCodeProvider;
+import com.nexters.keyme.domain.test.helper.provider.TestDataProvider;
+import com.nexters.keyme.domain.test.helper.provider.TestResultCodeProvider;
 import com.nexters.keyme.domain.test.domain.internaldto.TestResultStatisticInfo;
 import com.nexters.keyme.domain.test.domain.model.Test;
 import com.nexters.keyme.domain.test.domain.model.TestResult;
@@ -50,9 +52,13 @@ import java.util.stream.Collectors;
 public class TestServiceImpl implements TestService {
 
     private final TestDataProvider testDataProvider;
+
     private final MemberValidator memberValidator;
     private final MemberRepository memberRepository;
+
+    private final TestValidator testValidator;
     private final TestRepository testRepository;
+
     private final TestResultRepository testResultRepository;
     private final TestResultCodeProvider testResultCodeProvider;
     private final QuestionRepository questionRepository;
@@ -63,84 +69,38 @@ public class TestServiceImpl implements TestService {
     @Transactional
     @Override
     public TestDetailResponse getOnboardingTest(Long memberId) {
-        /*
-            TODO : 로직순서
-            1. validate
-            2. getExistOnboardingTest
-            3. createOnboardingTest
-        */
-
-        // validation
         MemberEntity member = memberValidator.validateMember(memberId);
 
-        // business
+        Test onboardingTest = testDataProvider.getExistOnboardingTest(member).orElse(null);
+        if (onboardingTest == null) onboardingTest = testDataProvider.createOnboardingTest(member);
 
-
-        // mapper
-
-
-
-
-        Long existOnboardingId = testRepository.findFirstByMemberAndIsOnboardingOrderByCreatedAtDesc(member, true)
-                .map(test -> test.getTestId())
+        TestDetailInfo testDetail = testDataProvider.getTestDetail(onboardingTest);
+        Long testResultId = testResultRepository.findByTestAndSolver(onboardingTest, member)
+                .map(t -> t.getTestResultId())
                 .orElse(null);
 
-        // 온보딩이 이미 존재
-        if (existOnboardingId != null) {
-            return testDataProvider.getTestDeatil(existOnboardingId, memberId);
-        }
-
-        // FIXME : Create Test - isOnboarding, member, questionList 필요
-        List<Question> questionList = questionRepository.findAllByIsOnboarding(true);
-        Test test = new Test(true, member, questionList.get(0).getTitle());
-        testRepository.save(test);
-        questionBundleRepository.saveAllAndFlush(
-            questionList.stream()
-                .map(question -> new QuestionBundle(new QuestionBundleId(test, question)))
-                .collect(Collectors.toList())
-        );
-
-        // FIXME : Create TestDeatilResponse - test, member, questionList
-        // testId와 내가 푼정보만 있으면?
-        return TestDetailResponse.builder()
-                .testId(test.getTestId())
-                .testResultId(null)
-                .solvedCount(0)
-                .title(test.getTitle())
-                .owner(new TestSimpleMemberResponse(member))
-                .questions(questionList.stream().map(QuestionResponse::new).collect(Collectors.toList()))
-                .build();
+        return new TestDetailResponse(testDetail, testResultId);
     }
 
     @Transactional
     @Override
     public TestDetailResponse getDailyTest(Long memberId) {
-        /*
-            TODO : 로직 순서
-            1. validate
-            2. getExistDailyTest
-            3. createDailyTest
-        */
+        MemberEntity member = memberValidator.validateMember(memberId);
 
+        Test dailyTest = testDataProvider.getExistDailyTest(member).orElse(null);
+        if (dailyTest == null) dailyTest = testDataProvider.createDailyTest(member);
 
-        MemberEntity member = memberRepository.findById(memberId).orElseThrow(NotFoundMemberException::new);
+        TestDetailInfo testDetail = testDataProvider.getTestDetail(dailyTest);
+        Long testResultId = testResultRepository.findByTestAndSolver(dailyTest, member)
+                .map(t -> t.getTestResultId())
+                .orElse(null);
+
+        return new TestDetailResponse(testDetail, testResultId);
 
 
         // 최근 test가 존재하며, 해당 test를 풀지 않았거나 오늘 풀었으면 기존 테스트 리턴
         // FIXME : 체킹로직 메서드로 빼기
-        Optional<Test> latesetTestOpt = testRepository.findFirstByMemberAndIsOnboardingOrderByCreatedAtDesc(member, false);
-        Optional<TestResult> testResultOpt = null;
-        if (latesetTestOpt.isPresent()) {
-            testResultOpt = testResultRepository.findByTestAndSolver(latesetTestOpt.get(), member);
-        }
 
-        LocalDate today = LocalDate.now();
-        if (latesetTestOpt.isPresent() && (
-                testResultOpt.isEmpty() ||
-                !testResultOpt.get().getCreatedAt().toLocalDate().isEqual(today) )
-        ) {
-            return testDataProvider.getTestDeatil(latesetTestOpt.get().getTestId(), memberId);
-        }
 
         // 랜덤발급으로 수정 필요
         // 온보딩 문제 풀었는지 확인 FIXME : 랜덤발급 로직으로 수정 시 필요없음
@@ -172,9 +132,17 @@ public class TestServiceImpl implements TestService {
 
     @Transactional
     @Override
-    public TestDetailResponse getSpecificTest(Long solvedMemberId, Long testId) {
-        // FIXME : solver Optional로 래핑 - null일 수 있음을 명시
-        return testDataProvider.getTestDeatil(testId, solvedMemberId);
+    public TestDetailResponse getSpecificTest(Long memberId, Long testId) {
+        MemberEntity member = memberId == null ? null : memberValidator.validateMember(memberId);
+
+        Test test = testValidator.validateTest(testId);
+        TestDetailInfo testDetail = testDataProvider.getTestDetail(test);
+        Long testResultId = memberId == null ? null :
+                testResultRepository.findByTestAndSolver(test, member)
+                    .map(t -> t.getTestResultId())
+                    .orElse(null);
+
+        return new TestDetailResponse(testDetail, testResultId);
     }
 
     @Transactional(readOnly = true)
@@ -219,7 +187,7 @@ public class TestServiceImpl implements TestService {
         /*
             TODO : 로직 순서
             1. validate - test, member, testResult 존재유무확인(기명유저인 경우)
-            2. 일치율 계산
+            2. 일치율 계산 - 내 test result와 owner의 test result 필요
             3. create test result
             4. event 뿌리기
         */
@@ -259,6 +227,7 @@ public class TestServiceImpl implements TestService {
                 .collect(Collectors.toList());
         questionSolvedRepository.saveAll(questionSolvedList);
 
+        // FIXME : 너무 강하게 묶여있음
         eventPublisher.publishEvent(new AddStatisticEvent(test.getMember().getId(), solverId, questionSolvedList));
         eventPublisher.publishEvent(new SendNotificationEvent(test.getMember().getId(), solverId));
 

@@ -1,5 +1,6 @@
 package com.nexters.keyme.domain.question.presentation.dto.response;
 
+import com.nexters.keyme.domain.question.domain.internaldto.QuestionInfo;
 import com.nexters.keyme.domain.question.domain.model.Question;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -23,6 +24,13 @@ public class QuestionResponse {
 
     @ApiModelProperty(value = "질문의 가테고리", example = "영웅적 면모")
     private QuestionCategoryResponse category;
+
+    public QuestionResponse(QuestionInfo questionInfo) {
+        this.questionId = questionInfo.getQuestionId();
+        this.title = questionInfo.getTitle();
+        this.keyword = questionInfo.getKeyword();
+        this.category = questionInfo.getCategory();
+    }
 
     public QuestionResponse(Question question) {
         this.questionId = question.getQuestionId();

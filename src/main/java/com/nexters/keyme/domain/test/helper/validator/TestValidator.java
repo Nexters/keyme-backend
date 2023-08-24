@@ -1,6 +1,6 @@
-package com.nexters.keyme.domain.test.domain.helper.validator;
+package com.nexters.keyme.domain.test.helper.validator;
 
-import com.nexters.keyme.domain.test.domain.exceptions.NotFoundTestException;
+import com.nexters.keyme.domain.test.exceptions.NotFoundTestException;
 import com.nexters.keyme.domain.test.domain.model.Test;
 import com.nexters.keyme.domain.test.domain.repository.TestRepository;
 import lombok.RequiredArgsConstructor;

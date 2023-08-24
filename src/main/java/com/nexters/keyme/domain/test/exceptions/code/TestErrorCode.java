@@ -1,4 +1,4 @@
-package com.nexters.keyme.domain.test.domain.exceptions.code;
+package com.nexters.keyme.domain.test.exceptions.code;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
