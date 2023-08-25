@@ -20,5 +20,5 @@ public class TestSubmitResponse {
     private String resultCode;
 
     @ApiModelProperty(value = "테스트 제출자와의 일치율(MMVP에서는 없음)", example = "87.7")
-    private float matchRate;
+    private Double matchRate;
 }
