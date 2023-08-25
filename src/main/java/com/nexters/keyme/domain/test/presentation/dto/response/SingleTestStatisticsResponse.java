@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class SingleTestStatisticsResponse {
-    private float averageRate;
-    private int solvedCount;
+    private Double averageRate;
+    private Long solvedCount;
     private List<QuestionStatisticResponse> questionsStatistics;
 }

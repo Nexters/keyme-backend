@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TestResultStatisticInfo {
-    private double averageRate;
+    private Double averageRate;
     private Long solvedCount;
 }
