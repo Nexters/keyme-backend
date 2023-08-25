@@ -2,6 +2,7 @@ package com.nexters.keyme.domain.question.domain.repository;
 
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
 import com.nexters.keyme.domain.question.domain.internaldto.QuestionStatisticInfo;
+import com.nexters.keyme.domain.test.domain.model.TestResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -9,6 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface QuestionSolvedRepository extends JpaRepository<QuestionSolved, Long>, QuestionSolvedRepositoryCustom {
+
+    List<QuestionSolved> findAllByTestResultOrderByQuestion(TestResult testResult);
 
     @Query(
         "select qs from QuestionSolved qs " +
