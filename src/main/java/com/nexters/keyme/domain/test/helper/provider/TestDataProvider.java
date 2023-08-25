@@ -47,6 +47,8 @@ public class TestDataProvider {
 
     @Transactional
     public TestDetailInfo getTestDetail(Test test) {
+        List<QuestionBundle> questionBundleList = test.getQuestionBundleList();
+
         List<Question> questionList = test.getQuestionBundleList()
                 .stream()
                 .map(qb -> qb.getQuestionBundleId().getQuestion())
@@ -72,11 +74,12 @@ public class TestDataProvider {
         List<Question> questionList = questionRepository.findAllByIsOnboarding(true);
         Test test = new Test(true, member, questionList.get(0).getTitle());
         testRepository.save(test);
-        questionBundleRepository.saveAll(
-                questionList.stream()
-                        .map(question -> new QuestionBundle(new QuestionBundleId(test, question)))
-                        .collect(Collectors.toList())
-        );
+
+        List<QuestionBundle> questionBundleList = questionList.stream()
+                .map(question -> new QuestionBundle(new QuestionBundleId(test, question)))
+                .collect(Collectors.toList());
+        questionBundleRepository.saveAll(questionBundleList);
+        test.addAllQuestionBundle(questionBundleList);
 
         return test;
     }
@@ -114,7 +117,7 @@ public class TestDataProvider {
         SecureRandom random = new SecureRandom();
         Set<Long> useQuestionIdList = new HashSet<>();
 
-        while (useQuestionIdList.size() == 3) {
+        while (useQuestionIdList.size() != 3) {
             int randomIndex = random.nextInt(availableQuestionIdList.size());
             useQuestionIdList.add(availableQuestionIdList.get(randomIndex));
         }
@@ -122,11 +125,12 @@ public class TestDataProvider {
         List<Question> questionList = questionRepository.findAllById(useQuestionIdList);
         Test test = new Test(false, member, questionList.get(0).getTitle());
         testRepository.save(test);
-        questionBundleRepository.saveAll(
-                questionList.stream()
-                        .map(question -> new QuestionBundle(new QuestionBundleId(test, question)))
-                        .collect(Collectors.toList())
-        );
+
+        List<QuestionBundle> questionBundleList = questionList.stream()
+                .map(question -> new QuestionBundle(new QuestionBundleId(test, question)))
+                .collect(Collectors.toList());
+        questionBundleRepository.saveAll(questionBundleList);
+        test.addAllQuestionBundle(questionBundleList);
 
         return test;
     }

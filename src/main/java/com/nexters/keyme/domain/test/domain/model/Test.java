@@ -42,4 +42,8 @@ public class Test extends BaseTimeEntity {
         this.member = member;
         this.title = title;
     }
+
+    public void addAllQuestionBundle(List<QuestionBundle> questionBundleList) {
+        this.questionBundleList.addAll(questionBundleList);
+    }
 }
