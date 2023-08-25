@@ -96,46 +96,15 @@ public class TestServiceImpl implements TestService {
                 .orElse(null);
 
         return new TestDetailResponse(testDetail, testResultId);
-
-
-        // 최근 test가 존재하며, 해당 test를 풀지 않았거나 오늘 풀었으면 기존 테스트 리턴
-        // FIXME : 체킹로직 메서드로 빼기
-
-
-        // 랜덤발급으로 수정 필요
-        // 온보딩 문제 풀었는지 확인 FIXME : 랜덤발급 로직으로 수정 시 필요없음
-        // 온보딩 안풀어도 Daily 호출할 수 있도록
-        List<QuestionSolved> questionSolvedList = questionSolvedRepository.findFirstLastestQuestionSolved(memberId, memberId);
-        if (questionSolvedList.isEmpty()) {
-            throw new InvalidDailyTestException();
-        }
-
-        Long lastSolvedQuestionId = questionSolvedList.get(0).getQuestion().getQuestionId();
-        List<Question> questionList = questionRepository.findAllById(Arrays.asList(lastSolvedQuestionId + 1, lastSolvedQuestionId + 2, lastSolvedQuestionId + 3));
-        Test test = new Test(false, member, questionList.get(0).getTitle());
-        testRepository.save(test);
-        questionBundleRepository.saveAllAndFlush(
-                questionList.stream()
-                        .map(question -> new QuestionBundle(new QuestionBundleId(test, question)))
-                        .collect(Collectors.toList())
-        );
-
-        return TestDetailResponse.builder()
-                .testId(test.getTestId())
-                .testResultId(null)
-                .solvedCount(0)
-                .title(test.getTitle())
-                .owner(new TestSimpleMemberResponse(member))
-                .questions(questionList.stream().map(QuestionResponse::new).collect(Collectors.toList()))
-                .build();
     }
 
     @Transactional
     @Override
     public TestDetailResponse getSpecificTest(Long memberId, Long testId) {
         MemberEntity member = memberId == null ? null : memberValidator.validateMember(memberId);
-
         Test test = testValidator.validateTest(testId);
+
+
         TestDetailInfo testDetail = testDataProvider.getTestDetail(test);
         Long testResultId = memberId == null ? null :
                 testResultRepository.findByTestAndSolver(test, member)
