@@ -1,6 +1,6 @@
 package com.nexters.keyme.domain.clienttest.application;
 
-import com.nexters.keyme.domain.member.domain.exceptions.NotFoundMemberException;
+import com.nexters.keyme.domain.member.exceptions.NotFoundMemberException;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;

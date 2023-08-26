@@ -1,6 +1,6 @@
 package com.nexters.keyme.domain.statistics.infrastcurture;
 
-import com.nexters.keyme.domain.statistics.domain.internaldto.CoordinateInfo;
+import com.nexters.keyme.domain.statistics.dto.internal.CoordinateInfo;
 import com.nexters.keyme.domain.statistics.domain.model.Statistic;
 import com.nexters.keyme.domain.statistics.domain.service.CoordinateConversionService;
 import com.nexters.keyme.domain.statistics.infrastcurture.dto.CoordinateRequest;

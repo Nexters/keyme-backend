@@ -4,18 +4,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nexters.keyme.domain.auth.domain.client.AppleClient;
 import com.nexters.keyme.domain.auth.domain.client.KakaoClient;
-import com.nexters.keyme.domain.auth.domain.exceptions.InvalidAppleTokenException;
-import com.nexters.keyme.domain.auth.domain.internaldto.AppleJwtBodyInfo;
-import com.nexters.keyme.domain.auth.domain.internaldto.OAuthUserInfo;
-import com.nexters.keyme.domain.auth.presentation.dto.request.LoginRequest;
-import com.nexters.keyme.domain.auth.presentation.dto.response.AppleAuthKeysResponse;
-import com.nexters.keyme.domain.auth.presentation.dto.response.KakaoUserInfoResponse;
-import com.nexters.keyme.domain.auth.presentation.dto.response.TokenResponse;
-import com.nexters.keyme.domain.auth.domain.helper.ApplePublicKeyProvider;
+import com.nexters.keyme.domain.auth.exceptions.InvalidAppleTokenException;
+import com.nexters.keyme.domain.auth.dto.internal.AppleJwtBodyInfo;
+import com.nexters.keyme.domain.auth.dto.internal.OAuthUserInfo;
+import com.nexters.keyme.domain.auth.dto.request.LoginRequest;
+import com.nexters.keyme.domain.auth.dto.response.AppleAuthKeysResponse;
+import com.nexters.keyme.domain.auth.dto.response.KakaoUserInfoResponse;
+import com.nexters.keyme.domain.auth.dto.response.TokenResponse;
+import com.nexters.keyme.domain.auth.domain.service.processor.ApplePublicKeyProcessor;
 import com.nexters.keyme.global.common.util.JwtTokenProvider;
-import com.nexters.keyme.global.common.enums.OAuthType;
+import com.nexters.keyme.domain.auth.enums.OAuthType;
 import com.nexters.keyme.domain.member.application.MemberService;
-import com.nexters.keyme.domain.member.presentation.dto.response.MemberWithTokenResponse;
+import com.nexters.keyme.domain.member.dto.response.MemberWithTokenResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ import java.security.PublicKey;
 public class AuthServiceImpl implements AuthService {
 
     private final ObjectMapper objectMapper;
-    private final ApplePublicKeyProvider applePublicKeyProvider;
+    private final ApplePublicKeyProcessor applePublicKeyProcessor;
     private final JwtTokenProvider jwtTokenProvider;
     private final AppleClient appleClient;
     private final KakaoClient kakaoClient;
@@ -56,7 +56,7 @@ public class AuthServiceImpl implements AuthService {
     private OAuthUserInfo getOAuthInfoOfApple(String identityToken) {
         AppleAuthKeysResponse authKeys = appleClient.getAuthKeys();
         String jwtHeaderString = jwtTokenProvider.extractJwtHeaderString(identityToken);
-        PublicKey key = applePublicKeyProvider.getPublicKey(jwtHeaderString, authKeys);
+        PublicKey key = applePublicKeyProcessor.getPublicKey(jwtHeaderString, authKeys);
         Boolean isVerified  = jwtTokenProvider.verifyToken(identityToken, key);
 
         if (!isVerified) {

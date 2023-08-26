@@ -1,8 +1,8 @@
 package com.nexters.keyme.domain.friend.presentation.controller;
 
-import com.nexters.keyme.domain.friend.presentation.dto.request.FriendAcceptRequest;
-import com.nexters.keyme.domain.friend.presentation.dto.request.FriendAddRequest;
-import com.nexters.keyme.domain.friend.presentation.dto.response.FriendResponse;
+import com.nexters.keyme.domain.friend.dto.request.FriendAcceptRequest;
+import com.nexters.keyme.domain.friend.dto.request.FriendAddRequest;
+import com.nexters.keyme.domain.friend.dto.response.FriendResponse;
 import com.nexters.keyme.global.common.annotation.RequestUser;
 import com.nexters.keyme.global.common.dto.internal.UserInfo;
 import com.nexters.keyme.global.common.dto.response.ApiResponse;

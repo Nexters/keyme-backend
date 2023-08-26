@@ -1,6 +1,6 @@
 package com.nexters.keyme.domain.test.application;
 
-import com.nexters.keyme.domain.member.domain.exceptions.NotFoundMemberException;
+import com.nexters.keyme.domain.member.exceptions.NotFoundMemberException;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
 import com.nexters.keyme.domain.question.domain.repository.QuestionSolvedRepository;

@@ -1,6 +1,6 @@
 package com.nexters.keyme.domain.test.domain.service.validator;
 
-import com.nexters.keyme.domain.member.domain.helper.validator.MemberValidator;
+import com.nexters.keyme.domain.member.domain.service.validator.MemberValidator;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.domain.test.domain.model.Test;
 import com.nexters.keyme.domain.test.exceptions.AlreadyExistTestResultException;

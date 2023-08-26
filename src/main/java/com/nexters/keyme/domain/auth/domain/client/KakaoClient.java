@@ -1,6 +1,6 @@
 package com.nexters.keyme.domain.auth.domain.client;
 
-import com.nexters.keyme.domain.auth.presentation.dto.response.KakaoUserInfoResponse;
+import com.nexters.keyme.domain.auth.dto.response.KakaoUserInfoResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;

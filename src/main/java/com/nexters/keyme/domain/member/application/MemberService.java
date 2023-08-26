@@ -1,15 +1,15 @@
 package com.nexters.keyme.domain.member.application;
 
-import com.nexters.keyme.domain.auth.domain.internaldto.OAuthUserInfo;
+import com.nexters.keyme.domain.auth.dto.internal.OAuthUserInfo;
 import com.nexters.keyme.global.common.dto.internal.UserInfo;
-import com.nexters.keyme.domain.member.presentation.dto.request.AddTokenRequest;
-import com.nexters.keyme.domain.member.presentation.dto.request.DeleteTokenRequest;
-import com.nexters.keyme.domain.member.presentation.dto.request.MemberModificationRequest;
-import com.nexters.keyme.domain.member.presentation.dto.request.NicknameVerificationRequest;
-import com.nexters.keyme.domain.member.presentation.dto.response.ImageResponse;
-import com.nexters.keyme.domain.member.presentation.dto.response.NicknameVerificationResponse;
-import com.nexters.keyme.domain.member.presentation.dto.response.MemberResponse;
-import com.nexters.keyme.domain.member.presentation.dto.response.MemberWithTokenResponse;
+import com.nexters.keyme.domain.member.dto.request.AddTokenRequest;
+import com.nexters.keyme.domain.member.dto.request.DeleteTokenRequest;
+import com.nexters.keyme.domain.member.dto.request.MemberModificationRequest;
+import com.nexters.keyme.domain.member.dto.request.NicknameVerificationRequest;
+import com.nexters.keyme.domain.member.dto.response.ImageResponse;
+import com.nexters.keyme.domain.member.dto.response.NicknameVerificationResponse;
+import com.nexters.keyme.domain.member.dto.response.MemberResponse;
+import com.nexters.keyme.domain.member.dto.response.MemberWithTokenResponse;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -1,7 +1,7 @@
 package com.nexters.keyme.domain.question.domain.model;
 
 import com.nexters.keyme.global.common.model.BaseTimeEntity;
-import com.nexters.keyme.domain.question.domain.enums.QuestionCategoryType;
+import com.nexters.keyme.domain.question.enums.QuestionCategoryType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

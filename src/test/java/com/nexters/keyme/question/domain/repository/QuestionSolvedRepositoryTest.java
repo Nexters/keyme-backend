@@ -2,8 +2,8 @@ package com.nexters.keyme.question.domain.repository;
 
 import com.nexters.keyme.domain.question.domain.repository.QuestionSolvedRepository;
 import com.nexters.keyme.global.common.dto.internal.PageInfo;
-import com.nexters.keyme.domain.question.domain.enums.QuestionCategoryType;
-import com.nexters.keyme.domain.question.domain.internaldto.QuestionStatisticInfo;
+import com.nexters.keyme.domain.question.enums.QuestionCategoryType;
+import com.nexters.keyme.domain.question.dto.internal.QuestionStatisticInfo;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
 import com.nexters.keyme.test.annotation.RepositoryTest;
 import org.junit.jupiter.api.DisplayName;
@@ -66,7 +66,7 @@ class QuestionSolvedRepositoryTest {
         Long questionId = 2L;
         Long ownerId = 1L;
 
-        QuestionStatisticInfo questionStatisticInfo = questionSolvedRepository.findQuestionStatisticsByQuestionIdAndOwnerId(questionId, ownerId).orElse(null);
+        QuestionStatisticInfo questionStatisticInfo = questionSolvedRepository.findQuestionStatisticsByQuestionIdAndOwnerId(questionId, ownerId);
 
         assertAll(
             () -> assertThat(questionStatisticInfo.getAvgScore()).isEqualTo(2.0),

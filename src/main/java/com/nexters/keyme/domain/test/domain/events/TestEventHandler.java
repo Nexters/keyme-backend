@@ -4,7 +4,7 @@ import com.nexters.keyme.domain.notification.dto.UserNotificationRequest;
 import com.nexters.keyme.domain.notification.service.NotificationService;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
 import com.nexters.keyme.domain.statistics.application.StatisticService;
-import com.nexters.keyme.domain.statistics.application.dto.ScoreInfo;
+import com.nexters.keyme.domain.statistics.dto.internal.ScoreInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

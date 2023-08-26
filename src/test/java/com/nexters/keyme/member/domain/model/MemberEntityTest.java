@@ -1,6 +1,6 @@
 package com.nexters.keyme.member.domain.model;
 
-import com.nexters.keyme.domain.member.domain.internaldto.MemberModificationInfo;
+import com.nexters.keyme.domain.member.dto.internal.MemberModificationInfo;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.domain.member.domain.model.ProfileImage;
 import org.junit.jupiter.api.DisplayName;

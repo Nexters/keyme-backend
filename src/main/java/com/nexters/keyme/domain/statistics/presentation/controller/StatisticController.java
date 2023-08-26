@@ -1,11 +1,11 @@
 package com.nexters.keyme.domain.statistics.presentation.controller;
 
 import com.nexters.keyme.domain.statistics.application.StatisticService;
-import com.nexters.keyme.domain.statistics.presentation.dto.AdditionalStatisticResponse;
-import com.nexters.keyme.domain.statistics.presentation.dto.request.StatisticRequest;
+import com.nexters.keyme.domain.statistics.dto.response.AdditionalStatisticResponse;
+import com.nexters.keyme.domain.statistics.dto.request.StatisticRequest;
 import com.nexters.keyme.global.common.dto.response.ApiResponse;
-import com.nexters.keyme.domain.statistics.presentation.dto.AdditionalStatisticRequest;
-import com.nexters.keyme.domain.statistics.presentation.dto.response.MemberStatisticResponse;
+import com.nexters.keyme.domain.statistics.dto.request.AdditionalStatisticRequest;
+import com.nexters.keyme.domain.statistics.dto.response.MemberStatisticResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

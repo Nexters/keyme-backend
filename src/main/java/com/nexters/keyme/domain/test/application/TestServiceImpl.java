@@ -1,24 +1,24 @@
 package com.nexters.keyme.domain.test.application;
 
-import com.nexters.keyme.domain.member.domain.helper.validator.MemberValidator;
+import com.nexters.keyme.domain.member.domain.service.validator.MemberValidator;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
-import com.nexters.keyme.domain.question.domain.internaldto.QuestionStatisticInfo;
+import com.nexters.keyme.domain.question.dto.internal.QuestionStatisticInfo;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
 import com.nexters.keyme.domain.question.domain.repository.QuestionSolvedRepository;
-import com.nexters.keyme.domain.question.presentation.dto.response.QuestionSolvedResponse;
-import com.nexters.keyme.domain.question.presentation.dto.response.QuestionStatisticResponse;
-import com.nexters.keyme.domain.test.domain.internaldto.TestDetailInfo;
+import com.nexters.keyme.domain.question.dto.response.QuestionSolvedResponse;
+import com.nexters.keyme.domain.question.dto.response.QuestionStatisticResponse;
+import com.nexters.keyme.domain.test.dto.internal.TestDetailInfo;
+import com.nexters.keyme.domain.test.dto.response.*;
 import com.nexters.keyme.domain.test.exceptions.NotFoundTestException;
 import com.nexters.keyme.domain.test.domain.events.SendNotificationEvent;
-import com.nexters.keyme.domain.test.domain.service.provider.TestResultDataProvider;
+import com.nexters.keyme.domain.test.domain.service.processor.TestResultDataProcessor;
 import com.nexters.keyme.domain.test.domain.service.validator.TestResultValidator;
 import com.nexters.keyme.domain.test.domain.service.validator.TestValidator;
-import com.nexters.keyme.domain.test.presentation.dto.request.TestListRequest;
-import com.nexters.keyme.domain.test.presentation.dto.request.TestSubmissionRequest;
-import com.nexters.keyme.domain.test.presentation.dto.response.*;
-import com.nexters.keyme.domain.test.domain.service.provider.TestDataProvider;
-import com.nexters.keyme.domain.test.domain.service.provider.TestResultCodeProvider;
-import com.nexters.keyme.domain.test.domain.internaldto.TestResultStatisticInfo;
+import com.nexters.keyme.domain.test.dto.request.TestListRequest;
+import com.nexters.keyme.domain.test.dto.request.TestSubmissionRequest;
+import com.nexters.keyme.domain.test.domain.service.processor.TestDataProcessor;
+import com.nexters.keyme.domain.test.domain.service.processor.TestResultCodeProcessor;
+import com.nexters.keyme.domain.test.dto.internal.TestResultStatisticInfo;
 import com.nexters.keyme.domain.test.domain.model.Test;
 import com.nexters.keyme.domain.test.domain.model.TestResult;
 import com.nexters.keyme.domain.test.domain.repository.TestRepository;
@@ -42,12 +42,12 @@ public class TestServiceImpl implements TestService {
 
     private final TestValidator testValidator;
     private final TestRepository testRepository;
-    private final TestDataProvider testDataProvider;
+    private final TestDataProcessor testDataProcessor;
 
     private final TestResultValidator testResultValidator;
     private final TestResultRepository testResultRepository;
-    private final TestResultDataProvider testResultDataProvider;
-    private final TestResultCodeProvider testResultCodeProvider;
+    private final TestResultDataProcessor testResultDataProcessor;
+    private final TestResultCodeProcessor testResultCodeProcessor;
 
     private final QuestionSolvedRepository questionSolvedRepository;
     private final ApplicationEventPublisher eventPublisher;
@@ -58,11 +58,11 @@ public class TestServiceImpl implements TestService {
         MemberEntity member = memberValidator.validateMember(memberId);
 
         // 없으면 생성
-        Test onboardingTest = testDataProvider.getExistOnboardingTest(member).orElse(null);
-        if (onboardingTest == null) onboardingTest = testDataProvider.createOnboardingTest(member);
+        Test onboardingTest = testDataProcessor.getExistOnboardingTest(member).orElse(null);
+        if (onboardingTest == null) onboardingTest = testDataProcessor.createOnboardingTest(member);
 
         // Test의 디테일한 정보 + 내 결과
-        TestDetailInfo testDetail = testDataProvider.getTestDetail(onboardingTest);
+        TestDetailInfo testDetail = testDataProcessor.getTestDetail(onboardingTest);
         Long testResultId = testResultRepository.findByTestAndSolver(onboardingTest, member)
                 .map(t -> t.getTestResultId())
                 .orElse(null);
@@ -76,11 +76,11 @@ public class TestServiceImpl implements TestService {
         MemberEntity member = memberValidator.validateMember(memberId);
 
         // 없으면 생성
-        Test dailyTest = testDataProvider.getExistDailyTest(member).orElse(null);
-        if (dailyTest == null) dailyTest = testDataProvider.createDailyTest(member);
+        Test dailyTest = testDataProcessor.getExistDailyTest(member).orElse(null);
+        if (dailyTest == null) dailyTest = testDataProcessor.createDailyTest(member);
 
         // Test의 디테일한 정보 + 내 결과
-        TestDetailInfo testDetail = testDataProvider.getTestDetail(dailyTest);
+        TestDetailInfo testDetail = testDataProcessor.getTestDetail(dailyTest);
         Long testResultId = testResultRepository.findByTestAndSolver(dailyTest, member)
                 .map(t -> t.getTestResultId())
                 .orElse(null);
@@ -95,7 +95,7 @@ public class TestServiceImpl implements TestService {
         Test test = testValidator.validateTest(testId);
 
         // Test의 디테일한 정보 + 내 결과
-        TestDetailInfo testDetail = testDataProvider.getTestDetail(test);
+        TestDetailInfo testDetail = testDataProcessor.getTestDetail(test);
         Long testResultId = memberId == null ? null :
                 testResultRepository.findByTestAndSolver(test, member)
                     .map(t -> t.getTestResultId())
@@ -136,8 +136,8 @@ public class TestServiceImpl implements TestService {
         Test test = testValidator.validateTest(testId);
         testResultValidator.validateTestResultAlreadyExist(solverId, test);
 
-        TestResult testResult = testResultDataProvider.createTestResult(solverId, test, submitInfo.getResults());
-        String resultCode = solverId != null ? null : testResultCodeProvider.createResultCode(testResult.getTestResultId());
+        TestResult testResult = testResultDataProcessor.createTestResult(solverId, test, submitInfo.getResults());
+        String resultCode = solverId != null ? null : testResultCodeProcessor.createResultCode(testResult.getTestResultId());
 
         // FIXME : 너무 강하게 묶여있음
         MemberEntity testOwner = test.getMember();

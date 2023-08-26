@@ -2,11 +2,11 @@ package com.nexters.keyme.domain.test.presentation.controller;
 
 import com.nexters.keyme.global.common.dto.internal.UserInfo;
 import com.nexters.keyme.domain.test.application.TestService;
-import com.nexters.keyme.domain.test.presentation.dto.request.TestSubmissionRequest;
-import com.nexters.keyme.domain.test.presentation.dto.response.SingleTestStatisticsResponse;
-import com.nexters.keyme.domain.test.presentation.dto.response.TestDetailResponse;
-import com.nexters.keyme.domain.test.presentation.dto.response.TestResultResponse;
-import com.nexters.keyme.domain.test.presentation.dto.response.TestSubmitResponse;
+import com.nexters.keyme.domain.test.dto.request.TestSubmissionRequest;
+import com.nexters.keyme.domain.test.dto.response.SingleTestStatisticsResponse;
+import com.nexters.keyme.domain.test.dto.response.TestDetailResponse;
+import com.nexters.keyme.domain.test.dto.response.TestResultResponse;
+import com.nexters.keyme.domain.test.dto.response.TestSubmitResponse;
 import com.nexters.keyme.global.common.annotation.RequestUser;
 import com.nexters.keyme.global.common.dto.response.ApiResponse;
 import io.swagger.annotations.Api;
