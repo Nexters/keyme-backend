@@ -1,12 +1,12 @@
 package com.nexters.keyme.domain.test.application;
 
-import com.nexters.keyme.domain.member.domain.exceptions.NotFoundMemberException;
+import com.nexters.keyme.domain.member.exceptions.NotFoundMemberException;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
 import com.nexters.keyme.domain.question.domain.repository.QuestionSolvedRepository;
 import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
-import com.nexters.keyme.domain.test.domain.exceptions.AlreadyExistTestResultOwnerException;
-import com.nexters.keyme.domain.test.domain.exceptions.NotFoundTestResultCodeException;
+import com.nexters.keyme.domain.test.exceptions.AlreadyExistTestResultOwnerException;
+import com.nexters.keyme.domain.test.exceptions.NotFoundTestResultCodeException;
 import com.nexters.keyme.domain.test.domain.model.TestResult;
 import com.nexters.keyme.domain.test.domain.model.TestResultCode;
 import com.nexters.keyme.domain.test.domain.repository.TestResultCodeRepository;

@@ -1,10 +1,10 @@
 package com.nexters.keyme.domain.test.presentation.controller;
 
-import com.nexters.keyme.global.dto.internal.UserInfo;
+import com.nexters.keyme.global.common.dto.internal.UserInfo;
 import com.nexters.keyme.domain.test.application.TestResultService;
-import com.nexters.keyme.domain.test.presentation.dto.request.TestRegistrationRequest;
-import com.nexters.keyme.global.annotation.RequestUser;
-import com.nexters.keyme.global.dto.response.ApiResponse;
+import com.nexters.keyme.domain.test.dto.request.TestRegistrationRequest;
+import com.nexters.keyme.global.common.annotation.RequestUser;
+import com.nexters.keyme.global.common.dto.response.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

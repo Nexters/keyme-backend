@@ -1,12 +1,12 @@
 package com.nexters.keyme.domain.statistics.application;
 
-import com.nexters.keyme.domain.statistics.application.dto.ScoreInfo;
-import com.nexters.keyme.domain.statistics.domain.internaldto.StatisticInfo;
+import com.nexters.keyme.domain.statistics.dto.internal.ScoreInfo;
+import com.nexters.keyme.domain.statistics.dto.internal.StatisticInfo;
 import com.nexters.keyme.domain.statistics.domain.model.Statistic;
-import com.nexters.keyme.domain.statistics.presentation.dto.AdditionalStatisticRequest;
-import com.nexters.keyme.domain.statistics.presentation.dto.AdditionalStatisticResponse;
-import com.nexters.keyme.domain.statistics.presentation.dto.request.StatisticRequest;
-import com.nexters.keyme.domain.statistics.presentation.dto.response.MemberStatisticResponse;
+import com.nexters.keyme.domain.statistics.dto.request.AdditionalStatisticRequest;
+import com.nexters.keyme.domain.statistics.dto.response.AdditionalStatisticResponse;
+import com.nexters.keyme.domain.statistics.dto.request.StatisticRequest;
+import com.nexters.keyme.domain.statistics.dto.response.MemberStatisticResponse;
 
 import java.util.List;
 

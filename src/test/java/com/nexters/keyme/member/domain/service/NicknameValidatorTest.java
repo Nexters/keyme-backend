@@ -1,10 +1,10 @@
 package com.nexters.keyme.member.domain.service;
 
-import com.nexters.keyme.domain.member.domain.exceptions.NicknameDuplicateException;
-import com.nexters.keyme.domain.member.domain.exceptions.NicknameTooLongException;
+import com.nexters.keyme.domain.member.exceptions.NicknameDuplicateException;
+import com.nexters.keyme.domain.member.exceptions.NicknameTooLongException;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
-import com.nexters.keyme.domain.member.domain.service.NicknameValidator;
+import com.nexters.keyme.domain.member.domain.service.validator.NicknameValidator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

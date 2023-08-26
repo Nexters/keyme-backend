@@ -1,14 +1,14 @@
 package com.nexters.keyme.domain.test.presentation.controller;
 
-import com.nexters.keyme.global.dto.internal.UserInfo;
+import com.nexters.keyme.global.common.dto.internal.UserInfo;
 import com.nexters.keyme.domain.test.application.TestService;
-import com.nexters.keyme.domain.test.presentation.dto.request.TestSubmissionRequest;
-import com.nexters.keyme.domain.test.presentation.dto.response.SingleTestStatisticsResponse;
-import com.nexters.keyme.domain.test.presentation.dto.response.TestDetailResponse;
-import com.nexters.keyme.domain.test.presentation.dto.response.TestResultResponse;
-import com.nexters.keyme.domain.test.presentation.dto.response.TestSubmitResponse;
-import com.nexters.keyme.global.annotation.RequestUser;
-import com.nexters.keyme.global.dto.response.ApiResponse;
+import com.nexters.keyme.domain.test.dto.request.TestSubmissionRequest;
+import com.nexters.keyme.domain.test.dto.response.SingleTestStatisticsResponse;
+import com.nexters.keyme.domain.test.dto.response.TestDetailResponse;
+import com.nexters.keyme.domain.test.dto.response.TestResultResponse;
+import com.nexters.keyme.domain.test.dto.response.TestSubmitResponse;
+import com.nexters.keyme.global.common.annotation.RequestUser;
+import com.nexters.keyme.global.common.dto.response.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -25,14 +25,14 @@ public class TestController {
     @GetMapping("/onboarding")
     @ApiOperation(value = "내 온보딩 테스트 가져오기 (모바일 전용 API)")
     public ResponseEntity<ApiResponse<TestDetailResponse>> getOnboardingTest(@RequestUser UserInfo requestUser) {
-        TestDetailResponse testDetailResponse = testService.getOrCreateOnboardingTest(requestUser.getMemberId());
+        TestDetailResponse testDetailResponse = testService.getOnboardingTest(requestUser.getMemberId());
         return ResponseEntity.ok(new ApiResponse(testDetailResponse) );
     }
 
     @GetMapping("/daily")
     @ApiOperation(value = "내 데일리 테스트 가져오기")
     public ResponseEntity<ApiResponse<TestDetailResponse>> getDailyTest(@RequestUser UserInfo requestUser) {
-        TestDetailResponse testDetailResponse = testService.getOrCreateDailyTest(requestUser.getMemberId());
+        TestDetailResponse testDetailResponse = testService.getDailyTest(requestUser.getMemberId());
         return ResponseEntity.ok(new ApiResponse(testDetailResponse) );
     }
 

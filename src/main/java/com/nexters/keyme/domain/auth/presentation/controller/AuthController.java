@@ -1,11 +1,11 @@
 package com.nexters.keyme.domain.auth.presentation.controller;
 
 
-import com.nexters.keyme.domain.auth.presentation.dto.request.LoginRequest;
+import com.nexters.keyme.domain.auth.dto.request.LoginRequest;
 import com.nexters.keyme.domain.auth.application.AuthService;
-import com.nexters.keyme.global.annotation.ApiSecurityIgnore;
-import com.nexters.keyme.global.dto.response.ApiResponse;
-import com.nexters.keyme.domain.member.presentation.dto.response.MemberWithTokenResponse;
+import com.nexters.keyme.global.common.annotation.ApiSecurityIgnore;
+import com.nexters.keyme.global.common.dto.response.ApiResponse;
+import com.nexters.keyme.domain.member.dto.response.MemberWithTokenResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,8 @@
 package com.nexters.keyme.domain.member.domain.model;
 
-import com.nexters.keyme.global.model.BaseTimeEntity;
-import com.nexters.keyme.domain.member.domain.internaldto.MemberModificationInfo;
+import com.nexters.keyme.domain.test.domain.model.Test;
+import com.nexters.keyme.global.common.model.BaseTimeEntity;
+import com.nexters.keyme.domain.member.dto.internal.MemberModificationInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,6 +28,9 @@ public class MemberEntity extends BaseTimeEntity {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name="member_id")
     private List<MemberDevice> memberDevice;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Test> testList;
 
     private String nickname;
     private String friendCode;

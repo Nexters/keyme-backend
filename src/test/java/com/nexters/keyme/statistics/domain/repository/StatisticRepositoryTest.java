@@ -1,6 +1,6 @@
 package com.nexters.keyme.statistics.domain.repository;
 
-import com.nexters.keyme.domain.statistics.domain.exceptions.NotFoundStatisticsException;
+import com.nexters.keyme.domain.statistics.exceptions.NotFoundStatisticsException;
 import com.nexters.keyme.domain.statistics.domain.repository.StatisticRepository;
 import com.nexters.keyme.domain.statistics.domain.model.Statistic;
 import com.nexters.keyme.test.annotation.RepositoryTest;

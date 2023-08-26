@@ -1,7 +1,7 @@
 package com.nexters.keyme.global.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nexters.keyme.global.dto.response.CommonResponse;
+import com.nexters.keyme.global.common.dto.response.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

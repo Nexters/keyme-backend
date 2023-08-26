@@ -2,7 +2,7 @@ package com.nexters.keyme.domain.test.domain.model;
 
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.domain.question.domain.model.QuestionBundle;
-import com.nexters.keyme.global.model.BaseTimeEntity;
+import com.nexters.keyme.global.common.model.BaseTimeEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -41,5 +41,9 @@ public class Test extends BaseTimeEntity {
         this.isOnboarding = isOnboarding;
         this.member = member;
         this.title = title;
+    }
+
+    public void addAllQuestionBundle(List<QuestionBundle> questionBundleList) {
+        this.questionBundleList.addAll(questionBundleList);
     }
 }

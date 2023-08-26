@@ -1,17 +1,17 @@
 package com.nexters.keyme.statistics.application;
 
-import com.nexters.keyme.domain.question.presentation.dto.response.QuestionCategoryResponse;
+import com.nexters.keyme.domain.question.dto.response.QuestionCategoryResponse;
 import com.nexters.keyme.domain.statistics.application.StatisticService;
-import com.nexters.keyme.domain.statistics.application.dto.ScoreInfo;
-import com.nexters.keyme.domain.statistics.domain.internaldto.StatisticInfo;
+import com.nexters.keyme.domain.statistics.dto.internal.ScoreInfo;
+import com.nexters.keyme.domain.statistics.dto.internal.StatisticInfo;
 import com.nexters.keyme.domain.statistics.domain.model.Statistic;
-import com.nexters.keyme.domain.statistics.presentation.dto.AdditionalStatisticRequest;
-import com.nexters.keyme.domain.statistics.presentation.dto.AdditionalStatisticResponse;
-import com.nexters.keyme.domain.statistics.presentation.dto.request.StatisticRequest;
-import com.nexters.keyme.domain.statistics.presentation.dto.response.CoordinateResponse;
-import com.nexters.keyme.domain.statistics.presentation.dto.response.MemberStatisticResponse;
-import com.nexters.keyme.domain.statistics.presentation.dto.response.StatisticQuestionResponse;
-import com.nexters.keyme.domain.statistics.presentation.dto.response.StatisticResultResponse;
+import com.nexters.keyme.domain.statistics.dto.request.AdditionalStatisticRequest;
+import com.nexters.keyme.domain.statistics.dto.response.AdditionalStatisticResponse;
+import com.nexters.keyme.domain.statistics.dto.request.StatisticRequest;
+import com.nexters.keyme.domain.statistics.dto.response.CoordinateResponse;
+import com.nexters.keyme.domain.statistics.dto.response.MemberStatisticResponse;
+import com.nexters.keyme.domain.statistics.dto.response.StatisticQuestionResponse;
+import com.nexters.keyme.domain.statistics.dto.response.StatisticResultResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

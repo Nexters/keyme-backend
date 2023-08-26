@@ -2,7 +2,7 @@ package com.nexters.keyme.domain.test.domain.model;
 
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
-import com.nexters.keyme.global.model.BaseTimeEntity;
+import com.nexters.keyme.global.common.model.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,5 +31,15 @@ public class TestResult extends BaseTimeEntity {
     @OneToMany(mappedBy = "testResult", cascade = CascadeType.REMOVE)
     private List<QuestionSolved> questionSolvedList = new ArrayList<>();
 
-    private Float matchRate;
+    private Double matchRate;
+
+    public TestResult(Test test, MemberEntity solver, Double matchRate) {
+        this.test = test;
+        this.solver = solver;
+        this.matchRate = matchRate;
+    }
+
+    public void addAllQuestionSolved(List<QuestionSolved> questionSolvedList) {
+        this.questionSolvedList.addAll(questionSolvedList);
+    }
 }

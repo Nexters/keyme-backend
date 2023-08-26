@@ -1,9 +1,9 @@
 package com.nexters.keyme.domain.clienttest.presentation.controller;
 
-import com.nexters.keyme.global.dto.internal.UserInfo;
+import com.nexters.keyme.global.common.dto.internal.UserInfo;
 import com.nexters.keyme.domain.clienttest.application.ClientTestService;
-import com.nexters.keyme.global.annotation.RequestUser;
-import com.nexters.keyme.global.dto.response.ApiResponse;
+import com.nexters.keyme.global.common.annotation.RequestUser;
+import com.nexters.keyme.global.common.dto.response.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

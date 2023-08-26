@@ -2,9 +2,9 @@ package com.nexters.keyme.domain.member.infrastructure;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.nexters.keyme.global.exceptions.FileUploadFailedException;
-import com.nexters.keyme.domain.member.domain.internaldto.ImageInfo;
-import com.nexters.keyme.domain.member.domain.service.ImageUploader;
+import com.nexters.keyme.global.common.exceptions.FileUploadFailedException;
+import com.nexters.keyme.domain.member.dto.internal.ImageInfo;
+import com.nexters.keyme.domain.member.domain.service.processor.ImageUploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;

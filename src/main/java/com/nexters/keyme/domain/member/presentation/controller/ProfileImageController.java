@@ -1,8 +1,8 @@
 package com.nexters.keyme.domain.member.presentation.controller;
 
 import com.nexters.keyme.domain.member.application.MemberService;
-import com.nexters.keyme.domain.member.presentation.dto.response.ImageResponse;
-import com.nexters.keyme.global.dto.response.ApiResponse;
+import com.nexters.keyme.domain.member.dto.response.ImageResponse;
+import com.nexters.keyme.global.common.dto.response.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
