@@ -1,7 +1,7 @@
 package com.nexters.keyme.domain.question.application;
 
 import com.nexters.keyme.domain.member.domain.exceptions.NotFoundMemberException;
-import com.nexters.keyme.domain.question.domain.exceptions.NotFoundQuestionException;
+import com.nexters.keyme.domain.question.exceptions.NotFoundQuestionException;
 import com.nexters.keyme.domain.question.domain.model.Question;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
 import com.nexters.keyme.domain.question.presentation.dto.response.QuestionResponse;

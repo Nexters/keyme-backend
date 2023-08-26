@@ -1,4 +1,4 @@
-package com.nexters.keyme.domain.question.domain.helper;
+package com.nexters.keyme.domain.question.domain.service;
 
 import com.nexters.keyme.domain.question.domain.model.Question;
 import com.nexters.keyme.domain.question.domain.repository.QuestionRepository;

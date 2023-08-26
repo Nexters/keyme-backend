@@ -1,28 +1,21 @@
-package com.nexters.keyme.domain.test.helper.provider;
+package com.nexters.keyme.domain.test.domain.service.provider;
 
-import com.nexters.keyme.domain.member.domain.exceptions.NotFoundMemberException;
 import com.nexters.keyme.domain.member.domain.helper.validator.MemberValidator;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
-import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
-import com.nexters.keyme.domain.question.domain.exceptions.NotFoundQuestionException;
-import com.nexters.keyme.domain.question.domain.helper.QuestionAsyncDataProvider;
+import com.nexters.keyme.domain.question.exceptions.NotFoundQuestionException;
+import com.nexters.keyme.domain.question.domain.service.QuestionAsyncDataProvider;
 import com.nexters.keyme.domain.question.domain.internaldto.QuestionInfo;
 import com.nexters.keyme.domain.question.domain.model.Question;
 import com.nexters.keyme.domain.question.domain.model.QuestionBundle;
 import com.nexters.keyme.domain.question.domain.model.QuestionBundleId;
 import com.nexters.keyme.domain.question.domain.repository.QuestionBundleRepository;
 import com.nexters.keyme.domain.question.domain.repository.QuestionRepository;
-import com.nexters.keyme.domain.question.presentation.dto.response.QuestionResponse;
 import com.nexters.keyme.domain.test.domain.internaldto.TestDetailInfo;
 import com.nexters.keyme.domain.test.domain.internaldto.TestOwnerInfo;
 import com.nexters.keyme.domain.test.domain.repository.TestResultRepository;
-import com.nexters.keyme.domain.test.exceptions.NotFoundTestException;
 import com.nexters.keyme.domain.test.domain.model.Test;
 import com.nexters.keyme.domain.test.domain.repository.TestRepository;
-import com.nexters.keyme.domain.test.presentation.dto.response.TestDetailResponse;
-import com.nexters.keyme.domain.test.presentation.dto.response.TestSimpleMemberResponse;
 import com.nexters.keyme.domain.test.domain.model.TestResult;
-import com.nexters.keyme.global.common.exceptions.KeymeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,9 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 @RequiredArgsConstructor

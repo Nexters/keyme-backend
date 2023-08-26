@@ -1,4 +1,4 @@
-package com.nexters.keyme.domain.test.events;
+package com.nexters.keyme.domain.test.domain.events;
 
 import com.nexters.keyme.domain.notification.dto.UserNotificationRequest;
 import com.nexters.keyme.domain.notification.service.NotificationService;

@@ -1,6 +1,6 @@
 package com.nexters.keyme.domain.statistics.application;
 
-import com.nexters.keyme.domain.question.domain.exceptions.NotFoundQuestionException;
+import com.nexters.keyme.domain.question.exceptions.NotFoundQuestionException;
 import com.nexters.keyme.domain.question.domain.model.Question;
 import com.nexters.keyme.domain.question.domain.repository.QuestionRepository;
 import com.nexters.keyme.domain.statistics.application.dto.ScoreInfo;

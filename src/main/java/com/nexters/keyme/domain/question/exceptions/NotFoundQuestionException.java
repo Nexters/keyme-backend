@@ -1,6 +1,6 @@
-package com.nexters.keyme.domain.question.domain.exceptions;
+package com.nexters.keyme.domain.question.exceptions;
 
-import com.nexters.keyme.domain.question.domain.exceptions.code.QuestionErrorCode;
+import com.nexters.keyme.domain.question.exceptions.code.QuestionErrorCode;
 import com.nexters.keyme.global.common.exceptions.KeymeNotFoundException;
 
 public class NotFoundQuestionException extends KeymeNotFoundException {

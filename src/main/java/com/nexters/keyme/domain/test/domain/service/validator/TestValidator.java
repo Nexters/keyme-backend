@@ -1,4 +1,4 @@
-package com.nexters.keyme.domain.test.helper.validator;
+package com.nexters.keyme.domain.test.domain.service.validator;
 
 import com.nexters.keyme.domain.test.exceptions.NotFoundTestException;
 import com.nexters.keyme.domain.test.domain.model.Test;

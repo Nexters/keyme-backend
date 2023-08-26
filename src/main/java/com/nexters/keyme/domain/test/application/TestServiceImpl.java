@@ -1,51 +1,36 @@
 package com.nexters.keyme.domain.test.application;
 
-import com.nexters.keyme.domain.member.domain.exceptions.NotFoundMemberException;
 import com.nexters.keyme.domain.member.domain.helper.validator.MemberValidator;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.domain.question.domain.internaldto.QuestionStatisticInfo;
-import com.nexters.keyme.domain.question.domain.model.Question;
-import com.nexters.keyme.domain.question.domain.model.QuestionBundle;
-import com.nexters.keyme.domain.question.domain.model.QuestionBundleId;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
-import com.nexters.keyme.domain.question.domain.repository.QuestionBundleRepository;
-import com.nexters.keyme.domain.question.domain.repository.QuestionRepository;
 import com.nexters.keyme.domain.question.domain.repository.QuestionSolvedRepository;
-import com.nexters.keyme.domain.question.presentation.dto.response.QuestionResponse;
 import com.nexters.keyme.domain.question.presentation.dto.response.QuestionSolvedResponse;
 import com.nexters.keyme.domain.question.presentation.dto.response.QuestionStatisticResponse;
 import com.nexters.keyme.domain.test.domain.internaldto.TestDetailInfo;
-import com.nexters.keyme.domain.test.exceptions.AlreadyExistTestResultException;
-import com.nexters.keyme.domain.test.exceptions.InvalidDailyTestException;
 import com.nexters.keyme.domain.test.exceptions.NotFoundTestException;
-import com.nexters.keyme.domain.test.exceptions.NotFoundTestResultException;
-import com.nexters.keyme.domain.test.events.SendNotificationEvent;
-import com.nexters.keyme.domain.test.helper.provider.TestResultDataProvider;
-import com.nexters.keyme.domain.test.helper.validator.TestResultValidator;
-import com.nexters.keyme.domain.test.helper.validator.TestValidator;
+import com.nexters.keyme.domain.test.domain.events.SendNotificationEvent;
+import com.nexters.keyme.domain.test.domain.service.provider.TestResultDataProvider;
+import com.nexters.keyme.domain.test.domain.service.validator.TestResultValidator;
+import com.nexters.keyme.domain.test.domain.service.validator.TestValidator;
 import com.nexters.keyme.domain.test.presentation.dto.request.TestListRequest;
 import com.nexters.keyme.domain.test.presentation.dto.request.TestSubmissionRequest;
 import com.nexters.keyme.domain.test.presentation.dto.response.*;
-import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
-import com.nexters.keyme.domain.test.helper.provider.TestDataProvider;
-import com.nexters.keyme.domain.test.helper.provider.TestResultCodeProvider;
+import com.nexters.keyme.domain.test.domain.service.provider.TestDataProvider;
+import com.nexters.keyme.domain.test.domain.service.provider.TestResultCodeProvider;
 import com.nexters.keyme.domain.test.domain.internaldto.TestResultStatisticInfo;
 import com.nexters.keyme.domain.test.domain.model.Test;
 import com.nexters.keyme.domain.test.domain.model.TestResult;
 import com.nexters.keyme.domain.test.domain.repository.TestRepository;
 import com.nexters.keyme.domain.test.domain.repository.TestResultRepository;
-import com.nexters.keyme.domain.test.events.AddStatisticEvent;
+import com.nexters.keyme.domain.test.domain.events.AddStatisticEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -63,7 +48,7 @@ public class TestServiceImpl implements TestService {
     private final TestResultRepository testResultRepository;
     private final TestResultDataProvider testResultDataProvider;
     private final TestResultCodeProvider testResultCodeProvider;
-    
+
     private final QuestionSolvedRepository questionSolvedRepository;
     private final ApplicationEventPublisher eventPublisher;
 

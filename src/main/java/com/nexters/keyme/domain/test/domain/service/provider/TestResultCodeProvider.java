@@ -1,4 +1,4 @@
-package com.nexters.keyme.domain.test.helper.provider;
+package com.nexters.keyme.domain.test.domain.service.provider;
 
 import com.nexters.keyme.domain.test.domain.model.TestResultCode;
 import com.nexters.keyme.domain.test.domain.repository.TestResultCodeRepository;

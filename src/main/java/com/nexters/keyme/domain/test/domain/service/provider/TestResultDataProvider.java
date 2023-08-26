@@ -1,4 +1,4 @@
-package com.nexters.keyme.domain.test.helper.provider;
+package com.nexters.keyme.domain.test.domain.service.provider;
 
 
 import com.nexters.keyme.domain.member.domain.helper.validator.MemberValidator;
@@ -17,10 +17,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 @RequiredArgsConstructor
