@@ -31,6 +31,10 @@ public class Question extends BaseTimeEntity {
 
     private String keyword;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_category_id")
+    private QuestionCategory questionCategory;
+
     @Enumerated(EnumType.STRING)
     private QuestionCategoryType categoryName;
 
