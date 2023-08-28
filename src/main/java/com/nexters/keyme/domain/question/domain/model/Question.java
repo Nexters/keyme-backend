@@ -35,6 +35,7 @@ public class Question extends BaseTimeEntity {
     @JoinColumn(name = "question_category_id")
     private QuestionCategory questionCategory;
 
+    @Deprecated
     @Enumerated(EnumType.STRING)
     private QuestionCategoryType categoryName;
 
