@@ -2,18 +2,9 @@ package com.nexters.keyme.global.config;
 
 import com.nexters.keyme.global.common.annotation.ApiSecurityIgnore;
 import com.nexters.keyme.global.common.annotation.RequestUser;
-import com.nexters.keyme.global.common.annotation.SwaggerErrorCode;
-import io.swagger.v3.oas.models.Operation;
-import io.swagger.v3.oas.models.examples.Example;
-import io.swagger.v3.oas.models.media.Content;
-import io.swagger.v3.oas.models.media.MediaType;
-import io.swagger.v3.oas.models.responses.ApiResponse;
-import io.swagger.v3.oas.models.responses.ApiResponses;
-import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.method.HandlerMethod;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -46,37 +37,6 @@ public class SwaggerConfig {
                 .securitySchemes(List.of(bearerAuthSecurityScheme()))
                 .apiInfo(apiInfo())
                 .useDefaultResponseMessages(false);
-    }
-
-    @Bean
-    public OperationCustomizer customize() {
-        return (Operation operation, HandlerMethod handlerMethod) -> {
-            SwaggerErrorCode swaggerErrorCode =
-                    handlerMethod.getMethodAnnotation(SwaggerErrorCode.class);
-            if (swaggerErrorCode != null) {
-                addErrorCode(operation, swaggerErrorCode.code(), swaggerErrorCode.description(), swaggerErrorCode.responseMessage());
-            }
-            return operation;
-        };
-    }
-
-    private void addErrorCode(Operation operation, int code, String description, String responseMessage) {
-        ApiResponses res = operation.getResponses();
-
-        ApiResponse apiResponse = new ApiResponse();
-        Content content = new Content();
-        MediaType mediaType = new MediaType();
-        Example example = new Example();
-
-        example.setValue("example value");
-        example.description("description");
-
-        mediaType.setExample(example);
-
-        content.addMediaType("application/json", mediaType);
-        apiResponse.setContent(content);
-
-        res.addApiResponse(description, apiResponse);
     }
 
     private ApiInfo apiInfo() {
