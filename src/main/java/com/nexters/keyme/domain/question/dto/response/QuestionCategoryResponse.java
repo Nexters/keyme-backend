@@ -1,5 +1,6 @@
 package com.nexters.keyme.domain.question.dto.response;
 
+import com.nexters.keyme.domain.question.domain.model.QuestionCategory;
 import com.nexters.keyme.domain.question.enums.QuestionCategoryType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -28,5 +29,11 @@ public class QuestionCategoryResponse {
         this.iconUrl = type.getImageUrl();
         this.name = type.name();
         this.color = type.getColor();
+    }
+
+    public QuestionCategoryResponse(QuestionCategory questionCategory) {
+        this.iconUrl = questionCategory.getIconUrl();
+        this.name = questionCategory.getName();
+        this.color = questionCategory.getColor();
     }
 }
