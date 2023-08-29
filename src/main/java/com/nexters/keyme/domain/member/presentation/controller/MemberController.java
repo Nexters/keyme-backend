@@ -13,6 +13,7 @@ import com.nexters.keyme.domain.member.dto.response.MemberResponse;
 import com.nexters.keyme.domain.member.dto.response.NicknameVerificationResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,11 @@ public class MemberController {
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
 
+    @ApiResponses({
+            @io.swagger.annotations.ApiResponse(code = 200, message = "성공입니다.")
+            , @io.swagger.annotations.ApiResponse(code = 201, message = "닉네임이 이미 사용 중입니다.")
+            , @io.swagger.annotations.ApiResponse(code = 202, message = "닉네임이 형식에 맞지 않습니다.")
+    })
     @PostMapping("/verify-nickname")
     @ApiOperation("닉네임 중복 확인")
     @ApiSecurityIgnore
@@ -46,6 +52,11 @@ public class MemberController {
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
 
+    @ApiResponses({
+            @io.swagger.annotations.ApiResponse(code = 200, message = "성공입니다.")
+            , @io.swagger.annotations.ApiResponse(code = 201, message = "닉네임이 이미 사용 중입니다.")
+            , @io.swagger.annotations.ApiResponse(code = 202, message = "닉네임이 형식에 맞지 않습니다.")
+    })
     @PatchMapping
     @ApiOperation("회원 정보 수정")
     public ResponseEntity<ApiResponse<MemberResponse>> modifyMemberInfo(@RequestBody MemberModificationRequest request, @RequestUser UserInfo userInfo) {
