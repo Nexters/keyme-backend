@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.nexters.keyme.global.common.constant.ConstantString.DEFAULT_IMAGE_URL;
@@ -95,14 +96,22 @@ public class MemberServiceImpl implements MemberService {
                 .thumbnailImage(request.getProfileThumbnail())
                 .build();
 
-        nicknameValidator.validateNickname(modificationInfo.getNickname());
-
         MemberEntity member = memberRepository.findById(userInfo.getMemberId())
                 .orElseThrow(NotFoundMemberException::new);
+
+        if (isNicknameChanged(modificationInfo, member)) {
+            nicknameValidator.validateNickname(modificationInfo.getNickname());
+        }
+
         member.modifyMemberInfo(modificationInfo);
 
         return new MemberResponse(member);
     }
+
+    private boolean isNicknameChanged(MemberModificationInfo modificationInfo, MemberEntity member) {
+        return !Objects.equals(member.getNickname(), modificationInfo.getNickname());
+    }
+
 
     @Override
     public ImageResponse uploadImage(MultipartFile image) {
