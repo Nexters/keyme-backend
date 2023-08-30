@@ -1,19 +1,16 @@
 package com.nexters.keyme.global.common.event.message;
 
-import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
 import lombok.Getter;
-
-import java.util.List;
 
 @Getter
 public class AddStatisticEvent {
     private Long testOwnerId;
     private Long solverId;
-    private List<QuestionSolved> questionSolveds; // TODO: DTO 변환
+    private Long resultId; // TODO: DTO 변환
 
-    public AddStatisticEvent(Long testOwnerId, Long solverId, List<QuestionSolved> questionSolveds) {
+    public AddStatisticEvent(Long testOwnerId, Long solverId, Long resultId) {
         this.testOwnerId = testOwnerId;
         this.solverId = solverId;
-        this.questionSolveds = questionSolveds;
+        this.resultId = resultId;
     }
 }

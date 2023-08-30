@@ -2,9 +2,12 @@ package com.nexters.keyme.global.common.event.handler;
 
 import com.nexters.keyme.domain.notification.dto.UserNotificationRequest;
 import com.nexters.keyme.domain.notification.service.NotificationService;
+import com.nexters.keyme.domain.question.domain.model.Question;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
 import com.nexters.keyme.domain.statistics.application.StatisticService;
 import com.nexters.keyme.domain.statistics.dto.internal.ScoreInfo;
+import com.nexters.keyme.domain.test.domain.model.TestResult;
+import com.nexters.keyme.domain.test.domain.service.validator.TestResultValidator;
 import com.nexters.keyme.global.common.event.message.AddStatisticEvent;
 import com.nexters.keyme.global.common.event.message.SendNotificationEvent;
 import lombok.RequiredArgsConstructor;
@@ -21,11 +24,15 @@ public class GlobalEventHandler {
 
     private final StatisticService statisticService;
     private final NotificationService notificationService;
+    private final TestResultValidator testResultValidator;
 
     @EventListener
     public void handleAddStatisticEvent(AddStatisticEvent event) {
-        for (QuestionSolved question : event.getQuestionSolveds()) {
-            ScoreInfo info = new ScoreInfo(event.getTestOwnerId(), event.getSolverId(), question.getQuestion().getQuestionId(), question.getScore());
+        TestResult testResult = testResultValidator.validateTestResult(event.getResultId());
+
+        for (QuestionSolved questionSolved : testResult.getQuestionSolvedList()) {
+            Question question = questionSolved.getQuestion();
+            ScoreInfo info = new ScoreInfo(event.getTestOwnerId(), event.getSolverId(), question.getQuestionId(), questionSolved.getScore());
             statisticService.addNewScores(info);
         }
 

@@ -18,11 +18,11 @@ import com.nexters.keyme.domain.test.domain.service.validator.TestResultValidato
 import com.nexters.keyme.domain.test.domain.service.validator.TestValidator;
 import com.nexters.keyme.domain.test.dto.internal.TestDetailInfo;
 import com.nexters.keyme.domain.test.dto.internal.TestResultStatisticInfo;
+import com.nexters.keyme.domain.test.dto.mapper.TestEventMapper;
 import com.nexters.keyme.domain.test.dto.request.TestListRequest;
 import com.nexters.keyme.domain.test.dto.request.TestSubmissionRequest;
 import com.nexters.keyme.domain.test.dto.response.*;
 import com.nexters.keyme.domain.test.exceptions.NotFoundTestException;
-import com.nexters.keyme.global.common.event.message.AddStatisticEvent;
 import com.nexters.keyme.global.common.event.message.SendNotificationEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +51,7 @@ public class TestServiceImpl implements TestService {
 
     private final QuestionSolvedRepository questionSolvedRepository;
     private final ApplicationEventPublisher eventPublisher;
+    private final TestEventMapper eventMapper;
 
     @Transactional
     @Override
@@ -141,7 +142,7 @@ public class TestServiceImpl implements TestService {
 
         // FIXME : 너무 강하게 묶여있음
         MemberEntity testOwner = test.getMember();
-        eventPublisher.publishEvent(new AddStatisticEvent(testOwner.getId(), solverId, testResult.getQuestionSolvedList()));
+        eventPublisher.publishEvent(eventMapper.toAddStatisticEvent(testOwner, testResult, solverId));
         eventPublisher.publishEvent(new SendNotificationEvent(testOwner.getId(), solverId));
 
         return TestSubmitResponse.builder()
