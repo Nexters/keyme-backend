@@ -1,4 +1,4 @@
-package com.nexters.keyme.domain.test.domain.events;
+package com.nexters.keyme.global.common.event.message;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

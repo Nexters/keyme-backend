@@ -1,4 +1,4 @@
-package com.nexters.keyme.domain.test.domain.events;
+package com.nexters.keyme.global.common.event.message;
 
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
 import lombok.Getter;

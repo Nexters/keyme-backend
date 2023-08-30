@@ -1,10 +1,12 @@
-package com.nexters.keyme.domain.test.domain.events;
+package com.nexters.keyme.global.common.event.handler;
 
 import com.nexters.keyme.domain.notification.dto.UserNotificationRequest;
 import com.nexters.keyme.domain.notification.service.NotificationService;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
 import com.nexters.keyme.domain.statistics.application.StatisticService;
 import com.nexters.keyme.domain.statistics.dto.internal.ScoreInfo;
+import com.nexters.keyme.global.common.event.message.AddStatisticEvent;
+import com.nexters.keyme.global.common.event.message.SendNotificationEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -15,7 +17,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Component
 @Slf4j
-public class TestEventHandler {
+public class GlobalEventHandler {
 
     private final StatisticService statisticService;
     private final NotificationService notificationService;
