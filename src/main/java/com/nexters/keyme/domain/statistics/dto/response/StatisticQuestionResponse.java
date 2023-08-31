@@ -17,11 +17,6 @@ public class StatisticQuestionResponse extends QuestionResponse {
     private double avgScore;
     private int ownerScore;
 
-    public StatisticQuestionResponse(QuestionStatisticInfo info) {
-        super(info.getQuestionId(), info.getTitle(), info.getKeyword(), new QuestionCategoryResponse(info.getCategoryName()));
-        this.avgScore = info.getAvgScore();
-    }
-
     // 아무도 푼 사람이 없을때 통계값
     public StatisticQuestionResponse(Question question) {
         super(question);

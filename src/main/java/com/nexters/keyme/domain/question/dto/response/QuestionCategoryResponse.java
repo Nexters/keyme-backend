@@ -25,11 +25,11 @@ public class QuestionCategoryResponse {
     @ApiModelProperty(value = "색상 코드")
     private String color;
 
-    public QuestionCategoryResponse(QuestionCategoryType type) {
-        this.iconUrl = type.getImageUrl();
-        this.name = type.name();
-        this.color = type.getColor();
-    }
+//    public QuestionCategoryResponse(QuestionCategoryType type) {
+//        this.iconUrl = type.getImageUrl();
+//        this.name = type.name();
+//        this.color = type.getColor();
+//    }
 
     public QuestionCategoryResponse(QuestionCategory questionCategory) {
         this.iconUrl = questionCategory.getIconUrl();

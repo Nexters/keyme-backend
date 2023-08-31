@@ -19,6 +19,6 @@ public class QuestionInfo {
         this.questionId = question.getQuestionId();
         this.title = question.getTitle();
         this.keyword = question.getKeyword();
-        this.category = new QuestionCategoryResponse(question.getCategoryName());
+        this.category = new QuestionCategoryResponse(question.getQuestionCategory());
     }
 }

@@ -15,7 +15,7 @@ public class QuestionStatisticResponse extends QuestionResponse {
     private double avgScore;
 
     public QuestionStatisticResponse(QuestionStatisticInfo info) {
-        super(info.getQuestionId(), info.getTitle(), info.getKeyword(), new QuestionCategoryResponse(info.getCategoryName()));
+        super(info.getQuestionId(), info.getTitle(), info.getKeyword(), new QuestionCategoryResponse(info.getCategory()));
         this.avgScore = info.getAvgScore();
     }
 
