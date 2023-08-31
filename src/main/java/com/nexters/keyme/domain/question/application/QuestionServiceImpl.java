@@ -44,11 +44,13 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public QuestionStatisticResponse getQuestionStatistic(Long questionId, QuestionStatisticRequest request) {
+    public QuestionStatisticResponse getQuestionStatistic(Long memberId, Long questionId, QuestionStatisticRequest request) {
         questionValidator.validateQuestion(questionId);
         memberValidator.validateMember(request.getOwnerId());
 
         QuestionStatisticInfo questionStatisticInfo = questionSolvedRepository.findQuestionStatisticsByQuestionIdAndOwnerId(questionId, request.getOwnerId());
+        // 해당 문제에 대한 내 점수
+        questionSolvedRepository
 
         return new QuestionStatisticResponse(questionStatisticInfo);
     }
