@@ -42,33 +42,6 @@ public class MemberServiceImpl implements MemberService {
     private final NicknameValidator nicknameValidator;
     private final ImageUploader imageUploader;
 
-
-    @Override
-    @Transactional
-    public MemberWithTokenResponse getOrCreateMember(OAuthUserInfo oauthUserInfo) {
-        MemberOAuthId memberOAuthId = new MemberOAuthId(oauthUserInfo);
-
-        Optional<MemberOAuth> existedMemberOAuth = memberOAuthRepository.findById(memberOAuthId);
-        if (existedMemberOAuth.isPresent()) {
-            return new MemberWithTokenResponse(existedMemberOAuth.get().getMember());
-        }
-
-        // TODO : member 생성 시 친구코드도 생성
-        MemberEntity memberEntity = MemberEntity.builder()
-                .profileImage(new ProfileImage(DEFAULT_IMAGE_URL, DEFAULT_IMAGE_URL))
-                .build();
-        memberRepository.save(memberEntity);
-
-        MemberOAuth memberOauth = memberOAuthRepository.save(
-                MemberOAuth.builder()
-                        .oauthInfo(memberOAuthId)
-                        .member(memberEntity)
-                        .build()
-        );
-
-        return new MemberWithTokenResponse(memberEntity);
-    }
-
     @Override
     @Transactional
     public MemberResponse getMemberInfo(Long memberId) {
