@@ -25,6 +25,9 @@ public class MemberResponse {
     private String profileImage;
     @ApiModelProperty(value="프로필 섬네일 이미지 URL", example = "thumbnail URL")
     private String profileThumbnail;
+    @ApiModelProperty(value="onboarding 문제를 풀었는지")
+    private Boolean isOnboardingClear;
+
 
     public MemberResponse(MemberEntity member) {
         this.id = member.getId();
