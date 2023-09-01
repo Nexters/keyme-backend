@@ -12,7 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionStatisticResponse extends QuestionResponse {
-    private double avgScore;
+    private Double avgScore;
+
+    private Integer myScore;
 
     public QuestionStatisticResponse(QuestionStatisticInfo info) {
         super(info.getQuestionId(), info.getTitle(), info.getKeyword(), new QuestionCategoryResponse(info.getCategory()));
