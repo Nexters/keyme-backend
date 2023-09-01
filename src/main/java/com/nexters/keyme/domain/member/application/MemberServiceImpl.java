@@ -1,6 +1,7 @@
 package com.nexters.keyme.domain.member.application;
 
 import com.nexters.keyme.domain.auth.dto.internal.OAuthUserInfo;
+import com.nexters.keyme.domain.member.domain.service.processor.MemberDataProcessor;
 import com.nexters.keyme.domain.member.exceptions.NotFoundMemberException;
 import com.nexters.keyme.global.common.dto.internal.UserInfo;
 import com.nexters.keyme.domain.member.domain.model.*;
@@ -38,6 +39,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final MemberDeviceRepository memberDeviceRepository;
+    private final MemberDataProcessor memberDataProcessor;
     private final NicknameValidator nicknameValidator;
     private final ImageUploader imageUploader;
 
@@ -46,8 +48,12 @@ public class MemberServiceImpl implements MemberService {
     public MemberResponse getMemberInfo(Long memberId) {
         MemberEntity member = memberRepository.findById(memberId)
                 .orElseThrow(NotFoundMemberException::new);
+        Boolean isOnboardingClear = memberDataProcessor.checkOnboardingClear(member);
 
-        return new MemberResponse(member);
+        MemberResponse memberResponse = new MemberResponse(member);
+        memberResponse.setIsOnboardingClear(isOnboardingClear);
+
+        return memberResponse;
     }
 
     @Override
