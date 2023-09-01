@@ -1,4 +1,4 @@
-package com.nexters.keyme.domain.auth.enums;
+package com.nexters.keyme.global.common.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.AllArgsConstructor;
