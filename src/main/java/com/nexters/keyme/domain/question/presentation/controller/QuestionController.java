@@ -26,28 +26,28 @@ import java.util.List;
 public class QuestionController {
     private final QuestionService questionService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/{questionId}")
     @ApiOperation(value = "질문 정보 가져오기")
-    public ResponseEntity<ApiResponse<QuestionResponse>> questionDetail(@PathVariable("id") Long questionid) {
+    public ResponseEntity<ApiResponse<QuestionResponse>> questionDetail(@PathVariable("questionId") Long questionid) {
         QuestionResponse questionResponse = questionService.getQuestion(questionid);
         return ResponseEntity.ok(new ApiResponse<>(questionResponse));
     }
 
-    @GetMapping("/{id}/result/scores")
+    @GetMapping("/{questionId}/result/scores")
     @ApiOperation(value = "해당 Question을 푼 사람들의 점수리스트 가져오기")
     public ResponseEntity<ApiResponse<PageResponse<QuestionScoreInfoResponse>>> getQuestionResultScoreList(
-        @PathVariable("id") Long questionId,
+        @PathVariable("questionId") Long questionId,
         QuestionScoreListRequest request
     ) {
         PageResponse<QuestionScoreInfoResponse> questionSolvedPageResponse = questionService.getQuestionSolvedList(questionId, request);
         return ResponseEntity.ok(new ApiResponse<>(questionSolvedPageResponse));
     }
 
-    @GetMapping("/{id}/result/statistics")
+    @GetMapping("/{questionId}/result/statistics")
     @ApiOperation(value = "Question 통계 가져오기")
     public ResponseEntity<ApiResponse<QuestionStatisticResponse>> getQuestionStatistic(
         @RequestUser UserInfo requestUser,
-        @PathVariable("id") Long questionId,
+        @PathVariable("questionId") Long questionId,
         QuestionStatisticRequest request
     ) {
         QuestionStatisticResponse questionStatisticResponse = questionService.getQuestionStatistic(requestUser.getMemberId(), questionId, request);

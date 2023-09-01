@@ -36,21 +36,21 @@ public class TestController {
         return ResponseEntity.ok(new ApiResponse(testDetailResponse) );
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{testId}")
     @ApiOperation(value = "testId 기반으로 테스트 가져오기")
     public ResponseEntity<ApiResponse<TestDetailResponse>> getTest(
         @RequestUser UserInfo requestUser,
-        @PathVariable("id") Long testId
+        @PathVariable("testId") Long testId
     ) {
         TestDetailResponse testDetailResponse = testService.getSpecificTest(requestUser.getMemberId(), testId);
         return ResponseEntity.ok(new ApiResponse(testDetailResponse) );
     }
 
-    @GetMapping("/{id}/statistics")
+    @GetMapping("/{testId}/statistics")
     @ApiOperation(value = "해당 테스트의 통계정보 가져오기")
     public ResponseEntity<ApiResponse<SingleTestStatisticsResponse>> getTestStatistics(
         @RequestUser UserInfo requestUser,
-        @PathVariable("id") Long testId
+        @PathVariable("testId") Long testId
     ) {
         SingleTestStatisticsResponse testStatisticsResponse = testService.getTestStatistics(requestUser.getMemberId(), testId);
         return ResponseEntity.ok(new ApiResponse(testStatisticsResponse) );
@@ -66,11 +66,11 @@ public class TestController {
 //        return null;
 //    }
 
-    @PostMapping("/{id}/submit")
+    @PostMapping("/{testId}/submit")
     @ApiOperation(value = "테스트 제출")
     public ResponseEntity<ApiResponse<TestSubmitResponse>> submitTest(
         @RequestUser UserInfo userInfo,
-        @PathVariable("id") Long testId,
+        @PathVariable("testId") Long testId,
         @RequestBody TestSubmissionRequest requestBody
     ) {
         TestSubmitResponse testSubmitResponse = testService.createTestResult(userInfo.getMemberId(), testId, requestBody);
