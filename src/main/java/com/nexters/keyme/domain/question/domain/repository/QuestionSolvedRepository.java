@@ -14,13 +14,6 @@ public interface QuestionSolvedRepository extends JpaRepository<QuestionSolved, 
 
     @Query(
         "select qs from QuestionSolved qs " +
-            "where qs.testResult.solver.id = :solverId and qs.testResult.test.member.id = :ownerId " +
-            "order by qs.createdAt DESC "
-    )
-    List<QuestionSolved> findFirstLastestQuestionSolved(Long solverId, Long ownerId);
-
-    @Query(
-        "select qs from QuestionSolved qs " +
             "join fetch qs.question " +
             "where qs.testResult.testResultId = :resultId"
     )
