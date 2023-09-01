@@ -50,7 +50,6 @@ public class QuestionServiceImpl implements QuestionService {
 
         QuestionStatisticInfo questionStatisticInfo = questionSolvedRepository.findQuestionStatisticsByQuestionIdAndOwnerId(questionId, request.getOwnerId());
         // 해당 문제에 대한 내 점수
-        questionSolvedRepository
 
         return new QuestionStatisticResponse(questionStatisticInfo);
     }
