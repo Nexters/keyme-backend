@@ -21,6 +21,7 @@ import com.nexters.keyme.domain.member.dto.response.MemberWithTokenResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.PublicKey;
 
@@ -38,6 +39,7 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
+    @Transactional
     public MemberWithTokenResponse getMemberWithToken(LoginRequest request) {
         OAuthType oauthType = request.getOauthType();
         OAuthUserInfo userInfo;
@@ -50,7 +52,7 @@ public class AuthServiceImpl implements AuthService {
             userInfo = null;
         }
 
-        MemberEntity member = memberDataProcessor.getMemberByOAuthId(userInfo.getOauthType(), userInfo.getId()).orElseGet(null);
+        MemberEntity member = memberDataProcessor.getMemberByOAuthId(userInfo.getOauthType(), userInfo.getId()).orElse(null);
         if (member == null) member = memberDataProcessor.createMember(userInfo.getOauthType(), userInfo.getId());
 
         TokenResponse tokenResponse = new TokenResponse(jwtTokenProvider.createToken(member.getId()));
@@ -59,7 +61,7 @@ public class AuthServiceImpl implements AuthService {
         MemberWithTokenResponse memberWithTokenResponse = new MemberWithTokenResponse(member);
         memberWithTokenResponse.setIsOnboardingClear(isOnboardingClear);
         memberWithTokenResponse.setToken(tokenResponse);
-        
+
         return memberWithTokenResponse;
     }
 

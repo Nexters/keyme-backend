@@ -37,7 +37,6 @@ import static com.nexters.keyme.global.common.constant.ConstantString.DEFAULT_IM
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
-    private final MemberOAuthRepository memberOAuthRepository;
     private final MemberDeviceRepository memberDeviceRepository;
     private final NicknameValidator nicknameValidator;
     private final ImageUploader imageUploader;

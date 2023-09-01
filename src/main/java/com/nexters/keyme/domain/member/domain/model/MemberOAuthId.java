@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Data
 @Embeddable
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class MemberOAuthId implements Serializable {
     @Column(name = "oauth_type")
     @Enumerated(EnumType.STRING)

@@ -14,6 +14,7 @@ import com.nexters.keyme.domain.test.domain.repository.TestResultRepository;
 import com.nexters.keyme.domain.test.domain.service.processor.TestDataProcessor;
 import com.nexters.keyme.global.common.enums.OAuthType;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ import java.util.Optional;
 
 import static com.nexters.keyme.global.common.constant.ConstantString.DEFAULT_IMAGE_URL;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class MemberDataProcessor {
@@ -33,6 +35,7 @@ public class MemberDataProcessor {
     @Transactional
     public Optional<MemberEntity> getMemberByOAuthId(OAuthType oauthType, String id) {
         MemberOAuthId memberOAuthId = new MemberOAuthId(oauthType, id);
+
         return memberOAuthRepository.findById(memberOAuthId)
                 .map(memberOAuth -> memberOAuth.getMember());
     }
@@ -56,10 +59,10 @@ public class MemberDataProcessor {
 
     @Transactional
     public Boolean checkOnboardingClear(MemberEntity member) {
-        Test onboardingTest = testDataProcessor.getExistOnboardingTest(member).orElseGet(null);
+        Test onboardingTest = testDataProcessor.getExistOnboardingTest(member).orElse(null);
         if (onboardingTest == null) return false;
 
-        TestResult testResult = testResultRepository.findByTestAndSolver(onboardingTest, member).orElseGet(null);
+        TestResult testResult = testResultRepository.findByTestAndSolver(onboardingTest, member).orElse(null);
 
         return testResult != null;
     }

@@ -50,7 +50,7 @@ public class TestResultDataProcessor {
         if (solver == null || !solver.getId().equals(owner.getId())) {
             TestResult ownerResult = testResultRepository.findByTestAndSolver(test, owner)
                     .orElseThrow(NotFoundTestResultException::new);
-            List<QuestionSolved> sortedOwnerQuestionSolved = questionSolvedRepository.findAllByTestResultOrderByQuestion(ownerResult);
+            List<QuestionSolved> sortedOwnerQuestionSolved = questionSolvedRepository.findAllByTestResultOrderByQuestionDesc(ownerResult);
             List<TestSubmissionRequest.QuestionSubmission> sortedSubmissionList = answers.stream()
                     .sorted((a, b) -> a.getQuestionId().compareTo(b.getQuestionId()))
                     .collect(Collectors.toList());

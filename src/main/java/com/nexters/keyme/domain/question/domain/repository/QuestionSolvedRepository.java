@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface QuestionSolvedRepository extends JpaRepository<QuestionSolved, Long>, QuestionSolvedRepositoryCustom {
 
-    List<QuestionSolved> findAllByTestResultOrderByQuestion(TestResult testResult);
+    List<QuestionSolved> findAllByTestResultOrderByQuestionDesc(TestResult testResult);
 
     @Query(
         "select qs from QuestionSolved qs " +
