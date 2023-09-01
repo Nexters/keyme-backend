@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface QuestionSolvedRepository extends JpaRepository<QuestionSolved, Long>, QuestionSolvedRepositoryCustom {
 
@@ -37,10 +38,19 @@ public interface QuestionSolvedRepository extends JpaRepository<QuestionSolved, 
     )
     QuestionStatisticInfo findQuestionStatisticsByQuestionIdAndOwnerId(Long questionId, Long ownerId);
 
-    @Query(value = "SELECT * FROM question_solved qs " +
-            "JOIN test_result ts on ts.test_result_id = qs.test_result_id " +
-            "WHERE qs.question_id IN :questionIds AND qs.question_owner_id = :ownerId AND ts.solver_id = :solverId",
+    @Query(value = "select * from question_solved qs " +
+            "join test_result ts on ts.test_result_id = qs.test_result_id " +
+            "where qs.question_id in :questionIds and qs.question_owner_id = :ownerId and ts.solver_id = :solverId",
             nativeQuery = true
     )
     List<QuestionSolved> findByQuestionIdsAndOwnerIdAndSolverId(List<Long> questionIds, Long ownerId, Long solverId);
+
+    @Query(value = "select qs.score from question_solved qs " +
+            "join test_result tr on tr.test_result_id = qs.test_result_id " +
+            "where qs.question_owner_id = :ownerId " +
+                "and qs.question_id = :questionId " +
+                "and tr.solver_id = :solverId ",
+            nativeQuery = true
+    )
+    Optional<Integer> findSolverScoreByOwnerIdAndQuestionId(Long solverId, Long ownerId, Long questionId);
 }
