@@ -1,6 +1,8 @@
 package com.nexters.keyme.domain.question.application;
 
+import com.nexters.keyme.domain.member.domain.service.validator.MemberValidator;
 import com.nexters.keyme.domain.member.exceptions.NotFoundMemberException;
+import com.nexters.keyme.domain.question.domain.service.validator.QuestionValidator;
 import com.nexters.keyme.domain.question.exceptions.NotFoundQuestionException;
 import com.nexters.keyme.domain.question.domain.model.Question;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
@@ -22,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -29,28 +32,36 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
+    private final QuestionValidator questionValidator;
     private final QuestionSolvedRepository questionSolvedRepository;
-    private final MemberRepository memberRepository;
+
+    private final MemberValidator memberValidator;
+
 
     @Override
     public QuestionResponse getQuestion(Long questionId) {
-        Question question = questionRepository.findById(questionId).orElseThrow(NotFoundQuestionException::new);
+        Question question = questionValidator.validateQuestion(questionId);
         return new QuestionResponse(question);
     }
 
     @Override
-    public QuestionStatisticResponse getQuestionStatistic(Long questionId, QuestionStatisticRequest request) {
-        Question question = questionRepository.findById(questionId).orElseThrow(NotFoundQuestionException::new);
-        MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(NotFoundMemberException::new);
-        QuestionStatisticInfo questionStatisticInfo = questionSolvedRepository.findQuestionStatisticsByQuestionIdAndOwnerId(questionId, request.getOwnerId());
+    public QuestionStatisticResponse getQuestionStatistic(Long memberId, Long questionId, QuestionStatisticRequest request) {
+        questionValidator.validateQuestion(questionId);
+        memberValidator.validateMember(request.getOwnerId());
 
-        return new QuestionStatisticResponse(questionStatisticInfo);
+        QuestionStatisticInfo questionStatisticInfo = questionSolvedRepository.findQuestionStatisticsByQuestionIdAndOwnerId(questionId, request.getOwnerId());
+        Integer solverScore = questionSolvedRepository.findSolverScoreByOwnerIdAndQuestionId(memberId, request.getOwnerId(), questionId).orElse(null);
+
+        QuestionStatisticResponse questionStatisticResponse = new QuestionStatisticResponse(questionStatisticInfo);
+        questionStatisticResponse.setMyScore(solverScore);
+
+        return questionStatisticResponse;
     }
 
     @Override
     public PageResponse<QuestionScoreInfoResponse> getQuestionSolvedList(Long questionId, QuestionScoreListRequest request) {
-        Question question = questionRepository.findById(questionId).orElseThrow(NotFoundQuestionException::new);
-        MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(NotFoundMemberException::new);
+        questionValidator.validateQuestion(questionId);
+        memberValidator.validateMember(request.getOwnerId());
 
         PageInfo<QuestionSolved> solvedPage = questionSolvedRepository.findQuestionSolvedList(questionId, request.getOwnerId(), request.getCursor(), request.getLimit());
 
@@ -66,12 +77,13 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     @Deprecated
     public List<QuestionScoreInfoResponse> getQuestionSolvedScore(QuestionListScoreRequest request) {
+        memberValidator.validateMember(request.getOwnerId());
+
         List<Question> question = questionRepository.findAllById(request.getIds());
         if (question.size() != request.getIds().size()) {
             throw new NotFoundQuestionException();
         }
 
-        MemberEntity member = memberRepository.findById(request.getOwnerId()).orElseThrow(NotFoundMemberException::new);
         List<QuestionSolved> questionSolvedList = questionSolvedRepository.findByQuestionIdsAndOwnerIdAndSolverId(request.getIds(), request.getOwnerId(), request.getSolverId());
 
         return questionSolvedList.stream()

@@ -28,13 +28,10 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class TestDataProcessor {
-    final private TestResultAsyncDataProcessor testResultAsyncDataProcessor;
-    final private QuestionAsyncDataProcessor questionAsyncDataProcessor;
     final private TestRepository testRepository;
     final private TestResultRepository testResultRepository;
     final private QuestionRepository questionRepository;
     final private QuestionBundleRepository questionBundleRepository;
-    final private MemberValidator memberValidator;
 
     @Transactional
     public TestDetailInfo getTestDetail(Test test) {

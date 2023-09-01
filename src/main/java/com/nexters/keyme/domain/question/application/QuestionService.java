@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface QuestionService {
     QuestionResponse getQuestion(Long questionId);
-    QuestionStatisticResponse getQuestionStatistic(Long questionId, QuestionStatisticRequest request);
+    QuestionStatisticResponse getQuestionStatistic(Long memberId, Long questionId, QuestionStatisticRequest request);
     PageResponse<QuestionScoreInfoResponse> getQuestionSolvedList(Long questionId, QuestionScoreListRequest request);
     List<QuestionScoreInfoResponse> getQuestionSolvedScore(QuestionListScoreRequest request);
 }

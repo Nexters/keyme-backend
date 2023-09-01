@@ -25,11 +25,17 @@ public class MemberWithTokenResponse {
     @ApiModelProperty(value="프로필 원본 이미지 URL", example = "original URL")
     private String profileImage;
     @ApiModelProperty(value="프로필 섬네일 이미지 URL", example = "thumbnail URL")
-    private String profileTumbnail;
+    private String profileThumbnail;
+    @ApiModelProperty(value="onboarding 문제를 풀었는지")
+    private Boolean isOnboardingClear;
     @ApiModelProperty(value="JWT 토큰")
     private TokenResponse token;
 
     public MemberWithTokenResponse(MemberEntity member) {
         this.id = member.getId();
+        this.nickname = member.getNickname();
+        this.friendCode = member.getFriendCode();
+        this.profileImage = member.getProfileImage().getOriginalUrl();
+        this.profileThumbnail = member.getProfileImage().getThumbnailUrl();
     }
 }

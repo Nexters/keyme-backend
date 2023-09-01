@@ -1,6 +1,6 @@
 package com.nexters.keyme.domain.auth.dto.request;
 
-import com.nexters.keyme.domain.auth.enums.OAuthType;
+import com.nexters.keyme.global.common.enums.OAuthType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

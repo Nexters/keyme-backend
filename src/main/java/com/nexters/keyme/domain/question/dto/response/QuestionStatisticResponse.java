@@ -12,21 +12,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionStatisticResponse extends QuestionResponse {
-    private double avgScore;
+    private Double avgScore;
+
+    private Integer myScore;
 
     public QuestionStatisticResponse(QuestionStatisticInfo info) {
-        super(info.getQuestionId(), info.getTitle(), info.getKeyword(), new QuestionCategoryResponse(info.getCategoryName()));
+        super(info.getQuestionId(), info.getTitle(), info.getKeyword(), new QuestionCategoryResponse(info.getCategory()));
         this.avgScore = info.getAvgScore();
-    }
-
-    // 아무도 푼 사람이 없을때 통계값
-    public QuestionStatisticResponse(Question question) {
-        super(question);
-        this.avgScore = 0.0;
-    }
-
-    public QuestionStatisticResponse(Question question, double averageScore) {
-        super(question);
-        this.avgScore = averageScore;
     }
 }

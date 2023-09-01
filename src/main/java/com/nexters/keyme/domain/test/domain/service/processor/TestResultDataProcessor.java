@@ -13,6 +13,7 @@ import com.nexters.keyme.domain.test.exceptions.InvalidTestResultSubmitException
 import com.nexters.keyme.domain.test.exceptions.NotFoundTestResultException;
 import com.nexters.keyme.domain.test.dto.request.TestSubmissionRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +35,8 @@ public class TestResultDataProcessor {
         MemberEntity owner = test.getMember();
 
         // answers 체크
-        Set<Long> answerQuestionIdSet = answers.stream().map(answer -> answer.getQuestionId())
+        Set<Long> answerQuestionIdSet = answers.stream()
+                .map(answer -> answer.getQuestionId())
                 .collect(Collectors.toSet());
         Set<Long> questionIdSet = test.getQuestionBundleList().stream()
                 .map(qb -> qb.getQuestionBundleId().getQuestion().getQuestionId())
@@ -48,7 +50,7 @@ public class TestResultDataProcessor {
         if (solver == null || !solver.getId().equals(owner.getId())) {
             TestResult ownerResult = testResultRepository.findByTestAndSolver(test, owner)
                     .orElseThrow(NotFoundTestResultException::new);
-            List<QuestionSolved> sortedOwnerQuestionSolved = questionSolvedRepository.findAllByTestResultOrderByQuestion(ownerResult);
+            List<QuestionSolved> sortedOwnerQuestionSolved = questionSolvedRepository.findAllByTestResultOrderByQuestionDesc(ownerResult);
             List<TestSubmissionRequest.QuestionSubmission> sortedSubmissionList = answers.stream()
                     .sorted((a, b) -> a.getQuestionId().compareTo(b.getQuestionId()))
                     .collect(Collectors.toList());

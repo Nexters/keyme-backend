@@ -2,7 +2,7 @@ package com.nexters.keyme.domain.member.domain.model;
 
 
 import com.nexters.keyme.domain.auth.dto.internal.OAuthUserInfo;
-import com.nexters.keyme.domain.auth.enums.OAuthType;
+import com.nexters.keyme.global.common.enums.OAuthType;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -13,7 +13,8 @@ import java.io.Serializable;
 
 @Data
 @Embeddable
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@NoArgsConstructor
 public class MemberOAuthId implements Serializable {
     @Column(name = "oauth_type")
     @Enumerated(EnumType.STRING)

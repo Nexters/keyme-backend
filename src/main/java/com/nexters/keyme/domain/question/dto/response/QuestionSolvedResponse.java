@@ -20,7 +20,7 @@ public class QuestionSolvedResponse extends QuestionResponse {
             questionSolved.getQuestion().getQuestionId(),
             questionSolved.getQuestion().getTitle(),
             questionSolved.getQuestion().getKeyword(),
-            new QuestionCategoryResponse(questionSolved.getQuestion().getCategoryName())
+            new QuestionCategoryResponse(questionSolved.getQuestion().getQuestionCategory())
         );
         this.score = questionSolved.getScore();
     }
