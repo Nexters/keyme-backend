@@ -23,7 +23,7 @@ import com.nexters.keyme.domain.test.dto.request.TestListRequest;
 import com.nexters.keyme.domain.test.dto.request.TestSubmissionRequest;
 import com.nexters.keyme.domain.test.dto.response.*;
 import com.nexters.keyme.domain.test.exceptions.NotFoundTestException;
-import com.nexters.keyme.global.common.event.message.SendNotificationEvent;
+import com.nexters.keyme.global.common.event.message.SendProblemSolvedNotificationEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -143,7 +143,7 @@ public class TestServiceImpl implements TestService {
         // FIXME : 너무 강하게 묶여있음
         MemberEntity testOwner = test.getMember();
         eventPublisher.publishEvent(eventMapper.toAddStatisticEvent(testOwner, testResult, solverId));
-        eventPublisher.publishEvent(new SendNotificationEvent(testOwner.getId(), solverId));
+        eventPublisher.publishEvent(new SendProblemSolvedNotificationEvent(testOwner.getId(), solverId));
 
         return TestSubmitResponse.builder()
                 .testResultId(testResult.getTestResultId())
