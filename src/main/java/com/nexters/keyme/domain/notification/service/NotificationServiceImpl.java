@@ -3,7 +3,7 @@ package com.nexters.keyme.domain.notification.service;
 import com.nexters.keyme.domain.member.domain.model.MemberDevice;
 import com.nexters.keyme.domain.member.domain.repository.MemberDeviceRepository;
 import com.nexters.keyme.domain.notification.dto.ProblemSolvedNotificationRequest;
-import com.nexters.keyme.domain.notification.helper.NotificationSender;
+import com.nexters.keyme.infra.interfaces.NotificationSender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
