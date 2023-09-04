@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Builder
 @Getter
-public class SendProblemSolvedNotificationEvent {
+public class SendQuestionSolvedNotificationEvent {
     private Long ownerId;
     private Long solverId;
 }

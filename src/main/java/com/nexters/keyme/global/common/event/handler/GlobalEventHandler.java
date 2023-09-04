@@ -9,7 +9,7 @@ import com.nexters.keyme.domain.statistics.dto.internal.ScoreInfo;
 import com.nexters.keyme.domain.test.domain.model.TestResult;
 import com.nexters.keyme.domain.test.domain.service.validator.TestResultValidator;
 import com.nexters.keyme.global.common.event.message.AddStatisticEvent;
-import com.nexters.keyme.global.common.event.message.SendProblemSolvedNotificationEvent;
+import com.nexters.keyme.global.common.event.message.SendQuestionSolvedNotificationEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -37,7 +37,7 @@ public class GlobalEventHandler {
     }
 
     @EventListener
-    public void handleSendNotificationEvent(SendProblemSolvedNotificationEvent event) {
+    public void handleSendNotificationEvent(SendQuestionSolvedNotificationEvent event) {
         Long solverId = event.getSolverId();
         Long ownerId = event.getOwnerId();
 
