@@ -1,4 +1,4 @@
-package com.nexters.keyme.domain.notification.service;
+package com.nexters.keyme.domain.notification.application;
 
 import com.nexters.keyme.domain.member.domain.model.MemberDevice;
 import com.nexters.keyme.domain.member.domain.repository.MemberDeviceRepository;

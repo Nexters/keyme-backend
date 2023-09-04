@@ -1,4 +1,4 @@
-package com.nexters.keyme.domain.notification.config;
+package com.nexters.keyme.global.common;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

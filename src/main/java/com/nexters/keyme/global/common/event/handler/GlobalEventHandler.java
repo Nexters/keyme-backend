@@ -1,7 +1,7 @@
 package com.nexters.keyme.global.common.event.handler;
 
 import com.nexters.keyme.domain.notification.dto.ProblemSolvedNotificationRequest;
-import com.nexters.keyme.domain.notification.service.NotificationService;
+import com.nexters.keyme.domain.notification.application.NotificationService;
 import com.nexters.keyme.domain.question.domain.model.Question;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
 import com.nexters.keyme.domain.statistics.application.StatisticService;
