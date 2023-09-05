@@ -14,9 +14,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class S3FileUploader implements FileUploader {
     private final AmazonS3Client s3Client;
-
-    @Value("${image-temp}")
-    private String tempImagePath;
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 

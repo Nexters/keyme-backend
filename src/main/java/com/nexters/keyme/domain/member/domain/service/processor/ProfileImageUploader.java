@@ -1,10 +1,8 @@
-package com.nexters.keyme.domain.member.infrastructure;
+package com.nexters.keyme.domain.member.domain.service.processor;
 
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.nexters.keyme.global.common.exceptions.FileUploadFailedException;
 import com.nexters.keyme.domain.member.dto.internal.ImageInfo;
-import com.nexters.keyme.domain.member.domain.service.processor.ImageUploader;
+import com.nexters.keyme.infra.interfaces.FileUploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
@@ -20,14 +18,12 @@ import java.util.UUID;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class S3ImageUploader implements ImageUploader {
-    private final AmazonS3Client s3Client;
+public class ProfileImageUploader {
+    private final FileUploader fileUploader;
+
     @Value("${image-temp}")
     private String tempImagePath;
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
 
-    @Override
     public ImageInfo uploadImage(MultipartFile image) {
         String originalUrl;
         String thumbnailUrl;
@@ -58,10 +54,7 @@ public class S3ImageUploader implements ImageUploader {
     }
 
     private String uploadToS3AndGetUrl(InputStream inputStream, String extension) {
-        String key = UUID.randomUUID() + "." + extension;
-
-        s3Client.putObject(bucket, key, inputStream, new ObjectMetadata());
-        return s3Client.getUrl(bucket, key).toString();
+        return fileUploader.uploadAndGetUrl(inputStream, extension);
     }
 
     private String uploadToS3AndGetUrl(File tempFile, String extension) throws FileNotFoundException {
