@@ -13,6 +13,7 @@ import com.nexters.keyme.global.common.event.message.SendQuestionSolvedNotificat
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
@@ -24,6 +25,7 @@ public class GlobalEventHandler {
     private final NotificationService notificationService;
     private final TestResultValidator testResultValidator;
 
+    @Async
     @EventListener
     public void handleAddStatisticEvent(AddStatisticEvent event) {
         TestResult testResult = testResultValidator.validateTestResult(event.getResultId());
