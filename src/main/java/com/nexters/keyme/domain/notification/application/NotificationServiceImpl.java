@@ -6,6 +6,7 @@ import com.nexters.keyme.domain.notification.dto.ProblemSolvedNotificationReques
 import com.nexters.keyme.infra.interfaces.NotificationSender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class NotificationServiceImpl implements NotificationService {
     private final NotificationSender notificationSender;
     private final MemberDeviceRepository memberDeviceRepository;
 
+    @Async
     public CompletableFuture<Boolean> sendQuestionSolvedNotification(ProblemSolvedNotificationRequest request) {
         Long ownerId = request.getOwnerId();
         Long solverId = request.getSolverId();

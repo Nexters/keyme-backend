@@ -1,25 +1,20 @@
 package com.nexters.keyme.domain.statistics.application;
 
-import com.nexters.keyme.domain.question.exceptions.NotFoundQuestionException;
 import com.nexters.keyme.domain.question.domain.model.Question;
 import com.nexters.keyme.domain.question.domain.repository.QuestionRepository;
-import com.nexters.keyme.domain.statistics.dto.internal.ScoreInfo;
-import com.nexters.keyme.domain.statistics.exceptions.NotEnoughStatisticsException;
-import com.nexters.keyme.domain.statistics.exceptions.NotFoundStatisticsException;
-import com.nexters.keyme.domain.statistics.dto.internal.CoordinateInfo;
-import com.nexters.keyme.domain.statistics.dto.internal.StatisticInfo;
+import com.nexters.keyme.domain.question.exceptions.NotFoundQuestionException;
 import com.nexters.keyme.domain.statistics.domain.model.Statistic;
 import com.nexters.keyme.domain.statistics.domain.repository.StatisticRepository;
 import com.nexters.keyme.domain.statistics.domain.service.CoordinateConversionService;
+import com.nexters.keyme.domain.statistics.dto.internal.CoordinateInfo;
+import com.nexters.keyme.domain.statistics.dto.internal.ScoreInfo;
+import com.nexters.keyme.domain.statistics.dto.internal.StatisticInfo;
 import com.nexters.keyme.domain.statistics.dto.request.AdditionalStatisticRequest;
-import com.nexters.keyme.domain.statistics.dto.response.AdditionalStatisticResponse;
 import com.nexters.keyme.domain.statistics.dto.request.StatisticRequest;
-import com.nexters.keyme.domain.statistics.dto.response.CoordinateResponse;
-import com.nexters.keyme.domain.statistics.dto.response.MemberStatisticResponse;
-import com.nexters.keyme.domain.statistics.dto.response.StatisticQuestionResponse;
-import com.nexters.keyme.domain.statistics.dto.response.StatisticResultResponse;
+import com.nexters.keyme.domain.statistics.dto.response.*;
+import com.nexters.keyme.domain.statistics.exceptions.NotEnoughStatisticsException;
+import com.nexters.keyme.domain.statistics.exceptions.NotFoundStatisticsException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,7 +45,6 @@ public class StatisticServiceImpl implements StatisticService {
 
 
     @Transactional
-    @Async
     @Override
     public void addNewScores(ScoreInfo scoreInfo) {
         // FIXME - 내부에서만 사용중 domain service로 뺄것
