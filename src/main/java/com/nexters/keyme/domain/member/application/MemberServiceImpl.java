@@ -11,7 +11,7 @@ import com.nexters.keyme.domain.member.dto.internal.ValidationInfo;
 import com.nexters.keyme.domain.member.domain.repository.MemberDeviceRepository;
 import com.nexters.keyme.domain.member.domain.repository.MemberOAuthRepository;
 import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
-import com.nexters.keyme.domain.member.domain.service.processor.ImageUploader;
+import com.nexters.keyme.domain.member.domain.service.processor.ProfileImageUploader;
 import com.nexters.keyme.domain.member.domain.service.validator.NicknameValidator;
 import com.nexters.keyme.domain.member.dto.request.AddTokenRequest;
 import com.nexters.keyme.domain.member.dto.request.DeleteTokenRequest;
@@ -42,7 +42,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberDeviceRepository memberDeviceRepository;
     private final MemberDataProcessor memberDataProcessor;
     private final NicknameValidator nicknameValidator;
-    private final ImageUploader imageUploader;
+    private final ProfileImageUploader profileImageUploader;
 
     @Override
     @Transactional
@@ -93,7 +93,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public ImageResponse uploadImage(MultipartFile image) {
-        ImageInfo imageInfo = imageUploader.uploadImage(image);
+        ImageInfo imageInfo = profileImageUploader.uploadImage(image);
         return ImageResponse.from(imageInfo);
     }
 

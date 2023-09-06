@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -48,13 +49,14 @@ public class TestResultDataProcessor {
         // owner result와 비교해 matchRate 생성
         Double matchRate = 100.0;
         if (solver == null || !solver.getId().equals(owner.getId())) {
-            TestResult ownerResult = testResultRepository.findByTestAndSolver(test, owner)
-                    .orElseThrow(NotFoundTestResultException::new);
-            List<QuestionSolved> sortedOwnerQuestionSolved = questionSolvedRepository.findAllByTestResultOrderByQuestionDesc(ownerResult);
-            List<TestSubmissionRequest.QuestionSubmission> sortedSubmissionList = answers.stream()
-                    .sorted((a, b) -> a.getQuestionId().compareTo(b.getQuestionId()))
-                    .collect(Collectors.toList());
-            matchRate = calculateTestResultMatchRate(sortedOwnerQuestionSolved, sortedSubmissionList);
+            TestResult ownerResult = testResultRepository.findByTestAndSolver(test, owner).orElse(null);
+            if (ownerResult != null) {
+                List<QuestionSolved> sortedOwnerQuestionSolved = questionSolvedRepository.findAllByTestResultOrderByQuestion(ownerResult);
+                List<TestSubmissionRequest.QuestionSubmission> sortedSubmissionList = answers.stream()
+                        .sorted(Comparator.comparing(TestSubmissionRequest.QuestionSubmission::getQuestionId))
+                        .collect(Collectors.toList());
+                matchRate = calculateTestResultMatchRate(sortedOwnerQuestionSolved, sortedSubmissionList);
+            }
         }
 
         // TestResult 생성

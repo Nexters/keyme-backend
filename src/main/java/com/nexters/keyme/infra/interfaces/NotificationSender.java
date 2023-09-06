@@ -1,4 +1,4 @@
-package com.nexters.keyme.domain.notification.helper;
+package com.nexters.keyme.infra.interfaces;
 
 import java.util.List;
 import java.util.Map;

@@ -1,6 +1,7 @@
-package com.nexters.keyme.domain.notification.helper;
+package com.nexters.keyme.infra.implementations;
 
 import com.google.firebase.messaging.*;
+import com.nexters.keyme.infra.interfaces.NotificationSender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

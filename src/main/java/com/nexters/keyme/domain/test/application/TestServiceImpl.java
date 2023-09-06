@@ -1,29 +1,28 @@
 package com.nexters.keyme.domain.test.application;
 
-import com.nexters.keyme.domain.member.domain.service.validator.MemberValidator;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
-import com.nexters.keyme.domain.question.dto.internal.QuestionStatisticInfo;
+import com.nexters.keyme.domain.member.domain.service.validator.MemberValidator;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
 import com.nexters.keyme.domain.question.domain.repository.QuestionSolvedRepository;
+import com.nexters.keyme.domain.question.dto.internal.QuestionStatisticInfo;
 import com.nexters.keyme.domain.question.dto.response.QuestionSolvedResponse;
 import com.nexters.keyme.domain.question.dto.response.QuestionStatisticResponse;
-import com.nexters.keyme.domain.test.dto.internal.TestDetailInfo;
-import com.nexters.keyme.domain.test.dto.response.*;
-import com.nexters.keyme.domain.test.exceptions.NotFoundTestException;
-import com.nexters.keyme.domain.test.domain.events.SendNotificationEvent;
-import com.nexters.keyme.domain.test.domain.service.processor.TestResultDataProcessor;
-import com.nexters.keyme.domain.test.domain.service.validator.TestResultValidator;
-import com.nexters.keyme.domain.test.domain.service.validator.TestValidator;
-import com.nexters.keyme.domain.test.dto.request.TestListRequest;
-import com.nexters.keyme.domain.test.dto.request.TestSubmissionRequest;
-import com.nexters.keyme.domain.test.domain.service.processor.TestDataProcessor;
-import com.nexters.keyme.domain.test.domain.service.processor.TestResultCodeProcessor;
-import com.nexters.keyme.domain.test.dto.internal.TestResultStatisticInfo;
 import com.nexters.keyme.domain.test.domain.model.Test;
 import com.nexters.keyme.domain.test.domain.model.TestResult;
 import com.nexters.keyme.domain.test.domain.repository.TestRepository;
 import com.nexters.keyme.domain.test.domain.repository.TestResultRepository;
-import com.nexters.keyme.domain.test.domain.events.AddStatisticEvent;
+import com.nexters.keyme.domain.test.domain.service.processor.TestDataProcessor;
+import com.nexters.keyme.domain.test.domain.service.processor.TestResultCodeProcessor;
+import com.nexters.keyme.domain.test.domain.service.processor.TestResultDataProcessor;
+import com.nexters.keyme.domain.test.domain.service.validator.TestResultValidator;
+import com.nexters.keyme.domain.test.domain.service.validator.TestValidator;
+import com.nexters.keyme.domain.test.dto.internal.TestDetailInfo;
+import com.nexters.keyme.domain.test.dto.internal.TestResultStatisticInfo;
+import com.nexters.keyme.domain.test.dto.mapper.TestEventMapper;
+import com.nexters.keyme.domain.test.dto.request.TestListRequest;
+import com.nexters.keyme.domain.test.dto.request.TestSubmissionRequest;
+import com.nexters.keyme.domain.test.dto.response.*;
+import com.nexters.keyme.domain.test.exceptions.NotFoundTestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -51,6 +50,7 @@ public class TestServiceImpl implements TestService {
 
     private final QuestionSolvedRepository questionSolvedRepository;
     private final ApplicationEventPublisher eventPublisher;
+    private final TestEventMapper eventMapper;
 
     @Transactional
     @Override
@@ -141,8 +141,8 @@ public class TestServiceImpl implements TestService {
 
         // FIXME : 너무 강하게 묶여있음
         MemberEntity testOwner = test.getMember();
-        eventPublisher.publishEvent(new AddStatisticEvent(testOwner.getId(), solverId, testResult.getQuestionSolvedList()));
-        eventPublisher.publishEvent(new SendNotificationEvent(testOwner.getId(), solverId));
+        eventPublisher.publishEvent(eventMapper.toAddStatisticEvent(testOwner, testResult, solverId));
+        eventPublisher.publishEvent(eventMapper.toSendQuestionSolvedNotificationEvent(testOwner, solverId));
 
         return TestSubmitResponse.builder()
                 .testResultId(testResult.getTestResultId())
