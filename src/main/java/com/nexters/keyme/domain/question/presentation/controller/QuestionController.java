@@ -6,6 +6,8 @@ import com.nexters.keyme.domain.question.dto.request.QuestionStatisticRequest;
 import com.nexters.keyme.domain.question.dto.response.QuestionResponse;
 import com.nexters.keyme.domain.question.dto.response.QuestionScoreInfoResponse;
 import com.nexters.keyme.domain.question.dto.response.QuestionStatisticResponse;
+import com.nexters.keyme.global.common.annotation.RequestUser;
+import com.nexters.keyme.global.common.dto.internal.UserInfo;
 import com.nexters.keyme.global.common.dto.response.ApiResponse;
 import com.nexters.keyme.global.common.dto.response.PageResponse;
 import com.nexters.keyme.domain.question.dto.request.QuestionScoreListRequest;
@@ -44,10 +46,11 @@ public class QuestionController {
     @GetMapping("/{questionId}/result/statistics")
     @ApiOperation(value = "Question 통계 가져오기")
     public ResponseEntity<ApiResponse<QuestionStatisticResponse>> getQuestionStatistic(
+        @RequestUser UserInfo requestUser,
         @PathVariable("questionId") Long questionId,
         QuestionStatisticRequest request
     ) {
-        QuestionStatisticResponse questionStatisticResponse = questionService.getQuestionStatistic(questionId, request);
+        QuestionStatisticResponse questionStatisticResponse = questionService.getQuestionStatistic(requestUser.getMemberId(), questionId, request);
         return ResponseEntity.ok(new ApiResponse<>(questionStatisticResponse));
     }
 

@@ -125,7 +125,7 @@ public class StatisticServiceImpl implements StatisticService {
                 .map((statistic) -> {
                     Question question = questionRepository.findById(statistic.getQuestionId())
                             .orElseThrow(NotFoundQuestionException::new);
-                    return new AdditionalStatisticResponse(statistic.getId(), question.getKeyword(), question.getCategoryName().getColor(), question.getCategoryName().getImageUrl(), statistic.getSolverAvgScore());
+                    return new AdditionalStatisticResponse(question.getQuestionId(), question.getKeyword(), question.getCategoryName().getColor(), question.getCategoryName().getImageUrl(), statistic.getSolverAvgScore());
                 })
                 .collect(Collectors.toList());
     }

@@ -12,13 +12,16 @@ import com.nexters.keyme.domain.auth.dto.response.AppleAuthKeysResponse;
 import com.nexters.keyme.domain.auth.dto.response.KakaoUserInfoResponse;
 import com.nexters.keyme.domain.auth.dto.response.TokenResponse;
 import com.nexters.keyme.domain.auth.domain.service.processor.ApplePublicKeyProcessor;
+import com.nexters.keyme.domain.member.domain.model.MemberEntity;
+import com.nexters.keyme.domain.member.domain.service.processor.MemberDataProcessor;
 import com.nexters.keyme.global.common.util.JwtTokenProvider;
-import com.nexters.keyme.domain.auth.enums.OAuthType;
+import com.nexters.keyme.global.common.enums.OAuthType;
 import com.nexters.keyme.domain.member.application.MemberService;
 import com.nexters.keyme.domain.member.dto.response.MemberWithTokenResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.PublicKey;
 
@@ -32,25 +35,34 @@ public class AuthServiceImpl implements AuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final AppleClient appleClient;
     private final KakaoClient kakaoClient;
-    private final MemberService memberService;
+    private final MemberDataProcessor memberDataProcessor;
+
 
     @Override
+    @Transactional
     public MemberWithTokenResponse getMemberWithToken(LoginRequest request) {
         OAuthType oauthType = request.getOauthType();
-        OAuthUserInfo userInfo = null;
+        OAuthUserInfo userInfo;
 
         if (oauthType.equals(OAuthType.APPLE)) {
             userInfo = getOAuthInfoOfApple(request.getToken());
         } else if (oauthType.equals(OAuthType.KAKAO)) {
             userInfo = getOAuthInfoOfKakao(request.getToken());
+        } else {
+            userInfo = null;
         }
 
-        MemberWithTokenResponse memberResponse = memberService.getOrCreateMember(userInfo);
-        String jwtToken = jwtTokenProvider.createToken(memberResponse.getId());
-        TokenResponse tokenObject = new TokenResponse(jwtToken);
-        memberResponse.setToken(tokenObject);
+        MemberEntity member = memberDataProcessor.getMemberByOAuthId(userInfo.getOauthType(), userInfo.getId()).orElse(null);
+        if (member == null) member = memberDataProcessor.createMember(userInfo.getOauthType(), userInfo.getId());
 
-        return memberResponse;
+        TokenResponse tokenResponse = new TokenResponse(jwtTokenProvider.createToken(member.getId()));
+        Boolean isOnboardingClear = memberDataProcessor.checkOnboardingClear(member);
+
+        MemberWithTokenResponse memberWithTokenResponse = new MemberWithTokenResponse(member);
+        memberWithTokenResponse.setIsOnboardingClear(isOnboardingClear);
+        memberWithTokenResponse.setToken(tokenResponse);
+
+        return memberWithTokenResponse;
     }
 
     private OAuthUserInfo getOAuthInfoOfApple(String identityToken) {

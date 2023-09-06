@@ -1,6 +1,6 @@
 package com.nexters.keyme.domain.auth.dto.internal;
 
-import com.nexters.keyme.domain.auth.enums.OAuthType;
+import com.nexters.keyme.global.common.enums.OAuthType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

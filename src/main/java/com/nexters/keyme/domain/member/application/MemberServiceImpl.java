@@ -1,6 +1,7 @@
 package com.nexters.keyme.domain.member.application;
 
 import com.nexters.keyme.domain.auth.dto.internal.OAuthUserInfo;
+import com.nexters.keyme.domain.member.domain.service.processor.MemberDataProcessor;
 import com.nexters.keyme.domain.member.exceptions.NotFoundMemberException;
 import com.nexters.keyme.global.common.dto.internal.UserInfo;
 import com.nexters.keyme.domain.member.domain.model.*;
@@ -38,45 +39,22 @@ import static com.nexters.keyme.global.common.constant.ConstantString.DEFAULT_IM
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
-    private final MemberOAuthRepository memberOAuthRepository;
     private final MemberDeviceRepository memberDeviceRepository;
+    private final MemberDataProcessor memberDataProcessor;
     private final NicknameValidator nicknameValidator;
     private final ProfileImageUploader profileImageUploader;
-
-
-    @Override
-    @Transactional
-    public MemberWithTokenResponse getOrCreateMember(OAuthUserInfo oauthUserInfo) {
-        MemberOAuthId memberOAuthId = new MemberOAuthId(oauthUserInfo);
-
-        Optional<MemberOAuth> existedMemberOAuth = memberOAuthRepository.findById(memberOAuthId);
-        if (existedMemberOAuth.isPresent()) {
-            return new MemberWithTokenResponse(existedMemberOAuth.get().getMember());
-        }
-
-        // TODO : member 생성 시 친구코드도 생성
-        MemberEntity memberEntity = MemberEntity.builder()
-                .profileImage(new ProfileImage(DEFAULT_IMAGE_URL, DEFAULT_IMAGE_URL))
-                .build();
-        memberRepository.save(memberEntity);
-
-        MemberOAuth memberOauth = memberOAuthRepository.save(
-                MemberOAuth.builder()
-                        .oauthInfo(memberOAuthId)
-                        .member(memberEntity)
-                        .build()
-        );
-
-        return new MemberWithTokenResponse(memberEntity);
-    }
 
     @Override
     @Transactional
     public MemberResponse getMemberInfo(Long memberId) {
         MemberEntity member = memberRepository.findById(memberId)
                 .orElseThrow(NotFoundMemberException::new);
+        Boolean isOnboardingClear = memberDataProcessor.checkOnboardingClear(member);
 
-        return new MemberResponse(member);
+        MemberResponse memberResponse = new MemberResponse(member);
+        memberResponse.setIsOnboardingClear(isOnboardingClear);
+
+        return memberResponse;
     }
 
     @Override

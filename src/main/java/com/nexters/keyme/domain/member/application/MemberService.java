@@ -14,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface MemberService {
-  MemberWithTokenResponse getOrCreateMember(OAuthUserInfo oauthUserInfo);
-
   MemberResponse getMemberInfo(Long memberId);
 
   NicknameVerificationResponse verifyNickname(NicknameVerificationRequest request);
