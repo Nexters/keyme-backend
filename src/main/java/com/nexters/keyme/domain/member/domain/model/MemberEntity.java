@@ -23,7 +23,7 @@ public class MemberEntity extends BaseTimeEntity {
     private Long id;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name="member_oauth_id")
+    @JoinColumn(name = "member_id")
     private List<MemberOAuth> memberOauth;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name="member_id")
