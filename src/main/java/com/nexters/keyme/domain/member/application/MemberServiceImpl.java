@@ -1,26 +1,25 @@
 package com.nexters.keyme.domain.member.application;
 
-import com.nexters.keyme.domain.auth.dto.internal.OAuthUserInfo;
+import com.nexters.keyme.domain.member.domain.model.MemberDevice;
+import com.nexters.keyme.domain.member.domain.model.MemberEntity;
+import com.nexters.keyme.domain.member.domain.repository.MemberDeviceRepository;
+import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
 import com.nexters.keyme.domain.member.domain.service.processor.MemberDataProcessor;
-import com.nexters.keyme.domain.member.exceptions.NotFoundMemberException;
-import com.nexters.keyme.global.common.dto.internal.UserInfo;
-import com.nexters.keyme.domain.member.domain.model.*;
+import com.nexters.keyme.domain.member.domain.service.processor.ProfileImageUploader;
+import com.nexters.keyme.domain.member.domain.service.validator.MemberValidator;
+import com.nexters.keyme.domain.member.domain.service.validator.NicknameValidator;
 import com.nexters.keyme.domain.member.dto.internal.ImageInfo;
 import com.nexters.keyme.domain.member.dto.internal.MemberModificationInfo;
 import com.nexters.keyme.domain.member.dto.internal.ValidationInfo;
-import com.nexters.keyme.domain.member.domain.repository.MemberDeviceRepository;
-import com.nexters.keyme.domain.member.domain.repository.MemberOAuthRepository;
-import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
-import com.nexters.keyme.domain.member.domain.service.processor.ProfileImageUploader;
-import com.nexters.keyme.domain.member.domain.service.validator.NicknameValidator;
 import com.nexters.keyme.domain.member.dto.request.AddTokenRequest;
 import com.nexters.keyme.domain.member.dto.request.DeleteTokenRequest;
 import com.nexters.keyme.domain.member.dto.request.MemberModificationRequest;
 import com.nexters.keyme.domain.member.dto.request.NicknameVerificationRequest;
 import com.nexters.keyme.domain.member.dto.response.ImageResponse;
 import com.nexters.keyme.domain.member.dto.response.MemberResponse;
-import com.nexters.keyme.domain.member.dto.response.MemberWithTokenResponse;
 import com.nexters.keyme.domain.member.dto.response.NicknameVerificationResponse;
+import com.nexters.keyme.domain.member.exceptions.NotFoundMemberException;
+import com.nexters.keyme.global.common.dto.internal.UserInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,8 +29,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
-import static com.nexters.keyme.global.common.constant.ConstantString.DEFAULT_IMAGE_URL;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +40,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberDataProcessor memberDataProcessor;
     private final NicknameValidator nicknameValidator;
     private final ProfileImageUploader profileImageUploader;
+    private final MemberValidator memberValidator;
 
     @Override
     @Transactional
@@ -134,5 +132,13 @@ public class MemberServiceImpl implements MemberService {
         if (device.isPresent()) {
             memberDeviceRepository.delete(device.get());
         }
+    }
+
+    @Transactional
+    @Override
+    public void deleteMember(long memberId) {
+        MemberEntity member = memberValidator.validateMember(memberId);
+
+        memberDataProcessor.deleteMember(member);
     }
 }

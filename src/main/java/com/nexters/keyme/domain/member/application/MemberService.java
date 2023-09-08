@@ -21,4 +21,6 @@ public interface MemberService {
   void registerDeviceToken(long userId, AddTokenRequest request);
 
   void deleteDeviceToken(long memberId, DeleteTokenRequest request);
+
+  void deleteMember(long memberId);
 }
