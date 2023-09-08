@@ -45,8 +45,8 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public MemberResponse getMemberInfo(Long memberId) {
-        MemberEntity member = memberRepository.findById(memberId)
-                .orElseThrow(NotFoundMemberException::new);
+        MemberEntity member = memberValidator.validateMember(memberId);
+
         Boolean isOnboardingClear = memberDataProcessor.checkOnboardingClear(member);
 
         MemberResponse memberResponse = new MemberResponse(member);
