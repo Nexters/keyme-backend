@@ -37,6 +37,7 @@ public class MemberEntity extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private MemberStatus status;
     private ProfileImage profileImage;
+    private boolean isDeleted;
 
 
     public void setProfileImage(ProfileImage profileImage) {
