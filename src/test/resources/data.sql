@@ -1,11 +1,21 @@
 /*
     Member 추가
 */
-INSERT INTO member (id, status, nickname, friend_code, original_url, thumbnail_url, created_at, updated_at)
+INSERT INTO member (id, status, nickname, friend_code, original_url, thumbnail_url, created_at, updated_at, is_deleted)
 VALUES
-    (1, 'ACTIVE', 'nick', 'ABCDEFG', 'keyme.space/original', 'keyme.space.thumbnail', '2023-08-05T16:07:00', '2023-08-05T16:07:00'),
-    (2, 'ACTIVE', 'james', '1234567', 'keyme.space/original', 'keyme.space.thumbnail', '2023-08-05T16:07:00', '2023-08-05T16:07:00'),
-    (3, 'ACTIVE', 'peter', 'A1B2C3D', 'keyme.space/original', 'keyme.space.thumbnail', '2023-08-05T16:07:00', '2023-08-05T16:07:00');
+    (1, 'ACTIVE', 'nick', 'ABCDEFG', 'keyme.space/original', 'keyme.space.thumbnail', '2023-08-05T16:07:00', '2023-08-05T16:07:00', false),
+    (2, 'ACTIVE', 'james', '1234567', 'keyme.space/original', 'keyme.space.thumbnail', '2023-08-05T16:07:00', '2023-08-05T16:07:00', false),
+    (3, 'ACTIVE', 'peter', 'A1B2C3D', 'keyme.space/original', 'keyme.space.thumbnail', '2023-08-05T16:07:00', '2023-08-05T16:07:00', false);
+
+/*
+    Member Oauth 정보 추가
+*/
+
+INSERT INTO member_oauth (oauth_id, oauth_type, member_id)
+VALUES
+    (1, 'KAKAO', 1),
+    (2, 'APPLE', 2),
+    (3, 'KAKAO', 3);
 
 
 /*
