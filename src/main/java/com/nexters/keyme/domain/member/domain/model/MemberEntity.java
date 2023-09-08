@@ -57,4 +57,8 @@ public class MemberEntity extends BaseTimeEntity {
             this.profileImage = new ProfileImage(modificationInfo.getOriginalImage(), modificationInfo.getThumbnailImage());
         }
     }
+
+    public void setDeleted() {
+        this.isDeleted = true;
+    }
 }
