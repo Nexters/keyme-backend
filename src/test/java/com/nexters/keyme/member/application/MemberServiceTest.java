@@ -1,5 +1,7 @@
 package com.nexters.keyme.member.application;
 
+import com.nexters.keyme.domain.member.domain.service.validator.MemberValidator;
+import com.nexters.keyme.domain.member.exceptions.DeletedMemberException;
 import com.nexters.keyme.domain.member.exceptions.NicknameDuplicateException;
 import com.nexters.keyme.global.common.dto.internal.UserInfo;
 import com.nexters.keyme.domain.member.application.MemberService;
@@ -7,6 +9,7 @@ import com.nexters.keyme.domain.member.dto.request.MemberModificationRequest;
 import com.nexters.keyme.domain.member.dto.request.NicknameVerificationRequest;
 import com.nexters.keyme.domain.member.dto.response.NicknameVerificationResponse;
 import com.nexters.keyme.domain.member.dto.response.MemberResponse;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +27,8 @@ public class MemberServiceTest {
     @Autowired
     private MemberService memberService;
 
-    @Test
-    void getOrCreateMember() {
-
-    }
+    @Autowired
+    private MemberValidator memberValidator;
 
     @Test
     @DisplayName("멤버 정보 가져오기 통합테스트")
@@ -68,5 +69,13 @@ public class MemberServiceTest {
         assertThat(response.getFriendCode()).isEqualTo("ABCDEFG");
         assertThat(response.getProfileImage()).isEqualTo("newOrg");
         assertThat(response.getProfileThumbnail()).isEqualTo("newThumbnail");
+    }
+
+    @Test
+    @DisplayName("멤버 삭제 통합테스트")
+    void deleteMemberTest() {
+        memberService.deleteMember(3L);
+
+        Assertions.assertThatThrownBy(() -> memberValidator.validateMember(3L)).isInstanceOf(DeletedMemberException.class);
     }
 }
