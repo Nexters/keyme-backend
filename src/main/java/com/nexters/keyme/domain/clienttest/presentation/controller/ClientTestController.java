@@ -23,6 +23,7 @@ public class ClientTestController {
     @DeleteMapping("/member")
     @ApiOperation(value = "멤버 정보 삭제")
     @SecurityRequirement(name = SWAGGER_AUTHORIZATION_SCHEME)
+    @Deprecated
     public ResponseEntity<ApiResponse> deleteMember(@RequestUser UserInfo userInfo) {
         clientTestService.clearMember(userInfo.getMemberId());
         return ResponseEntity.ok(new ApiResponse(200, "멤버가 삭제되었습니다.", null));
