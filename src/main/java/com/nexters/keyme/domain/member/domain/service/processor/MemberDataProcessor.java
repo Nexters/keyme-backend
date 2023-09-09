@@ -1,13 +1,9 @@
 package com.nexters.keyme.domain.member.domain.service.processor;
 
-import com.nexters.keyme.domain.auth.dto.internal.OAuthUserInfo;
-import com.nexters.keyme.domain.member.domain.model.MemberEntity;
-import com.nexters.keyme.domain.member.domain.model.MemberOAuth;
-import com.nexters.keyme.domain.member.domain.model.MemberOAuthId;
-import com.nexters.keyme.domain.member.domain.model.ProfileImage;
+import com.nexters.keyme.domain.member.domain.model.*;
+import com.nexters.keyme.domain.member.domain.repository.MemberDeviceRepository;
 import com.nexters.keyme.domain.member.domain.repository.MemberOAuthRepository;
 import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
-import com.nexters.keyme.domain.member.dto.response.MemberWithTokenResponse;
 import com.nexters.keyme.domain.test.domain.model.Test;
 import com.nexters.keyme.domain.test.domain.model.TestResult;
 import com.nexters.keyme.domain.test.domain.repository.TestResultRepository;
@@ -28,6 +24,7 @@ import static com.nexters.keyme.global.common.constant.ConstantString.DEFAULT_IM
 public class MemberDataProcessor {
 
     private final MemberOAuthRepository memberOAuthRepository;
+    private final MemberDeviceRepository memberDeviceRepository;
     private final MemberRepository memberRepository;
     private final TestDataProcessor testDataProcessor;
     private final TestResultRepository testResultRepository;
@@ -65,5 +62,20 @@ public class MemberDataProcessor {
         TestResult testResult = testResultRepository.findByTestAndSolver(onboardingTest, member).orElse(null);
 
         return testResult != null;
+    }
+
+    @Transactional
+    public MemberEntity deleteMember(MemberEntity member) {
+        member.setDeleted();
+
+        for (MemberOAuth oauth : member.getMemberOauth()) {
+            memberOAuthRepository.deleteById(oauth.getOauthInfo());
+        }
+
+        for (MemberDevice device : member.getMemberDevice()) {
+            memberDeviceRepository.deleteById(device.getId());
+        }
+
+        return member;
     }
 }

@@ -23,7 +23,7 @@ public class MemberEntity extends BaseTimeEntity {
     private Long id;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name="member_oauth_id")
+    @JoinColumn(name = "member_id")
     private List<MemberOAuth> memberOauth;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name="member_id")
@@ -37,6 +37,7 @@ public class MemberEntity extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private MemberStatus status;
     private ProfileImage profileImage;
+    private boolean isDeleted;
 
 
     public void setProfileImage(ProfileImage profileImage) {
@@ -55,5 +56,9 @@ public class MemberEntity extends BaseTimeEntity {
         if (modificationInfo.getOriginalImage() != null && modificationInfo.getThumbnailImage() != null) {
             this.profileImage = new ProfileImage(modificationInfo.getOriginalImage(), modificationInfo.getThumbnailImage());
         }
+    }
+
+    public void setDeleted() {
+        this.isDeleted = true;
     }
 }

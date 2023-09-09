@@ -72,9 +72,16 @@ public class MemberController {
     }
 
     @DeleteMapping("/devices")
-    @ApiOperation("멤버 FCM 토큰 추가")
+    @ApiOperation("멤버 FCM 토큰 삭제")
     public ResponseEntity<ApiResponse> deleteDeviceToken(@RequestUser UserInfo userInfo, @RequestBody DeleteTokenRequest request) {
         memberService.deleteDeviceToken(userInfo.getMemberId(), request);
+        return ResponseEntity.ok(new ApiResponse<>(200, "SUCCESS", null));
+    }
+
+    @DeleteMapping
+    @ApiOperation("멤버 탈퇴")
+    public ResponseEntity<ApiResponse> deleteDeviceToken(@RequestUser UserInfo userInfo) {
+        memberService.deleteMember(userInfo.getMemberId());
         return ResponseEntity.ok(new ApiResponse<>(200, "SUCCESS", null));
     }
 
