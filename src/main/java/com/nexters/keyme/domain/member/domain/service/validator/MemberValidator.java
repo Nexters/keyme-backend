@@ -20,6 +20,6 @@ public class MemberValidator {
             throw new DeletedMemberException();
         }
 
-        return null;
+        return member;
     }
 }
