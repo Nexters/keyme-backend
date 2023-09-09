@@ -1,9 +1,7 @@
 package com.nexters.keyme.domain.member.domain.service.processor;
 
-import com.nexters.keyme.domain.member.domain.model.MemberEntity;
-import com.nexters.keyme.domain.member.domain.model.MemberOAuth;
-import com.nexters.keyme.domain.member.domain.model.MemberOAuthId;
-import com.nexters.keyme.domain.member.domain.model.ProfileImage;
+import com.nexters.keyme.domain.member.domain.model.*;
+import com.nexters.keyme.domain.member.domain.repository.MemberDeviceRepository;
 import com.nexters.keyme.domain.member.domain.repository.MemberOAuthRepository;
 import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
 import com.nexters.keyme.domain.test.domain.model.Test;
@@ -16,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 import static com.nexters.keyme.global.common.constant.ConstantString.DEFAULT_IMAGE_URL;
@@ -27,6 +24,7 @@ import static com.nexters.keyme.global.common.constant.ConstantString.DEFAULT_IM
 public class MemberDataProcessor {
 
     private final MemberOAuthRepository memberOAuthRepository;
+    private final MemberDeviceRepository memberDeviceRepository;
     private final MemberRepository memberRepository;
     private final TestDataProcessor testDataProcessor;
     private final TestResultRepository testResultRepository;
@@ -69,10 +67,13 @@ public class MemberDataProcessor {
     @Transactional
     public MemberEntity deleteMember(MemberEntity member) {
         member.setDeleted();
-        List<MemberOAuth> oauthList = member.getMemberOauth();
 
-        for (MemberOAuth oauth : oauthList) {
+        for (MemberOAuth oauth : member.getMemberOauth()) {
             memberOAuthRepository.deleteById(oauth.getOauthInfo());
+        }
+
+        for (MemberDevice device : member.getMemberDevice()) {
+            memberDeviceRepository.deleteById(device.getId());
         }
 
         return member;
