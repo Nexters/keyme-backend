@@ -1,4 +1,4 @@
-package com.nexters.keyme.global.common;
+package com.nexters.keyme.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
