@@ -14,7 +14,8 @@ public interface TestResultRepository extends JpaRepository<TestResult, Long> {
 
     @Query(
         "select new com.nexters.keyme.domain.test.dto.internal.TestResultStatisticInfo(avg(tr.matchRate), COUNT(*)) from TestResult tr " +
-            "where tr.test.testId = :testId"
+            "where tr.test.testId = :testId " +
+                "and (tr.solver.id != :testOwnerId or tr.solver.id is null)"
     )
-    TestResultStatisticInfo findStatisticsByTestId(Long testId);
+    TestResultStatisticInfo findStatisticsByTestId(Long testId, Long testOwnerId);
 }
