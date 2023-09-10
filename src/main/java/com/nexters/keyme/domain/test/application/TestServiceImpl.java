@@ -107,12 +107,12 @@ public class TestServiceImpl implements TestService {
     @Transactional(readOnly = true)
     @Override
     public SingleTestStatisticsResponse getTestStatistics(Long memberId, Long testId) {
-        testRepository.findById(testId)
+        Long testOwnerId = testRepository.findById(testId)
                 .map(test -> test.getMember().getId())
-                .filter(testOwnerId -> testOwnerId.equals(memberId))
+                .filter(ownerId -> ownerId.equals(memberId))
                 .orElseThrow(NotFoundTestException::new);
 
-        TestResultStatisticInfo testResultStatisticInfo = testResultRepository.findStatisticsByTestId(testId);
+        TestResultStatisticInfo testResultStatisticInfo = testResultRepository.findStatisticsByTestId(testId, testOwnerId);
         List<QuestionStatisticInfo> questionStatisticInfoList = questionSolvedRepository.findAllAssociatedQuestionStatisticsByTestId(testId);
 
         return new SingleTestStatisticsResponse(
