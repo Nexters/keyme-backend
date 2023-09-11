@@ -1,5 +1,6 @@
 package com.nexters.keyme.domain.question.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nexters.keyme.domain.question.dto.internal.QuestionStatisticInfo;
 import com.nexters.keyme.domain.question.domain.model.Question;
 import io.swagger.annotations.ApiModel;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class QuestionStatisticResponse extends QuestionResponse {
     private Double avgScore;
 
