@@ -12,6 +12,7 @@ import com.nexters.keyme.domain.statistics.dto.response.CoordinateResponse;
 import com.nexters.keyme.domain.statistics.dto.response.MemberStatisticResponse;
 import com.nexters.keyme.domain.statistics.dto.response.StatisticQuestionResponse;
 import com.nexters.keyme.domain.statistics.dto.response.StatisticResultResponse;
+import com.nexters.keyme.domain.statistics.exceptions.NotEnoughStatisticsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @Transactional
@@ -76,6 +78,17 @@ class StatisticServiceTest {
         assertThat(coordinate.getX()).isEqualTo(0.2947799111389068);
         assertThat(coordinate.getY()).isEqualTo(0.6534475680919012);
         assertThat(coordinate.getR()).isEqualTo(0.28313953920146934);
+    }
+
+    @Test
+    @DisplayName("유저 통계 조회 시 solverCount 0인 경우 제외 테스트")
+    void getMemberStatisticWhenSolverCountIsZero() {
+        StatisticRequest differentRequest = new StatisticRequest(StatisticRequest.StatisticType.DIFFERENT);
+        StatisticRequest similarRequest = new StatisticRequest(StatisticRequest.StatisticType.SIMILAR);
+
+        assertThatThrownBy(() -> statisticService.getMemberStatistic(2, differentRequest)).isInstanceOf(NotEnoughStatisticsException.class);
+        assertThatThrownBy(() -> statisticService.getMemberStatistic(2, similarRequest)).isInstanceOf(NotEnoughStatisticsException.class);
+
     }
 
     @Test
