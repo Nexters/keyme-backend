@@ -16,10 +16,10 @@ public interface StatisticRepository extends JpaRepository<Statistic, Long> {
     @Query("SELECT st FROM Statistic st WHERE st.ownerId = :ownerId AND st.questionId = :questionId")
     Optional<Statistic> findByOwnerIdAndQuestionIdWithLock(@Param(value = "ownerId") long ownerId, @Param(value = "questionId") long questionId);
 
-    @Query(value = "SELECT * FROM statistic st WHERE st.owner_id = :memberId ORDER BY st.match_rate LIMIT 5", nativeQuery = true)
+    @Query(value = "SELECT * FROM statistic st WHERE st.owner_id = :memberId AND solver_count > 0 ORDER BY st.match_rate LIMIT 5", nativeQuery = true)
     List<Statistic> findByMemberIdSortByMatchRateAsc(@Param(value = "memberId") long memberId);
 
-    @Query(value = "SELECT * FROM statistic st WHERE st.owner_id = :memberId ORDER BY st.match_rate DESC LIMIT 5", nativeQuery = true)
+    @Query(value = "SELECT * FROM statistic st WHERE st.owner_id = :memberId AND solver_count > 0 ORDER BY st.match_rate DESC LIMIT 5", nativeQuery = true)
     List<Statistic> findByMemberIdSortByMatchRateDesc(@Param(value = "memberId") long memberId);
 
     @Query(value = "SELECT * FROM statistic st WHERE (st.solver_avg_score < :cursorScore OR st.solver_avg_score = :cursorScore AND st.id > :cursor) AND st.id NOT IN :exceptIds ORDER BY st.match_rate DESC, st.id LIMIT :limit", nativeQuery = true)
