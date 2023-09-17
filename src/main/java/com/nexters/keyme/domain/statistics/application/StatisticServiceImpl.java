@@ -48,13 +48,16 @@ public class StatisticServiceImpl implements StatisticService {
     @Override
     public void addNewScores(ScoreInfo scoreInfo) {
         // FIXME - 내부에서만 사용중 domain service로 뺄것
-        Statistic statistic = statisticRepository.findByOwnerIdAndQuestionIdWithLock(scoreInfo.getOwnerId(), scoreInfo.getQuestionId())
+        Statistic statistic = statisticRepository.findByOwnerIdAndQuestionId(scoreInfo.getOwnerId(), scoreInfo.getQuestionId())
                 .orElseGet(() -> {
                     StatisticInfo info = new StatisticInfo(scoreInfo.getOwnerId(), scoreInfo.getQuestionId(), scoreInfo.getScore());
                     return createStatistic(info);
                 });
 
-        statistic.addNewScore(scoreInfo.getSolverId(), scoreInfo.getScore());
+        Statistic statisticWithLock = statisticRepository.findByIdWithLock(statistic.getId())
+                        .orElseThrow(NotFoundStatisticsException::new);
+
+        statisticWithLock.addNewScore(scoreInfo.getSolverId(), scoreInfo.getScore());
     }
 
     @Transactional

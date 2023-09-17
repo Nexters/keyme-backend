@@ -20,7 +20,7 @@ class StatisticRepositoryTest {
     @Test
     @DisplayName("통계 정보 가져오기 테스트")
     void findByOwnerIdAndQuestionIdWithLock() {
-        Statistic statistic = statisticRepository.findByOwnerIdAndQuestionIdWithLock(1, 2)
+        Statistic statistic = statisticRepository.findByOwnerIdAndQuestionId(1, 2)
                 .orElseThrow(NotFoundStatisticsException::new);
 
         assertThat(statistic.getQuestionId()).isEqualTo(2L);
