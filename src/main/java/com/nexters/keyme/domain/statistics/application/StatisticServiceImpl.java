@@ -6,6 +6,7 @@ import com.nexters.keyme.domain.question.exceptions.NotFoundQuestionException;
 import com.nexters.keyme.domain.statistics.domain.model.Statistic;
 import com.nexters.keyme.domain.statistics.domain.repository.StatisticRepository;
 import com.nexters.keyme.domain.statistics.domain.service.CoordinateConversionService;
+import com.nexters.keyme.domain.statistics.domain.service.StatisticValidator;
 import com.nexters.keyme.domain.statistics.dto.internal.CoordinateInfo;
 import com.nexters.keyme.domain.statistics.dto.internal.ScoreInfo;
 import com.nexters.keyme.domain.statistics.dto.internal.StatisticInfo;
@@ -30,6 +31,7 @@ public class StatisticServiceImpl implements StatisticService {
     private final StatisticRepository statisticRepository;
     private final QuestionRepository questionRepository;
     private final CoordinateConversionService conversionService;
+    private final StatisticValidator statisticValidator;
 
     @Transactional
     @Override
@@ -70,9 +72,7 @@ public class StatisticServiceImpl implements StatisticService {
             statistics = statisticRepository.findByMemberIdSortByMatchRateDesc(memberId);
         }
 
-        if (checkStatisticExists(statistics)) {
-            throw new NotEnoughStatisticsException();
-        }
+        statisticValidator.validateStatistics(statistics, memberId);
 
         statistics.sort(getStatisticComparator());
         List<CoordinateInfo> coordinates = conversionService.convertFrom(statistics);
