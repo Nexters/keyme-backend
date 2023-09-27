@@ -13,14 +13,12 @@ import com.nexters.keyme.domain.statistics.dto.internal.StatisticInfo;
 import com.nexters.keyme.domain.statistics.dto.request.AdditionalStatisticRequest;
 import com.nexters.keyme.domain.statistics.dto.request.StatisticRequest;
 import com.nexters.keyme.domain.statistics.dto.response.*;
-import com.nexters.keyme.domain.statistics.exceptions.NotEnoughStatisticsException;
 import com.nexters.keyme.domain.statistics.exceptions.NotFoundStatisticsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -74,7 +72,6 @@ public class StatisticServiceImpl implements StatisticService {
 
         statisticValidator.validateStatistics(statistics, memberId);
 
-        statistics.sort(getStatisticComparator());
         List<CoordinateInfo> coordinates = conversionService.convertFrom(statistics);
         List<StatisticResultResponse> results = createStatisticResultResponse(statistics, coordinates);
         return new MemberStatisticResponse(memberId, results);
@@ -93,21 +90,6 @@ public class StatisticServiceImpl implements StatisticService {
             results.add(new StatisticResultResponse(new StatisticQuestionResponse(question, statistic.getOwnerScore(), statistic.getSolverAvgScore()), new CoordinateResponse(coordinateInfo)));
         }
         return results;
-    }
-
-    private static Comparator<Statistic> getStatisticComparator() {
-        return (s1, s2) -> {
-            if (s1.getSolverAvgScore() > s2.getSolverAvgScore()) {
-                return 1;
-            } else if (s1.getSolverAvgScore() < s2.getSolverAvgScore()) {
-                return -1;
-            }
-            return 0;
-        };
-    }
-
-    private boolean checkStatisticExists(List<Statistic> statistics) {
-        return statistics.size() < 5;
     }
 
     @Transactional

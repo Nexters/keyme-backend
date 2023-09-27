@@ -12,6 +12,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +23,10 @@ public class PythonCoordinateConversionService implements CoordinateConversionSe
     private String convertingServerUrl;
     @Override
     public List<CoordinateInfo> convertFrom(List<Statistic> statistics) {
-        List<Double> collect = statistics.stream()
+        List<Statistic> sortedStatistic = new ArrayList<>(statistics);
+        Collections.sort(sortedStatistic);
+
+        List<Double> collect = sortedStatistic.stream()
                 .map(Statistic::getSolverAvgScore)
                 .collect(Collectors.toList());
 
