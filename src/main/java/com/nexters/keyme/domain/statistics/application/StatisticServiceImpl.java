@@ -47,14 +47,16 @@ public class StatisticServiceImpl implements StatisticService {
     @Transactional
     @Override
     public void addNewScores(ScoreInfo scoreInfo) {
-        // FIXME - 내부에서만 사용중 domain service로 뺄것
-        Statistic statistic = statisticRepository.findByOwnerIdAndQuestionIdWithLock(scoreInfo.getOwnerId(), scoreInfo.getQuestionId())
+        Statistic statistic = statisticRepository.findByOwnerIdAndQuestionId(scoreInfo.getOwnerId(), scoreInfo.getQuestionId())
                 .orElseGet(() -> {
                     StatisticInfo info = new StatisticInfo(scoreInfo.getOwnerId(), scoreInfo.getQuestionId(), scoreInfo.getScore());
                     return createStatistic(info);
                 });
 
-        statistic.addNewScore(scoreInfo.getSolverId(), scoreInfo.getScore());
+        Statistic statisticWithLock = statisticRepository.findByIdWithLock(statistic.getId())
+                        .orElseThrow(NotFoundStatisticsException::new);
+
+        statisticWithLock.addNewScore(scoreInfo.getSolverId(), scoreInfo.getScore());
     }
 
     @Transactional
@@ -73,9 +75,12 @@ public class StatisticServiceImpl implements StatisticService {
         }
 
         statistics.sort(getStatisticComparator());
-
         List<CoordinateInfo> coordinates = conversionService.convertFrom(statistics);
+        List<StatisticResultResponse> results = createStatisticResultResponse(statistics, coordinates);
+        return new MemberStatisticResponse(memberId, results);
+    }
 
+    private List<StatisticResultResponse> createStatisticResultResponse(List<Statistic> statistics, List<CoordinateInfo> coordinates) {
         List<StatisticResultResponse> results = new ArrayList<>();
 
         for (int i = 0; i < statistics.size(); i++) {
@@ -87,8 +92,7 @@ public class StatisticServiceImpl implements StatisticService {
 
             results.add(new StatisticResultResponse(new StatisticQuestionResponse(question, statistic.getOwnerScore(), statistic.getSolverAvgScore()), new CoordinateResponse(coordinateInfo)));
         }
-
-        return new MemberStatisticResponse(memberId, results);
+        return results;
     }
 
     private static Comparator<Statistic> getStatisticComparator() {
