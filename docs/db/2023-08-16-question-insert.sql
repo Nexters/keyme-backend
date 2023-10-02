@@ -1,19 +1,43 @@
 -- is_onboarding이 true인 경우 (1~10번)
 INSERT INTO `question` (`title`, `keyword`, `category_name`, `is_onboarding`)
 VALUES
-    ('님은 거지방에서도 살아남을 사람이다', '절약왕', 'MONEY', true),
-    ('님은 술자리에서 가장 늦게 일어나는 타입이다', '술고래', 'PASSION', true),
-    ('님은 별별 TMI를 다 아는 인간 나무위키다', '인간나무위키', 'INTELLIGENCE', true),
-    ('님은 친구들 사이에서 개그맨이다', '개그맨', 'HUMOR', true),
-    ('님은 걸어다니는 종합병원이다', '개복치', 'BODY', true),
-    ('님은 밥은 살려고 먹는다', '소식좌', 'FOOD', true),
-    ('님은 주변의 변화를 빠르게 알아차리는 편이다', '눈썰미', 'SENSE', true),
-    ('님은 하고 싶은 것이 생기면 바로 실행에 옮긴다', '진행시켜', 'PLANNING', true),
-    ('님은 맑은 햇살의 낮보다는 새벽 감성을 더 좋아한다', '새벽감성', 'SENSIBILITY', true),
-    ('님은 어떠한 것이든 솔직하게 표현하는 편이다', '돌직구', 'RELATIONSHIPS', true),
-    ('님은 관심 있는 사람에게 밥을 먼저 먹자고할 수 있다', '플러팅 장인', 'AFFECTION', true);
+    ('님은 아이돌 덕질에 일가견이 있다.', '주간아이돌', 'PASSION', true),
+    ('님은 관심 있는 사람에게 밥을 먼저 먹자고할 수 있다.', '플러팅 장인', 'PASSION', true),
+    ('님은 하여자(하남자)다.', '하여자', 'INTELLIGENCE', true),
+    ('님의 유튜브 알고리즘은 깨끗하다.', '순수한 뇌', 'INTELLIGENCE', true),
+    ('님은 N번 까지 고백 공격을 해봤을것 같다.', '나무꾼', 'HUMOR', true),
+    ('님은 번호를 따여봤을 것 같다.', '김태희', 'BODY', true),
+    ('님은 나이보다 어려보인다.', '동안', 'BODY', true),
+    ('님은 주변의 변화를 빠르게 알아차리는 편이다.', '눈썰미', 'SENSE', true),
+    ('님은 너무 다정해서 유죄인간이다.', '유죄인간', 'SENSE', true),
+    ('님은 친구 전화를 귀찮아서 안받은 적이 많다.', '귀차니즘', 'PLANNING', true),
+    ('님은 운명적인 만남을 기다리고 있다.', '신데렐라', 'PLANNING', true),
+    ('님은 평생 갤럭시만 쓸것 같다.', '삼엽충', 'SENSIBILITY', true),
+    ('님은 어떠한 것이든 솔직하게 표현하는 편이다.', '돌직구', 'SENSIBILITY', true),
+    ('님은 첫인상과 후인상이 정말 다른 사람이다.', '반전매력', 'SENSIBILITY', true),
+    ('님은 친구랑 싸워서 손절한 경험이 많을 것 같다.', '아싸', 'RELATIONSHIPS', true),
+    ('님은 처음보는 사람이랑 시비붙은 적이 있을 것 같다.', '여포', 'RELATIONSHIPS', true),
+    ('님은 고백을 많이 받아봤을 것 같다.', '차은우', 'AFFECTION', true),
+    ('님은 결혼을 빨리할 것 같다.', '결혼주의자', 'AFFECTION', true),
+    ('님은 장기연애를 한 경험이 많을 것 같다.', '진국', 'AFFECTION', true),
+    ('님은 사업하면 성공할 것 같다.', 'CEO', 'MONEY', true);
+
 
 -- is_onboarding이 false인 경우
+INSERT INTO `question` (`title`, `keyword`, `category_name`, `is_onboarding`)
+VALUES
+    ('님은 거지방에서도 살아남을 사람이다', '절약왕', 'MONEY', false),
+    ('님은 술자리에서 가장 늦게 일어나는 타입이다', '술고래', 'PASSION', false),
+    ('님은 별별 TMI를 다 아는 인간 나무위키다', '인간나무위키', 'INTELLIGENCE', false),
+    ('님은 친구들 사이에서 개그맨이다', '개그맨', 'HUMOR', false),
+    ('님은 걸어다니는 종합병원이다', '개복치', 'BODY', false),
+    ('님은 밥은 살려고 먹는다', '소식좌', 'FOOD', false),
+    ('님은 주변의 변화를 빠르게 알아차리는 편이다', '눈썰미', 'SENSE', false),
+    ('님은 하고 싶은 것이 생기면 바로 실행에 옮긴다', '진행시켜', 'PLANNING', false),
+    ('님은 맑은 햇살의 낮보다는 새벽 감성을 더 좋아한다', '새벽감성', 'SENSIBILITY', false),
+    ('님은 어떠한 것이든 솔직하게 표현하는 편이다', '돌직구', 'RELATIONSHIPS', false),
+    ('님은 관심 있는 사람에게 밥을 먼저 먹자고할 수 있다', '플러팅 장인', 'AFFECTION', false);
+
 INSERT INTO `question` (`title`, `keyword`, `category_name`, `is_onboarding`)
 VALUES
     ('님은 돈관리를 잘한다', '돈관리 마스터', 'MONEY', false),
