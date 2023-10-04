@@ -13,4 +13,8 @@ public class MemberStatisticResponse {
     private final Long memberId;
     @ApiModelProperty(value="문제별 결과 정보")
     private final List<StatisticResultResponse> results;
+
+
+
+
 }

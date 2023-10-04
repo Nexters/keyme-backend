@@ -16,7 +16,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Getter
 @Builder
-public class Statistic extends BaseTimeEntity {
+public class Statistic extends BaseTimeEntity implements Comparable<Statistic> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -46,5 +46,15 @@ public class Statistic extends BaseTimeEntity {
     private double calculateMatchRate(int ownerScore, double solverAvgScore) {
         double diff = Math.abs(ownerScore - solverAvgScore);
         return 100 / (diff + 1);
+    }
+
+    @Override
+    public int compareTo(Statistic o) {
+        if (this.getSolverAvgScore() < o.getSolverAvgScore()) {
+            return -1;
+        } else if (this.getSolverAvgScore() > o.getSolverAvgScore()) {
+            return 1;
+        }
+        return 0;
     }
 }

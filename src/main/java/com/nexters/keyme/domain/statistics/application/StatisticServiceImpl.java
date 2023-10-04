@@ -6,20 +6,20 @@ import com.nexters.keyme.domain.question.exceptions.NotFoundQuestionException;
 import com.nexters.keyme.domain.statistics.domain.model.Statistic;
 import com.nexters.keyme.domain.statistics.domain.repository.StatisticRepository;
 import com.nexters.keyme.domain.statistics.domain.service.CoordinateConversionService;
+import com.nexters.keyme.domain.statistics.domain.service.StatisticValidator;
 import com.nexters.keyme.domain.statistics.dto.internal.CoordinateInfo;
 import com.nexters.keyme.domain.statistics.dto.internal.ScoreInfo;
 import com.nexters.keyme.domain.statistics.dto.internal.StatisticInfo;
 import com.nexters.keyme.domain.statistics.dto.request.AdditionalStatisticRequest;
 import com.nexters.keyme.domain.statistics.dto.request.StatisticRequest;
-import com.nexters.keyme.domain.statistics.dto.response.*;
-import com.nexters.keyme.domain.statistics.exceptions.NotEnoughStatisticsException;
+import com.nexters.keyme.domain.statistics.dto.response.AdditionalStatisticResponse;
+import com.nexters.keyme.domain.statistics.dto.response.MemberStatisticResponse;
+import com.nexters.keyme.domain.statistics.dto.response.StatisticResultResponse;
 import com.nexters.keyme.domain.statistics.exceptions.NotFoundStatisticsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -30,6 +30,7 @@ public class StatisticServiceImpl implements StatisticService {
     private final StatisticRepository statisticRepository;
     private final QuestionRepository questionRepository;
     private final CoordinateConversionService conversionService;
+    private final StatisticValidator statisticValidator;
 
     @Transactional
     @Override
@@ -70,44 +71,14 @@ public class StatisticServiceImpl implements StatisticService {
             statistics = statisticRepository.findByMemberIdSortByMatchRateDesc(memberId);
         }
 
-        if (checkStatisticExists(statistics)) {
-            throw new NotEnoughStatisticsException();
-        }
+        statisticValidator.validateStatistics(statistics, memberId);
 
-        statistics.sort(getStatisticComparator());
         List<CoordinateInfo> coordinates = conversionService.convertFrom(statistics);
-        List<StatisticResultResponse> results = createStatisticResultResponse(statistics, coordinates);
-        return new MemberStatisticResponse(memberId, results);
-    }
+        List<Question> questions = statistics.stream()
+                .map((s) -> questionRepository.findById(s.getQuestionId()).orElseThrow(NotFoundQuestionException::new))
+                .collect(Collectors.toList());
 
-    private List<StatisticResultResponse> createStatisticResultResponse(List<Statistic> statistics, List<CoordinateInfo> coordinates) {
-        List<StatisticResultResponse> results = new ArrayList<>();
-
-        for (int i = 0; i < statistics.size(); i++) {
-            Statistic statistic = statistics.get(i);
-            CoordinateInfo coordinateInfo = coordinates.get(i);
-
-            Question question = questionRepository.findById(statistic.getQuestionId())
-                    .orElseThrow(NotFoundQuestionException::new);
-
-            results.add(new StatisticResultResponse(new StatisticQuestionResponse(question, statistic.getOwnerScore(), statistic.getSolverAvgScore()), new CoordinateResponse(coordinateInfo)));
-        }
-        return results;
-    }
-
-    private static Comparator<Statistic> getStatisticComparator() {
-        return (s1, s2) -> {
-            if (s1.getSolverAvgScore() > s2.getSolverAvgScore()) {
-                return 1;
-            } else if (s1.getSolverAvgScore() < s2.getSolverAvgScore()) {
-                return -1;
-            }
-            return 0;
-        };
-    }
-
-    private boolean checkStatisticExists(List<Statistic> statistics) {
-        return statistics.size() < 5;
+        return new MemberStatisticResponse(memberId, StatisticResultResponse.CreateListFrom(questions, statistics, coordinates));
     }
 
     @Transactional
@@ -140,7 +111,6 @@ public class StatisticServiceImpl implements StatisticService {
                     .id(0)
                     .solverAvgScore(Double.MAX_VALUE)
                     .build();
-
         }
 
         return statisticRepository.findById(cursor)
