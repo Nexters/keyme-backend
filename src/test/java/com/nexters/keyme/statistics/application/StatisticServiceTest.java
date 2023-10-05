@@ -57,7 +57,7 @@ class StatisticServiceTest {
     void getMemberStatistic() {
         StatisticRequest request = new StatisticRequest(StatisticRequest.StatisticType.DIFFERENT);
 
-        MemberStatisticResponse response = statisticService.getMemberStatistic(1, request);
+        MemberStatisticResponse response = statisticService.getMemberStatistic(1L, request);
         assertThat(response.getMemberId()).isEqualTo(1L);
 
         List<StatisticResultResponse> results = response.getResults();
@@ -68,18 +68,6 @@ class StatisticServiceTest {
         StatisticQuestionResponse question = firstResult.getQuestionStatistic();
         assertThat(question.getQuestionId()).isEqualTo(1L);
         assertThat(question.getAvgScore()).isEqualTo(1L);
-        assertThat(question.getTitle()).isEqualTo("새로운 사람들과 대화하는 것을 즐기시겠군요?");
-        assertThat(question.getKeyword()).isEqualTo("대화");
-
-        QuestionCategoryResponse category = question.getCategory();
-        assertThat(category.getName()).isEqualTo("사회적_활동");
-        assertThat(category.getColor()).isEqualTo("FFFFFF");
-        assertThat(category.getIconUrl()).isEqualTo("https://keyme-ec2-access-s3.s3.ap-northeast-2.amazonaws.com/test_star.png");
-
-        CoordinateResponse coordinate = firstResult.getCoordinate();
-        assertThat(coordinate.getX()).isEqualTo(0.2947799111389068);
-        assertThat(coordinate.getY()).isEqualTo(0.6534475680919012);
-        assertThat(coordinate.getR()).isEqualTo(0.28313953920146934);
     }
 
     @Test

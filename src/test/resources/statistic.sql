@@ -31,30 +31,6 @@ VALUES
 /*
     Question 추가
 */
-INSERT INTO `question` (`question_id`, `title`, `keyword`, `category_name`, `is_onboarding`)
-VALUES
-    (1,' 님은 아이돌 덕질에 일가견이 있다.', '주간아이돌', 'PASSION', true),
-    (2, '님은 관심 있는 사람에게 밥을 먼저 먹자고할 수 있다.', '플러팅 장인', 'PASSION', true),
-    (3, '님은 하여자(하남자)다.', '하여자', 'INTELLIGENCE', true),
-    (4, '님의 유튜브 알고리즘은 깨끗하다.', '순수한 뇌', 'INTELLIGENCE', true),
-    (5, '님은 N번 까지 고백 공격을 해봤을것 같다.', '나무꾼', 'HUMOR', true),
-    (6, '님은 번호를 따여봤을 것 같다.', '김태희', 'BODY', true),
-    (7, '님은 나이보다 어려보인다.', '동안', 'BODY', true),
-    (8, '님은 주변의 변화를 빠르게 알아차리는 편이다.', '눈썰미', 'SENSE', true),
-    (9, '님은 너무 다정해서 유죄인간이다.', '유죄인간', 'SENSE', true),
-    (10, '님은 친구 전화를 귀찮아서 안받은 적이 많다.', '귀차니즘', 'PLANNING', true),
-    (11, '님은 운명적인 만남을 기다리고 있다.', '신데렐라', 'PLANNING', true),
-    (12, '님은 평생 갤럭시만 쓸것 같다.', '삼엽충', 'SENSIBILITY', true),
-    (13, '님은 어떠한 것이든 솔직하게 표현하는 편이다.', '돌직구', 'SENSIBILITY', true),
-    (14, '님은 첫인상과 후인상이 정말 다른 사람이다.', '반전매력', 'SENSIBILITY', true),
-    (15, '님은 친구랑 싸워서 손절한 경험이 많을 것 같다.', '아싸', 'RELATIONSHIPS', true),
-    (16, '님은 처음보는 사람이랑 시비붙은 적이 있을 것 같다.', '여포', 'RELATIONSHIPS', true),
-    (17, '님은 고백을 많이 받아봤을 것 같다.', '차은우', 'AFFECTION', true),
-    (18, '님은 결혼을 빨리할 것 같다.', '결혼주의자', 'AFFECTION', true),
-    (19, '님은 장기연애를 한 경험이 많을 것 같다.', '진국', 'AFFECTION', true),
-    (20, '님은 사업하면 성공할 것 같다.', 'CEO', 'MONEY', true);
-
-
 INSERT INTO question_category (`question_category_id`, `name`, `color`, `icon_url`)
 VALUES
     (1, '돈관리', '568049', 'https://d2z2a95epq6bmg.cloudfront.net/icon/money.png'),
@@ -69,6 +45,29 @@ VALUES
     (10, '관계', '905CFF', 'https://d2z2a95epq6bmg.cloudfront.net/icon/relationships.png'),
     (11, '애정', 'FB5563', 'https://d2z2a95epq6bmg.cloudfront.net/icon/affection.png');
 
+
+INSERT INTO `question` (`question_id`, `title`, `keyword`, `question_category_id`, `category_name`, `is_onboarding`)
+VALUES
+    (1,' 님은 아이돌 덕질에 일가견이 있다.', '주간아이돌', 2, 'PASSION', true),
+    (2, '님은 관심 있는 사람에게 밥을 먼저 먹자고할 수 있다.', '플러팅 장인', 2, 'PASSION', true),
+    (3, '님은 하여자(하남자)다.', '하여자', 3, 'INTELLIGENCE', true),
+    (4, '님의 유튜브 알고리즘은 깨끗하다.', '순수한 뇌', 3, 'INTELLIGENCE', true),
+    (5, '님은 N번 까지 고백 공격을 해봤을것 같다.', '나무꾼', 4, 'HUMOR', true),
+    (6, '님은 번호를 따여봤을 것 같다.', '김태희', 5, 'BODY', true),
+    (7, '님은 나이보다 어려보인다.', '동안', 5, 'BODY', true),
+    (8, '님은 주변의 변화를 빠르게 알아차리는 편이다.', '눈썰미', 7, 'SENSE', true),
+    (9, '님은 너무 다정해서 유죄인간이다.', '유죄인간', 7, 'SENSE', true),
+    (10, '님은 친구 전화를 귀찮아서 안받은 적이 많다.', '귀차니즘', 8, 'PLANNING', true),
+    (11, '님은 운명적인 만남을 기다리고 있다.', '신데렐라', 8, 'PLANNING', true),
+    (12, '님은 평생 갤럭시만 쓸것 같다.', '삼엽충', 9, 'SENSIBILITY', true),
+    (13, '님은 어떠한 것이든 솔직하게 표현하는 편이다.', '돌직구', 9, 'SENSIBILITY', true),
+    (14, '님은 첫인상과 후인상이 정말 다른 사람이다.', '반전매력', 9, 'SENSIBILITY', true),
+    (15, '님은 친구랑 싸워서 손절한 경험이 많을 것 같다.', '아싸', 10, 'RELATIONSHIPS', true),
+    (16, '님은 처음보는 사람이랑 시비붙은 적이 있을 것 같다.', '여포', 10, 'RELATIONSHIPS', true),
+    (17, '님은 고백을 많이 받아봤을 것 같다.', '차은우', 11, 'AFFECTION', true),
+    (18, '님은 결혼을 빨리할 것 같다.', '결혼주의자', 11, 'AFFECTION', true),
+    (19, '님은 장기연애를 한 경험이 많을 것 같다.', '진국', 11, 'AFFECTION', true),
+    (20, '님은 사업하면 성공할 것 같다.', 'CEO', 1, 'MONEY', true);
 
 /*
     통계정보 추가
