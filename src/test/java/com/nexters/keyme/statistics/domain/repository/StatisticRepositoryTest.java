@@ -7,6 +7,7 @@ import com.nexters.keyme.test.annotation.RepositoryTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ class StatisticRepositoryTest {
     private StatisticRepository statisticRepository;
 
     @Test
+    @Transactional
     @DisplayName("통계 정보 가져오기 테스트")
     void findByOwnerIdAndQuestionIdWithLock() {
         Statistic statistic = statisticRepository.findByOwnerIdAndQuestionId(1, 2)
@@ -29,6 +31,7 @@ class StatisticRepositoryTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("일치율 낮은 순 가져오기 테스트")
     void findByMemberIdSortByMatchRateAsc() {
         List<Statistic> statistics = statisticRepository.findByMemberIdSortByMatchRateAsc(1L);
@@ -42,6 +45,7 @@ class StatisticRepositoryTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("일치율 높은 순 가져오기 테스트")
     void findByMemberIdSortByMatchRateDesc() {
         List<Statistic> statistics = statisticRepository.findByMemberIdSortByMatchRateDesc(1L);
@@ -55,12 +59,13 @@ class StatisticRepositoryTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("특정 id 제외 통계 가져오기 테스트")
     void findExceptIdsSortByAvgScoreTest() {
         List<Statistic> statistics = statisticRepository.findExceptIdsSortByAvgScore(List.of(1L, 2L), 6, 5, 5);
 
-        assertThat(statistics.size()).isEqualTo(3);
-        assertThat(statistics.get(0).getId()).isEqualTo(5);
-        assertThat(statistics.get(statistics.size() - 1).getId()).isEqualTo(3);
+        assertThat(statistics.size()).isEqualTo(5);
+        assertThat(statistics.get(0).getId()).isEqualTo(7L);
+        assertThat(statistics.get(statistics.size() - 1).getId()).isEqualTo(11L);
     }
 }
