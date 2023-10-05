@@ -62,7 +62,7 @@ class StatisticRepositoryTest {
     @Transactional
     @DisplayName("특정 id 제외 통계 가져오기 테스트")
     void findExceptIdsSortByAvgScoreTest() {
-        List<Statistic> statistics = statisticRepository.findExceptIdsSortByAvgScore(List.of(1L, 2L), 6, 5, 5);
+        List<Statistic> statistics = statisticRepository.findExceptIdsSortByAvgScore(1L, List.of(1L, 2L), 6, 5, 5);
 
         assertThat(statistics.size()).isEqualTo(5);
         assertThat(statistics.get(0).getId()).isEqualTo(7L);
