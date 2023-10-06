@@ -94,7 +94,7 @@ public class StatisticServiceImpl implements StatisticService {
         Statistic cursorStatistic = getCursorStatistic(request.getCursor());
         double cursorScore = cursorStatistic.getSolverAvgScore();
 
-        List<Statistic> statistics = statisticRepository.findExceptIdsSortByAvgScore(exceptIds, request.getCursor(), cursorScore, request.getLimit());
+        List<Statistic> statistics = statisticRepository.findExceptIdsSortByAvgScore(memberId, exceptIds, request.getCursor(), cursorScore, request.getLimit());
 
         return statistics.stream()
                 .map((statistic) -> {
