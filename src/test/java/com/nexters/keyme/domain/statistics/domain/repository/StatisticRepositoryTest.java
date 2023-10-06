@@ -1,12 +1,12 @@
-package com.nexters.keyme.statistics.domain.repository;
+package com.nexters.keyme.domain.statistics.domain.repository;
 
 import com.nexters.keyme.domain.statistics.exceptions.NotFoundStatisticsException;
-import com.nexters.keyme.domain.statistics.domain.repository.StatisticRepository;
 import com.nexters.keyme.domain.statistics.domain.model.Statistic;
-import com.nexters.keyme.test.annotation.RepositoryTest;
+import com.nexters.keyme.domain.test.annotation.RepositoryTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -14,6 +14,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RepositoryTest
+@Sql("/statistic.sql")
 class StatisticRepositoryTest {
     @Autowired
     private StatisticRepository statisticRepository;
@@ -64,8 +65,8 @@ class StatisticRepositoryTest {
     void findExceptIdsSortByAvgScoreTest() {
         List<Statistic> statistics = statisticRepository.findExceptIdsSortByAvgScore(1L, List.of(1L, 2L), 6, 5, 5);
 
-        assertThat(statistics.size()).isEqualTo(5);
-        assertThat(statistics.get(0).getId()).isEqualTo(7L);
-        assertThat(statistics.get(statistics.size() - 1).getId()).isEqualTo(11L);
+        assertThat(statistics.size()).isEqualTo(3);
+        assertThat(statistics.get(0).getId()).isEqualTo(5L);
+        assertThat(statistics.get(statistics.size() - 1).getId()).isEqualTo(3L);
     }
 }

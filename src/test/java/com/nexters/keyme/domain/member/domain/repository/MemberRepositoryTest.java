@@ -1,17 +1,18 @@
-package com.nexters.keyme.member.domain.repository;
+package com.nexters.keyme.domain.member.domain.repository;
 
 import com.nexters.keyme.domain.member.exceptions.NotFoundMemberException;
-import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
-import com.nexters.keyme.test.annotation.RepositoryTest;
+import com.nexters.keyme.domain.test.annotation.RepositoryTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RepositoryTest
+@Sql("/member.sql")
 class MemberRepositoryTest {
     @Autowired
     private MemberRepository memberRepository;

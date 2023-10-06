@@ -1,4 +1,4 @@
-package com.nexters.keyme.member.domain.service;
+package com.nexters.keyme.domain.member.domain.service;
 
 import com.nexters.keyme.domain.member.exceptions.NicknameDuplicateException;
 import com.nexters.keyme.domain.member.exceptions.NicknameTooLongException;

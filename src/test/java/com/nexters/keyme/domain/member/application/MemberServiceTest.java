@@ -1,4 +1,4 @@
-package com.nexters.keyme.member.application;
+package com.nexters.keyme.domain.member.application;
 
 import com.nexters.keyme.domain.member.application.MemberService;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,6 +25,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest
 @Transactional
 @ActiveProfiles("test")
+@Sql("/member.sql")
 public class MemberServiceTest {
     @Autowired
     private MemberService memberService;

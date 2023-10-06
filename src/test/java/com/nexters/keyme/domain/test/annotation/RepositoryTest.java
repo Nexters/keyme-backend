@@ -1,4 +1,4 @@
-package com.nexters.keyme.test.annotation;
+package com.nexters.keyme.domain.test.annotation;
 
 import com.nexters.keyme.global.config.QueryDslConfig;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

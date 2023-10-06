@@ -1,11 +1,9 @@
-package com.nexters.keyme.question.domain.repository;
+package com.nexters.keyme.domain.question.domain.repository;
 
-import com.nexters.keyme.domain.question.domain.repository.QuestionSolvedRepository;
 import com.nexters.keyme.global.common.dto.internal.PageInfo;
-import com.nexters.keyme.domain.question.enums.QuestionCategoryType;
 import com.nexters.keyme.domain.question.dto.internal.QuestionStatisticInfo;
 import com.nexters.keyme.domain.question.domain.model.QuestionSolved;
-import com.nexters.keyme.test.annotation.RepositoryTest;
+import com.nexters.keyme.domain.test.annotation.RepositoryTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

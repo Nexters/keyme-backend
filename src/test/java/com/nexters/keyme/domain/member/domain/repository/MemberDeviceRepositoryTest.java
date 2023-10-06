@@ -1,16 +1,17 @@
-package com.nexters.keyme.member.domain.repository;
+package com.nexters.keyme.domain.member.domain.repository;
 
-import com.nexters.keyme.domain.member.domain.repository.MemberDeviceRepository;
 import com.nexters.keyme.domain.member.domain.model.MemberDevice;
-import com.nexters.keyme.test.annotation.RepositoryTest;
+import com.nexters.keyme.domain.test.annotation.RepositoryTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
 @RepositoryTest
+@Sql("/member.sql")
 class MemberDeviceRepositoryTest {
     @Autowired
     private MemberDeviceRepository memberDeviceRepository;

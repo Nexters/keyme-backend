@@ -1,4 +1,4 @@
-package com.nexters.keyme.member.domain.model;
+package com.nexters.keyme.domain.member.domain.model;
 
 import com.nexters.keyme.domain.member.dto.internal.MemberModificationInfo;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;

@@ -1,4 +1,4 @@
-package com.nexters.keyme.statistics.domain.model;
+package com.nexters.keyme.domain.statistics.domain.model;
 
 import com.nexters.keyme.domain.statistics.domain.model.Statistic;
 import org.junit.jupiter.api.DisplayName;

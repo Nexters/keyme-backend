@@ -1,4 +1,4 @@
-package com.nexters.keyme.statistics.application;
+package com.nexters.keyme.domain.statistics.application;
 
 import com.nexters.keyme.domain.question.dto.response.QuestionCategoryResponse;
 import com.nexters.keyme.domain.statistics.application.StatisticService;
