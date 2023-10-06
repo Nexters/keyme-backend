@@ -1,6 +1,5 @@
 package com.nexters.keyme.domain.member.application;
 
-import com.nexters.keyme.domain.member.application.MemberService;
 import com.nexters.keyme.domain.member.domain.model.MemberEntity;
 import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
 import com.nexters.keyme.domain.member.domain.service.validator.MemberValidator;

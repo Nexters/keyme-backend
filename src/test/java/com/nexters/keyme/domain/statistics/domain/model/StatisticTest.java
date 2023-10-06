@@ -1,6 +1,5 @@
 package com.nexters.keyme.domain.statistics.domain.model;
 
-import com.nexters.keyme.domain.statistics.domain.model.Statistic;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
