@@ -60,6 +60,13 @@ class StatisticServiceTest {
         List<StatisticResultResponse> results = response.getResults();
         assertThat(results.size()).isEqualTo(5);
 
+        double prevRadius = Double.MIN_VALUE;
+        for (StatisticResultResponse result : results) {
+            double curRadius = result.getCoordinate().getR();
+            assertThat(prevRadius <= curRadius);
+            prevRadius = curRadius;
+        }
+
         StatisticResultResponse firstResult = results.get(0);
 
         StatisticQuestionResponse question = firstResult.getQuestionStatistic();
