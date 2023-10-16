@@ -3,6 +3,10 @@ package com.nexters.keyme.domain.statistics.domain.model;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class StatisticTest {
@@ -41,5 +45,26 @@ class StatisticTest {
         assertThat(statistic.getMatchRate()).isEqualTo(0);
         assertThat(statistic.getSolverCount()).isEqualTo(0);
         assertThat(statistic.getSolverAvgScore()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("엔티티 정렬 테스트")
+    void sortTest() {
+        Statistic s1 = new Statistic(1L, 1L, 1L, 1L, 5, 1, 70);
+        Statistic s2 = new Statistic(1L, 1L, 1L, 1L, 5, 1.2, 70);
+        Statistic s3 = new Statistic(1L, 1L, 1L, 1L, 5, 5, 70);
+        Statistic s4 = new Statistic(1L, 1L, 1L, 1L, 5, 3, 70);
+        Statistic s5 = new Statistic(1L, 1L, 1L, 1L, 5, 4.7, 70);
+
+        List<Statistic> statistics = new ArrayList<>(List.of(s1, s2, s3, s4, s5));
+
+        Collections.sort(statistics);
+
+        double prev = Double.MIN_VALUE;
+        for (int i = 0; i < 5; i++) {
+            double cur = statistics.get(i).getSolverAvgScore();
+            assertThat(prev <= cur).isTrue();
+            prev = cur;
+        }
     }
 }
