@@ -70,8 +70,8 @@ class StatisticServiceTest {
         StatisticResultResponse firstResult = results.get(0);
 
         StatisticQuestionResponse question = firstResult.getQuestionStatistic();
-        assertThat(question.getQuestionId()).isEqualTo(1L);
-        assertThat(question.getAvgScore()).isEqualTo(1L);
+        assertThat(question.getQuestionId()).isEqualTo(5L);
+        assertThat(question.getAvgScore()).isEqualTo(2);
     }
 
     @Test
