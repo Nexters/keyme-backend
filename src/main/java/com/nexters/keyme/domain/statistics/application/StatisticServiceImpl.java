@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -72,6 +73,8 @@ public class StatisticServiceImpl implements StatisticService {
         }
 
         statisticValidator.validateStatistics(statistics, memberId);
+
+        Collections.sort(statistics);
 
         List<CoordinateInfo> coordinates = conversionService.convertFrom(statistics);
         List<Question> questions = statistics.stream()

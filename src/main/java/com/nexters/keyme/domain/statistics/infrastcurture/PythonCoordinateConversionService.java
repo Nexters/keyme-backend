@@ -1,8 +1,8 @@
 package com.nexters.keyme.domain.statistics.infrastcurture;
 
-import com.nexters.keyme.domain.statistics.dto.internal.CoordinateInfo;
 import com.nexters.keyme.domain.statistics.domain.model.Statistic;
 import com.nexters.keyme.domain.statistics.domain.service.CoordinateConversionService;
+import com.nexters.keyme.domain.statistics.dto.internal.CoordinateInfo;
 import com.nexters.keyme.domain.statistics.infrastcurture.dto.CoordinateRequest;
 import com.nexters.keyme.domain.statistics.infrastcurture.dto.CoordinateResponse;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,8 +12,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,10 +21,7 @@ public class PythonCoordinateConversionService implements CoordinateConversionSe
     private String convertingServerUrl;
     @Override
     public List<CoordinateInfo> convertFrom(List<Statistic> statistics) {
-        List<Statistic> sortedStatistic = new ArrayList<>(statistics);
-        Collections.sort(sortedStatistic);
-
-        List<Double> collect = sortedStatistic.stream()
+        List<Double> collect = statistics.stream()
                 .map(Statistic::getSolverAvgScore)
                 .collect(Collectors.toList());
 

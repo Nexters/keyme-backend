@@ -28,7 +28,7 @@ class StatisticRepositoryTest {
 
         assertThat(statistic.getQuestionId()).isEqualTo(2L);
         assertThat(statistic.getOwnerId()).isEqualTo(1L);
-        assertThat(statistic.getMatchRate()).isEqualTo(22L);
+        assertThat(statistic.getMatchRate()).isEqualTo(25);
     }
 
     @Test
@@ -55,8 +55,8 @@ class StatisticRepositoryTest {
         assertThat(statistics.get(0).getId()).isEqualTo(6);
         assertThat(statistics.get(1).getId()).isEqualTo(5);
         assertThat(statistics.get(2).getId()).isEqualTo(4);
-        assertThat(statistics.get(3).getId()).isEqualTo(3);
-        assertThat(statistics.get(4).getId()).isEqualTo(2);
+        assertThat(statistics.get(3).getId()).isEqualTo(2);
+        assertThat(statistics.get(4).getId()).isEqualTo(3);
     }
 
     @Test
@@ -66,7 +66,7 @@ class StatisticRepositoryTest {
         List<Statistic> statistics = statisticRepository.findExceptIdsSortByAvgScore(1L, List.of(1L, 2L), 6, 5, 5);
 
         assertThat(statistics.size()).isEqualTo(3);
-        assertThat(statistics.get(0).getId()).isEqualTo(5L);
-        assertThat(statistics.get(statistics.size() - 1).getId()).isEqualTo(3L);
+        assertThat(statistics.get(0).getId()).isEqualTo(3L);
+        assertThat(statistics.get(statistics.size() - 1).getId()).isEqualTo(5L);
     }
 }
