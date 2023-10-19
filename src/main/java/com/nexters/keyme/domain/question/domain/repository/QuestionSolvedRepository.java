@@ -30,11 +30,10 @@ public interface QuestionSolvedRepository extends JpaRepository<QuestionSolved, 
     List<QuestionStatisticInfo> findAllAssociatedQuestionStatisticsByTestId(Long testId);
 
     @Query(
-        "select new com.nexters.keyme.domain.question.dto.internal.QuestionStatisticInfo(qs.question.questionId, qs.question.title, qs.question.keyword, qs.question.questionCategory, avg(qs.score)) " +
+        "select new com.nexters.keyme.domain.question.dto.internal.QuestionStatisticInfo(qs.question.questionId, qs.question.title, qs.question.keyword, qs.question.questionCategory, " +
+                "avg(CASE WHEN qs.owner.id = :ownerId and (qs.testResult.solver.id != :ownerId or qs.testResult.solver.id IS NULL) THEN qs.score END)) " +
             "from QuestionSolved qs " +
-            "where qs.question.questionId = :questionId " +
-                "and qs.owner.id = :ownerId " +
-                "and (qs.testResult.solver.id != :ownerId or qs.testResult.solver.id IS NULL)"
+            "where qs.question.questionId = :questionId "
     )
     QuestionStatisticInfo findQuestionStatisticsByQuestionIdAndOwnerId(Long questionId, Long ownerId);
 

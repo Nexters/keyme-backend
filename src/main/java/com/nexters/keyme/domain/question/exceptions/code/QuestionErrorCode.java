@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum QuestionErrorCode {
 
-    NOT_FOUND_QUESTION(400, "Question을 찾을 수 없습니다.");
+    NOT_FOUND_QUESTION(404, "Question을 찾을 수 없습니다.");
 
     private final int code;
     private final String message;

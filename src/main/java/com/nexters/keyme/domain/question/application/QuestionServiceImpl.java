@@ -1,7 +1,6 @@
 package com.nexters.keyme.domain.question.application;
 
 import com.nexters.keyme.domain.member.domain.service.validator.MemberValidator;
-import com.nexters.keyme.domain.member.exceptions.NotFoundMemberException;
 import com.nexters.keyme.domain.question.domain.service.validator.QuestionValidator;
 import com.nexters.keyme.domain.question.exceptions.NotFoundQuestionException;
 import com.nexters.keyme.domain.question.domain.model.Question;
@@ -11,8 +10,6 @@ import com.nexters.keyme.domain.question.dto.response.QuestionScoreInfoResponse;
 import com.nexters.keyme.domain.question.dto.response.QuestionStatisticResponse;
 import com.nexters.keyme.global.common.dto.internal.PageInfo;
 import com.nexters.keyme.global.common.dto.response.PageResponse;
-import com.nexters.keyme.domain.member.domain.model.MemberEntity;
-import com.nexters.keyme.domain.member.domain.repository.MemberRepository;
 import com.nexters.keyme.domain.question.dto.internal.QuestionStatisticInfo;
 import com.nexters.keyme.domain.question.domain.repository.QuestionRepository;
 import com.nexters.keyme.domain.question.domain.repository.QuestionSolvedRepository;
@@ -24,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j

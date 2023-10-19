@@ -1,0 +1,1 @@
+ALTER TABLE test_result ADD CONSTRAINT solver_test UNIQUE (solver_id, test_id);
